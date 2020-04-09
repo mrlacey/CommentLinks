@@ -1,0 +1,16 @@
+﻿[*.cs]
+
+# SA1600: Elements should be documented
+dotnet_diagnostic.SA1600.severity = none
+
+# SA1618: Generic type parameters should be documented
+dotnet_diagnostic.SA1618.severity = none
+
+# SA1604: Element documentation should have summary
+dotnet_diagnostic.SA1604.severity = none
+
+# SA1611: Element parameters should be documented
+dotnet_diagnostic.SA1611.severity = none
+
+# SA1612: Element parameter documentation should match element parameters
+dotnet_diagnostic.SA1612.severity = none
