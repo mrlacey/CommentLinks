@@ -10,7 +10,7 @@ using Task = System.Threading.Tasks.Task;
 namespace CommentLinks
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [InstalledProductRegistration("#110", "#112", "1.0")] // Info on this package for Help/About
+    [InstalledProductRegistration("#110", "#112", "1.1")] // Info on this package for Help/About
     [Guid(CommentLinksPackage.PackageGuidString)]
     public sealed class CommentLinksPackage : AsyncPackage
     {
