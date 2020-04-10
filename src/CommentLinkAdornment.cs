@@ -40,7 +40,7 @@ namespace CommentLinks
                 }
             }
 
-            return lineNumber;
+            return 0;
         }
 
         internal void Update(CommentLinkTag dataTag)
@@ -89,10 +89,15 @@ namespace CommentLinks
                     if (this.CmntLinkTag.LineNo > 0)
                     {
                         // Set the cursor at the beginning of the declaration.
-                        ErrorHandler.ThrowOnFailure(viewAdapter.SetCaretPos(this.CmntLinkTag.LineNo - 1, 0));
-
-                        // Make sure that the text is visible.
-                        viewAdapter.CenterLines(this.CmntLinkTag.LineNo - 1, 1);
+                        if (viewAdapter.SetCaretPos(this.CmntLinkTag.LineNo - 1, 0) == VSConstants.S_OK)
+                        {
+                            // Make sure that the text is visible.
+                            viewAdapter.CenterLines(this.CmntLinkTag.LineNo - 1, 1);
+                        }
+                        else
+                        {
+                            await this.ShowStatusBarMessageAsync($"'{this.CmntLinkTag.FileName}' contains fewer than '{this.CmntLinkTag.LineNo}' lines.");
+                        }
                     }
                     else if (!string.IsNullOrWhiteSpace(this.CmntLinkTag.SearchTerm))
                     {
@@ -103,8 +108,30 @@ namespace CommentLinks
                             ErrorHandler.ThrowOnFailure(viewAdapter.SetCaretPos(lineNo - 1, 0));
                             viewAdapter.CenterLines(lineNo - 1, 1);
                         }
+                        else
+                        {
+                            await this.ShowStatusBarMessageAsync($"Could not find '{this.CmntLinkTag.SearchTerm}' in '{this.CmntLinkTag.FileName}'.");
+                        }
                     }
                 }
+                else
+                {
+                    await this.ShowStatusBarMessageAsync($"Unable to find file '{this.CmntLinkTag.FileName}'");
+                }
+            }
+            catch (Exception exc)
+            {
+                System.Diagnostics.Debug.WriteLine(exc);
+            }
+        }
+
+        private async System.Threading.Tasks.Task ShowStatusBarMessageAsync(string message)
+        {
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+
+            try
+            {
+                ProjectHelpers.Dte.StatusBar.Text = message;
             }
             catch (Exception exc)
             {

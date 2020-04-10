@@ -14,3 +14,6 @@ dotnet_diagnostic.SA1611.severity = none
 
 # SA1612: Element parameter documentation should match element parameters
 dotnet_diagnostic.SA1612.severity = none
+
+# SA0001: XML comment analysis is disabled due to project configuration
+dotnet_diagnostic.SA0001.severity = none
