@@ -22,6 +22,8 @@ namespace CommentLinks
                 this.FileName = link;
             }
 
+            this.FileName = this.FileName.Replace("%20", " ").Trim();
+
             if (separatorPos > -1)
             {
                 if (link.Substring(separatorPos).StartsWith("#L"))
@@ -33,11 +35,11 @@ namespace CommentLinks
                 }
                 else if (link[separatorPos] == ':')
                 {
-                    this.SearchTerm = link.Substring(separatorPos + 1);
+                    this.SearchTerm = link.Substring(separatorPos + 1).Replace("%20", " ");
                 }
                 else if (link.Substring(separatorPos).StartsWith("#:~:text="))
                 {
-                    this.SearchTerm = link.Substring(separatorPos + 9);
+                    this.SearchTerm = link.Substring(separatorPos + 9).Replace("%20", " ");
                 }
                 else
                 {
