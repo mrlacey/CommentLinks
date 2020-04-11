@@ -7,7 +7,6 @@
         <MoreInfo>https://github.com/mrlacey/CommentLinks</MoreInfo>
         <License>LICENSE.txt</License>
         <Icon>Resources\CommentLinksIcon.ico</Icon>
-        <Preview>true</Preview>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.0, 17.0)" />
