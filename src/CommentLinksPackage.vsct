@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <Extern href="stdidcmd.h"/>
+    <Extern href="vsshlids.h"/>
+    <Commands package="guidCommentLinksPackage">
+        <Groups>
+            <Group guid="guidCommentLinksPackageCmdSet" id="CodeContextGroup" priority="0x0600" />
+            <Group guid="guidCommentLinksPackageCmdSet" id="CodeContextMenuGroup" priority="0x0600" />
+        </Groups>
+
+        <Menus>
+            <Menu guid="guidCommentLinksPackageCmdSet" id="CodeContextMenu" type="Context" priority="0x0100">
+                <Strings>
+                    <ButtonText>Comment Links</ButtonText>
+                </Strings>
+            </Menu>
+        </Menus>
+
+        <Buttons>
+            <Button guid="guidCommentLinksPackageCmdSet" id="LinkToFileCommandId" priority="0x0100" type="Button">
+                <Strings>
+                    <ButtonText>Copy link to File</ButtonText>
+                </Strings>
+            </Button>
+            <Button guid="guidCommentLinksPackageCmdSet" id="LinkToLineCommandId" priority="0x0200" type="Button">
+                <Strings>
+                    <ButtonText>Copy link to Line</ButtonText>
+                </Strings>
+            </Button>
+            <Button guid="guidCommentLinksPackageCmdSet" id="LinkToSelectionCommandId" priority="0x0300" type="Button">
+                <Strings>
+                    <ButtonText>Copy link to Selection</ButtonText>
+                </Strings>
+            </Button>
+        </Buttons>
+    </Commands>
+
+    <CommandPlacements>
+        <CommandPlacement guid="guidCommentLinksPackageCmdSet" id="CodeContextGroup" priority="0x0200">
+            <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidCommentLinksPackageCmdSet" id="CodeContextMenu" priority="0x0100">
+            <Parent guid="guidCommentLinksPackageCmdSet" id="CodeContextGroup" />
+        </CommandPlacement>
+
+        <CommandPlacement guid="guidCommentLinksPackageCmdSet" id="CodeContextGroup" priority="0x0200">
+            <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidCommentLinksPackageCmdSet" id="CodeContextMenu" priority="0x0100">
+            <Parent guid="guidCommentLinksPackageCmdSet" id="CodeContextGroup" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidCommentLinksPackageCmdSet" id="CodeContextMenuGroup" priority="0x0100">
+            <Parent guid="guidCommentLinksPackageCmdSet" id="CodeContextMenu" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidCommentLinksPackageCmdSet" id="LinkToFileCommandId" priority="0x0100">
+            <Parent guid="guidCommentLinksPackageCmdSet" id="CodeContextMenuGroup" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidCommentLinksPackageCmdSet" id="LinkToLineCommandId" priority="0x0100">
+            <Parent guid="guidCommentLinksPackageCmdSet" id="CodeContextMenuGroup" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidCommentLinksPackageCmdSet" id="LinkToSelectionCommandId" priority="0x0100">
+            <Parent guid="guidCommentLinksPackageCmdSet" id="CodeContextMenuGroup" />
+        </CommandPlacement>
+    </CommandPlacements>
+
+    <Symbols>
+        <GuidSymbol name="guidCommentLinksPackage" value="{e1724685-50af-49aa-9d96-ff26a69cc1c9}" />
+
+        <GuidSymbol name="guidCommentLinksPackageCmdSet" value="{8b7f9d00-fcc1-4b0f-a951-3d63273c87de}">
+            <IDSymbol value="0x1100" name="CodeContextGroup" />
+            <IDSymbol value="0x1200" name="CodeContextMenu" />
+            <IDSymbol value="0x1300" name="CodeContextMenuGroup" />
+            <IDSymbol name="LinkToFileCommandId" value="0x0100" />
+            <IDSymbol name="LinkToLineCommandId" value="0x0200" />
+            <IDSymbol name="LinkToSelectionCommandId" value="0x0300" />
+        </GuidSymbol>
+    </Symbols>
+</CommandTable>
