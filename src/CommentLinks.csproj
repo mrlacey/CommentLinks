@@ -56,6 +56,9 @@
     <Compile Include="CommentLinkTagger.cs" />
     <Compile Include="CommentLinkTaggerProvider.cs" />
     <Compile Include="IntraTextAdornmentTagger.cs" />
+    <Compile Include="OptionsGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ProjectHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CommentLinksPackage.cs" />

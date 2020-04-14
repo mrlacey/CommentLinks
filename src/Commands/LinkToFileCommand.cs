@@ -17,7 +17,7 @@ namespace CommentLinks.Commands
     {
         public const int CommandId = 0x0100;
 
-        private LinkToFileCommand(AsyncPackage package, OleMenuCommandService commandService)
+        private LinkToFileCommand(CommentLinksPackage package, OleMenuCommandService commandService)
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
@@ -29,7 +29,7 @@ namespace CommentLinks.Commands
 
         public static LinkToFileCommand Instance { get; private set; }
 
-        public static async Task InitializeAsync(AsyncPackage package)
+        public static async Task InitializeAsync(CommentLinksPackage package)
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
@@ -46,13 +46,12 @@ namespace CommentLinks.Commands
             try
             {
                 var doc = ProjectHelpers.Dte.ActiveDocument;
+                var formattedFilePath = this.GetFormattedFilePath(doc.FullName);
 
-                var filePath = doc.FullName;
-
-                if (!string.IsNullOrWhiteSpace(filePath))
+                if (!string.IsNullOrWhiteSpace(formattedFilePath))
                 {
-                    Clipboard.SetText($"Link:{SimpleSpaceEncoding(Path.GetFileName(filePath))}");
-                    await StatusBarHelper.ShowMessageAsync("Link to file copied to clipboard.");
+                    Clipboard.SetText($"{this.FormattedLinkText}:{formattedFilePath}");
+                    await StatusBarHelper.ShowMessageAsync("Link to File copied to clipboard.");
                 }
                 else
                 {

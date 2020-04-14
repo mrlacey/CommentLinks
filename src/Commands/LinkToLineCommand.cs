@@ -5,7 +5,6 @@ using System;
 using System.ComponentModel.Design;
 using System.IO;
 using System.Windows.Forms;
-using Microsoft.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Shell;
 using Task = System.Threading.Tasks.Task;
 
@@ -15,7 +14,7 @@ namespace CommentLinks.Commands
     {
         public const int CommandId = 0x0200;
 
-        private LinkToLineCommand(AsyncPackage package, OleMenuCommandService commandService)
+        private LinkToLineCommand(CommentLinksPackage package, OleMenuCommandService commandService)
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
@@ -27,7 +26,7 @@ namespace CommentLinks.Commands
 
         public static LinkToLineCommand Instance { get; private set; }
 
-        public static async Task InitializeAsync(AsyncPackage package)
+        public static async Task InitializeAsync(CommentLinksPackage package)
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
@@ -45,14 +44,14 @@ namespace CommentLinks.Commands
             {
                 var doc = ProjectHelpers.Dte.ActiveDocument;
 
-                var filePath = doc.FullName;
+                var formattedFilePath = this.GetFormattedFilePath(doc.FullName);
 
-                var lineNo = (doc.Selection as EnvDTE.TextSelection).CurrentLine;
-
-                if (!string.IsNullOrWhiteSpace(filePath))
+                if (!string.IsNullOrWhiteSpace(formattedFilePath))
                 {
-                    Clipboard.SetText($"Link:{SimpleSpaceEncoding(Path.GetFileName(filePath))}#L{lineNo}");
-                    await StatusBarHelper.ShowMessageAsync("Link to line copied to clipboard.");
+                    var lineNo = (doc.Selection as EnvDTE.TextSelection).CurrentLine;
+
+                    Clipboard.SetText($"{this.FormattedLinkText}:{formattedFilePath}#L{lineNo}");
+                    await StatusBarHelper.ShowMessageAsync("Link to Line copied to clipboard.");
                 }
                 else
                 {
