@@ -50,17 +50,22 @@ namespace CommentLinks.Commands
                 {
                     var lineNo = (doc.Selection as EnvDTE.TextSelection).CurrentLine;
 
-                    Clipboard.SetText($"{this.FormattedLinkText}:{formattedFilePath}#L{lineNo}");
+                    var text = $"{this.FormattedLinkText}:{formattedFilePath}#L{lineNo}";
+
+                    Clipboard.SetText(text);
+
+                    await OutputPane.Instance.WriteAsync($"Copied: {text}");
                     await StatusBarHelper.ShowMessageAsync("Link to Line copied to clipboard.");
                 }
                 else
                 {
                     await StatusBarHelper.ShowMessageAsync("File path for document not available.");
+                    await OutputPane.Instance.WriteAsync("File path for document not available.");
                 }
             }
             catch (Exception exc)
             {
-                System.Diagnostics.Debug.WriteLine(exc);
+                await OutputPane.Instance.WriteAsync(exc);
             }
         }
     }

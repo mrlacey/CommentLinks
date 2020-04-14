@@ -50,17 +50,30 @@ namespace CommentLinks.Commands
                 {
                     var selectedText = (doc.Selection as EnvDTE.TextSelection).Text;
 
-                    Clipboard.SetText($"{this.FormattedLinkText}:{formattedFilePath}:{SimpleSpaceEncoding(selectedText)}");
-                    await StatusBarHelper.ShowMessageAsync("Link to Selection copied to clipboard.");
+                    if (!string.IsNullOrWhiteSpace(selectedText))
+                    {
+                        var text = $"{this.FormattedLinkText}:{formattedFilePath}:{SimpleSpaceEncoding(selectedText)}";
+
+                        Clipboard.SetText(text);
+
+                        await OutputPane.Instance.WriteAsync($"Copied: {text}");
+                        await StatusBarHelper.ShowMessageAsync("Link to Selection copied to clipboard.");
+                    }
+                    else
+                    {
+                        await StatusBarHelper.ShowMessageAsync("No text selected so no link copied to clipboard.");
+                        await OutputPane.Instance.WriteAsync("No text selected so no link copied to clipboard.");
+                    }
                 }
                 else
                 {
                     await StatusBarHelper.ShowMessageAsync("File path for document not available.");
+                    await OutputPane.Instance.WriteAsync("File path for document not available.");
                 }
             }
             catch (Exception exc)
             {
-                System.Diagnostics.Debug.WriteLine(exc);
+                await OutputPane.Instance.WriteAsync(exc);
             }
         }
     }

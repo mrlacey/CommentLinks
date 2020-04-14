@@ -19,7 +19,7 @@ namespace CommentLinks
             }
             catch (Exception exc)
             {
-                System.Diagnostics.Debug.WriteLine(exc);
+                await OutputPane.Instance.WriteAsync(exc);
             }
         }
     }

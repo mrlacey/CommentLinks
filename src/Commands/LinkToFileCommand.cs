@@ -50,17 +50,22 @@ namespace CommentLinks.Commands
 
                 if (!string.IsNullOrWhiteSpace(formattedFilePath))
                 {
-                    Clipboard.SetText($"{this.FormattedLinkText}:{formattedFilePath}");
+                    var text = $"{this.FormattedLinkText}:{formattedFilePath}";
+
+                    Clipboard.SetText(text);
+
+                    await OutputPane.Instance.WriteAsync($"Copied: {text}");
                     await StatusBarHelper.ShowMessageAsync("Link to File copied to clipboard.");
                 }
                 else
                 {
                     await StatusBarHelper.ShowMessageAsync("File path for document not available.");
+                    await OutputPane.Instance.WriteAsync("File path for document not available.");
                 }
             }
             catch (Exception exc)
             {
-                System.Diagnostics.Debug.WriteLine(exc);
+                await OutputPane.Instance.WriteAsync(exc);
             }
         }
     }

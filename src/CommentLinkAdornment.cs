@@ -96,7 +96,7 @@ namespace CommentLinks
                         }
                         else
                         {
-                            await this.ShowStatusBarMessageAsync($"'{this.CmntLinkTag.FileName}' contains fewer than '{this.CmntLinkTag.LineNo}' lines.");
+                            await StatusBarHelper.ShowMessageAsync($"'{this.CmntLinkTag.FileName}' contains fewer than '{this.CmntLinkTag.LineNo}' lines.");
                         }
                     }
                     else if (!string.IsNullOrWhiteSpace(this.CmntLinkTag.SearchTerm))
@@ -110,32 +110,18 @@ namespace CommentLinks
                         }
                         else
                         {
-                            await this.ShowStatusBarMessageAsync($"Could not find '{this.CmntLinkTag.SearchTerm}' in '{this.CmntLinkTag.FileName}'.");
+                            await StatusBarHelper.ShowMessageAsync($"Could not find '{this.CmntLinkTag.SearchTerm}' in '{this.CmntLinkTag.FileName}'.");
                         }
                     }
                 }
                 else
                 {
-                    await this.ShowStatusBarMessageAsync($"Unable to find file '{this.CmntLinkTag.FileName}'");
+                    await StatusBarHelper.ShowMessageAsync($"Unable to find file '{this.CmntLinkTag.FileName}'");
                 }
             }
             catch (Exception exc)
             {
-                System.Diagnostics.Debug.WriteLine(exc);
-            }
-        }
-
-        private async System.Threading.Tasks.Task ShowStatusBarMessageAsync(string message)
-        {
-            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-
-            try
-            {
-                ProjectHelpers.Dte.StatusBar.Text = message;
-            }
-            catch (Exception exc)
-            {
-                System.Diagnostics.Debug.WriteLine(exc);
+                await OutputPane.Instance.WriteAsync(exc);
             }
         }
     }

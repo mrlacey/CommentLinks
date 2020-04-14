@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Matt Lacey Ltd. All rights reserved.
 // Licensed under the MIT license.
 
-using Microsoft.VisualStudio.Shell;
 using System.ComponentModel;
+using Microsoft.VisualStudio.Shell;
 
 namespace CommentLinks
 {
@@ -17,14 +17,5 @@ namespace CommentLinks
         [DisplayName("Link text case")]
         [Description("How the link indicator will be cased in links generated from the context menu.")]
         public CaseOption LinkCasing { get; set; } = CaseOption.lowercase;
-
-
-    }
-
-    public enum CaseOption
-    {
-        TitleCase,
-        lowercase,
-        UPPERCASE,
     }
 }
