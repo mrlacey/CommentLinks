@@ -135,7 +135,12 @@ namespace CommentLinks
 
                 foreach (var keyValuePair in this.adornmentCache)
                 {
-                    translatedAdornmentCache.Add(keyValuePair.Key.TranslateTo(this.Snapshot, SpanTrackingMode.EdgeExclusive), keyValuePair.Value);
+                    var adjustedKey = keyValuePair.Key.TranslateTo(this.Snapshot, SpanTrackingMode.EdgeExclusive);
+
+                    if (!translatedAdornmentCache.ContainsKey(adjustedKey))
+                    {
+                        translatedAdornmentCache.Add(adjustedKey, keyValuePair.Value);
+                    }
                 }
 
                 this.adornmentCache = translatedAdornmentCache;
