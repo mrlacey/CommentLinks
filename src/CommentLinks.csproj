@@ -103,7 +103,9 @@
     <EmbeddedResource Include="CommentLinks.resx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\CommentLinksIcon.png" />
+    <Content Include="Resources\CommentLinksIcon.png">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <VSCTCompile Include="CommentLinksPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
