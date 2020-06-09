@@ -103,14 +103,11 @@
     <EmbeddedResource Include="CommentLinks.resx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\CommentLinksIcon.png" />
     <VSCTCompile Include="CommentLinksPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
     <Content Include="LICENSE.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="Resources\CommentLinksIcon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>

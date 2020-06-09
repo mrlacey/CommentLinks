@@ -11,7 +11,7 @@ using Task = System.Threading.Tasks.Task;
 namespace CommentLinks
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [InstalledProductRegistration("#110", "#112", "1.2")] // Info on this package for Help/About
+    [InstalledProductRegistration("#110", "#112", "1.3")] // Info on this package for Help/About
     [Guid(CommentLinksPackage.PackageGuidString)]
     [ProvideOptionPage(typeof(OptionsGrid), "Comment Links", "General", 0, 0, true)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
