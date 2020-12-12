@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommentLinks.Tests", "..\CommentLinks.Tests\CommentLinks.Tests.csproj", "{15B2D5FA-1402-4082-9D46-E600BB4BD2BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{785A8A90-5489-4BAB-9CE0-67317C97BA01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{785A8A90-5489-4BAB-9CE0-67317C97BA01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{785A8A90-5489-4BAB-9CE0-67317C97BA01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15B2D5FA-1402-4082-9D46-E600BB4BD2BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15B2D5FA-1402-4082-9D46-E600BB4BD2BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15B2D5FA-1402-4082-9D46-E600BB4BD2BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15B2D5FA-1402-4082-9D46-E600BB4BD2BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
