@@ -11,7 +11,7 @@ namespace CommentLinks
         internal CommentLinkTagger(ITextBuffer buffer)
             : base(
                   buffer,
-                  new[] { new Regex(@"(link:)([0-9a-z. \-%\\/\:\#\~\=]{4,})", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase) })
+                  new[] { new Regex(@"(link:)([0-9a-z. \'""\-%\\/\:\#\~\=\(\)]{4,})", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase) })
         {
         }
 

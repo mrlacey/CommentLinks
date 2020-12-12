@@ -560,6 +560,16 @@ namespace CommentLinks.Tests
         [TestMethod]
         public void CanIncludeSearchTermsInQuotesWithoutEscapingSpaces()
         {
+            var sut = new CommentLinkTag("\"SomeFile.cs:some search words\"");
+
+            Assert.AreEqual("SomeFile.cs", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void CanIncludeSearchTermsInQuotesWithoutEscapingSpaces_AndHaveSubsequentWords()
+        {
             var sut = new CommentLinkTag("\"SomeFile.cs:some search words\" and some other words");
 
             Assert.AreEqual("SomeFile.cs", sut.FileName);
