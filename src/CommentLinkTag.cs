@@ -17,13 +17,21 @@ namespace CommentLinks
             // handle file names wrapped in single or double quotes
             if (croppedLink.StartsWith("\""))
             {
-                croppedLink = croppedLink.Substring(1, croppedLink.IndexOf('"', 1) - 1);
-                trailingTextDefnitelyRemoved = true;
+                var closingIndex = croppedLink.IndexOf('"', 1);
+                if (closingIndex > 1)
+                {
+                    croppedLink = croppedLink.Substring(1, closingIndex - 1);
+                    trailingTextDefnitelyRemoved = true;
+                }
             }
             else if (croppedLink.StartsWith("'"))
             {
-                croppedLink = croppedLink.Substring(1, croppedLink.IndexOf('\'', 1) - 1);
-                trailingTextDefnitelyRemoved = true;
+                var closingIndex = croppedLink.IndexOf('\'', 1);
+                if (closingIndex > 1)
+                {
+                    croppedLink = croppedLink.Substring(1, closingIndex - 1);
+                    trailingTextDefnitelyRemoved = true;
+                }
             }
 
             var separatorPos = croppedLink.IndexOfAny(new[] { '#', ':' });
