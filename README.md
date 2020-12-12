@@ -29,12 +29,17 @@ For compatibility with [text fragment anchors](https://github.com/WICG/ScrollToT
 // link:mapManager.js#:~:text=UpdateLocalData
 ```
 
-Files will be found anywhere in the solution, even other projects. If you have more than one file with the same name, you can specify the directory name the file is in too.
+- Files will be found anywhere in the solution, even other projects. If you have more than one file with the same name, you can specify the directory name the file is in too.
 
 ```cs
 // link:include/mapManager.js
 ```
 
+- Any words after the file name or search term should be automatically ignored. If you find that something isn't being detected correctly you can escape the name (and, optionally, search terms) by enclosing them in quotes.
+
+```cs
+// Go to link:"include/mapManager.js" and see ...
+```
 ---
 
 Please [raise an issue](https://github.com/mrlacey/CommentLinks/issues/new) if you have feature requests.

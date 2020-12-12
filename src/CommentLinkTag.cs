@@ -5,41 +5,95 @@ using Microsoft.VisualStudio.Text.Tagging;
 
 namespace CommentLinks
 {
-    internal class CommentLinkTag : ITag
+    public class CommentLinkTag : ITag
     {
-        internal CommentLinkTag(string link)
+        public CommentLinkTag(string link)
         {
             this.Link = link;
 
-            var separatorPos = link.IndexOfAny(new[] { '#', ':' });
+            string croppedLink = link;
+            bool trailingTextDefnitelyRemoved = false;
+
+            // handle file names wrapped in single or double quotes
+            if (croppedLink.StartsWith("\""))
+            {
+                var closingIndex = croppedLink.IndexOf('"', 1);
+                if (closingIndex > 1)
+                {
+                    croppedLink = croppedLink.Substring(1, closingIndex - 1);
+                    trailingTextDefnitelyRemoved = true;
+                }
+            }
+            else if (croppedLink.StartsWith("'"))
+            {
+                var closingIndex = croppedLink.IndexOf('\'', 1);
+                if (closingIndex > 1)
+                {
+                    croppedLink = croppedLink.Substring(1, closingIndex - 1);
+                    trailingTextDefnitelyRemoved = true;
+                }
+            }
+
+            var separatorPos = croppedLink.IndexOfAny(new[] { '#', ':' });
+
+            if (!trailingTextDefnitelyRemoved)
+            {
+                if (separatorPos > 0)
+                {
+                    // If there's a separator get everything up to the first space after it
+                    if (croppedLink.Substring(separatorPos).Contains(" "))
+                    {
+                        croppedLink = croppedLink.Substring(0, croppedLink.IndexOf(" ", separatorPos));
+                    }
+                }
+                else
+                {
+                    var firstDot = croppedLink.IndexOf('.');
+
+                    // If there's a '.' assume it's for distinguishing the file name from its extension
+                    if (firstDot >= 0)
+                    {
+                        // Get everythign up to the first space after the '.'
+                        if (croppedLink.Substring(firstDot).Contains(" "))
+                        {
+                            croppedLink = croppedLink.Substring(0, croppedLink.IndexOf(" ", firstDot));
+                        }
+                    }
+                    else if (croppedLink.Contains(" "))
+                    {
+                        // Get everything up to the first space
+                        croppedLink = croppedLink.Substring(0, croppedLink.IndexOf(" "));
+                    }
+                }
+            }
 
             if (separatorPos > 0)
             {
-                this.FileName = link.Substring(0, separatorPos);
+                this.FileName = croppedLink.Substring(0, separatorPos);
             }
             else
             {
-                this.FileName = link;
+                this.FileName = croppedLink;
             }
 
             this.FileName = this.FileName.Replace("%20", " ").Trim();
 
             if (separatorPos > -1)
             {
-                if (link.Substring(separatorPos).StartsWith("#L"))
+                if (croppedLink.Substring(separatorPos).StartsWith("#L"))
                 {
-                    if (int.TryParse(link.Substring(separatorPos + 2), out int lineNo))
+                    if (int.TryParse(croppedLink.Split(' ')[0].Substring(separatorPos + 2), out int lineNo))
                     {
                         this.LineNo = lineNo;
                     }
                 }
-                else if (link[separatorPos] == ':')
+                else if (croppedLink[separatorPos] == ':')
                 {
-                    this.SearchTerm = link.Substring(separatorPos + 1).Replace("%20", " ");
+                    this.SearchTerm = croppedLink.Substring(separatorPos + 1).Replace("%20", " ");
                 }
-                else if (link.Substring(separatorPos).StartsWith("#:~:text="))
+                else if (croppedLink.Substring(separatorPos).StartsWith("#:~:text="))
                 {
-                    this.SearchTerm = link.Substring(separatorPos + 9).Replace("%20", " ");
+                    this.SearchTerm = croppedLink.Substring(separatorPos + 9).Replace("%20", " ");
                 }
                 else
                 {
