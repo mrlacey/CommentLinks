@@ -12,7 +12,7 @@ namespace CommentLinks
             this.Link = link;
 
             string croppedLink = link;
-            bool trailingTextDefnitelyRemoved = false;
+            bool trailingTextDefinitelyRemoved = false;
 
             // handle file names wrapped in single or double quotes
             if (croppedLink.StartsWith("\""))
@@ -21,7 +21,7 @@ namespace CommentLinks
                 if (closingIndex > 1)
                 {
                     croppedLink = croppedLink.Substring(1, closingIndex - 1);
-                    trailingTextDefnitelyRemoved = true;
+                    trailingTextDefinitelyRemoved = true;
                 }
             }
             else if (croppedLink.StartsWith("'"))
@@ -30,13 +30,13 @@ namespace CommentLinks
                 if (closingIndex > 1)
                 {
                     croppedLink = croppedLink.Substring(1, closingIndex - 1);
-                    trailingTextDefnitelyRemoved = true;
+                    trailingTextDefinitelyRemoved = true;
                 }
             }
 
             var separatorPos = croppedLink.IndexOfAny(new[] { '#', ':' });
 
-            if (!trailingTextDefnitelyRemoved)
+            if (!trailingTextDefinitelyRemoved)
             {
                 if (separatorPos > 0)
                 {
@@ -53,7 +53,7 @@ namespace CommentLinks
                     // If there's a '.' assume it's for distinguishing the file name from its extension
                     if (firstDot >= 0)
                     {
-                        // Get everythign up to the first space after the '.'
+                        // Get everything up to the first space after the '.'
                         if (croppedLink.Substring(firstDot).Contains(" "))
                         {
                             croppedLink = croppedLink.Substring(0, croppedLink.IndexOf(" ", firstDot));
@@ -67,13 +67,21 @@ namespace CommentLinks
                 }
             }
 
-            if (separatorPos > 0)
+            if (System.IO.File.Exists(croppedLink))
             {
-                this.FileName = croppedLink.Substring(0, separatorPos);
+                this.FileName = croppedLink;
+                separatorPos = -1;  // Reset this as if a valid file path then definitely no search text after a separator
             }
             else
             {
-                this.FileName = croppedLink;
+                if (separatorPos > 0)
+                {
+                    this.FileName = croppedLink.Substring(0, separatorPos);
+                }
+                else
+                {
+                    this.FileName = croppedLink;
+                }
             }
 
             this.FileName = this.FileName.Replace("%20", " ").Trim();

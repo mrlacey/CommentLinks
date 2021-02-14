@@ -2,20 +2,21 @@
 // Licensed under the MIT license.
 
 using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TextManager.Interop;
+using Button = System.Windows.Controls.Button;
 
 namespace CommentLinks
 {
     internal sealed class CommentLinkAdornment : Button
     {
-        private System.Windows.Forms.Cursor previousCursor;
-
         internal CommentLinkAdornment(CommentLinkTag tag)
         {
             this.Content = new TextBlock { Text = "➡" };
@@ -23,6 +24,7 @@ namespace CommentLinks
             this.Padding = new Thickness(0);
             this.Margin = new Thickness(0);
             this.Background = new SolidColorBrush(Colors.GreenYellow);
+            this.Cursor = Cursors.Hand;
             this.CmntLinkTag = tag;
         }
 
@@ -48,19 +50,6 @@ namespace CommentLinks
             this.CmntLinkTag = dataTag;
         }
 
-        protected override void OnMouseEnter(System.Windows.Input.MouseEventArgs e)
-        {
-            base.OnMouseEnter(e);
-            this.previousCursor = System.Windows.Forms.Cursor.Current;
-            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Hand;
-        }
-
-        protected override void OnMouseLeave(System.Windows.Input.MouseEventArgs e)
-        {
-            base.OnMouseLeave(e);
-            System.Windows.Forms.Cursor.Current = this.previousCursor;
-        }
-
 #pragma warning disable VSTHRD100 // Avoid async void methods
         protected override async void OnClick()
 #pragma warning restore VSTHRD100 // Avoid async void methods
@@ -69,13 +58,9 @@ namespace CommentLinks
 
             try
             {
-                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-
-                var projItem = ProjectHelpers.Dte2.Solution.FindProjectItem(this.CmntLinkTag.FileName);
-
-                if (projItem != null)
+                async Task<IVsTextView> OpenFileAsync(string filePath)
                 {
-                    var filePath = projItem.Properties.Item("FullPath").Value.ToString();
+                    await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
                     VsShellUtilities.OpenDocument(
                         new ServiceProvider((Microsoft.VisualStudio.OLE.Interop.IServiceProvider)ProjectHelpers.Dte),
@@ -83,8 +68,31 @@ namespace CommentLinks
                         Guid.Empty,
                         out _,
                         out _,
-                        out IVsWindowFrame pWindowFrame,
+                        out _,
                         out IVsTextView viewAdapter);
+
+                    return viewAdapter;
+                }
+
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+
+                var projItem = ProjectHelpers.Dte2.Solution.FindProjectItem(this.CmntLinkTag.FileName);
+
+                if (projItem != null)
+                {
+                    string filePath;
+
+                    // If an item in a solution folder
+                    if (projItem.Kind == "{66A26722-8FB5-11D2-AA7E-00C04F688DDE}")
+                    {
+                        filePath = projItem.FileNames[1];
+                    }
+                    else
+                    {
+                        filePath = projItem.Properties.Item("FullPath").Value.ToString();
+                    }
+
+                    var viewAdapter = await OpenFileAsync(filePath);
 
                     if (this.CmntLinkTag.LineNo > 0)
                     {
@@ -113,6 +121,10 @@ namespace CommentLinks
                             await StatusBarHelper.ShowMessageAsync($"Could not find '{this.CmntLinkTag.SearchTerm}' in '{this.CmntLinkTag.FileName}'.");
                         }
                     }
+                }
+                else if (System.IO.File.Exists(this.CmntLinkTag.FileName))
+                {
+                    var _ = await OpenFileAsync(this.CmntLinkTag.FileName);
                 }
                 else
                 {

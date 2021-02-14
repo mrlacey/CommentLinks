@@ -564,7 +564,7 @@ namespace CommentLinks.Tests
 
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
-            Assert.IsNull(sut.SearchTerm);
+            Assert.AreEqual("some search words", sut.SearchTerm);
         }
 
         [TestMethod]
@@ -575,6 +575,26 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some search words", sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void CanSpecifyAbsoluteFilePathInQuotes()
+        {
+            var sut = new CommentLinkTag("\"C:\\Users\\matt\\Documents\\desktop.ini\"");
+
+            Assert.AreEqual("C:\\Users\\matt\\Documents\\desktop.ini", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void CanSpecifyAbsoluteFilePathInQuotes_AndHaveSubsequentWords()
+        {
+            var sut = new CommentLinkTag("\"C:\\Users\\matt\\Documents\\desktop.ini\" and some other words");
+
+            Assert.AreEqual("C:\\Users\\matt\\Documents\\desktop.ini", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
         }
     }
 }
