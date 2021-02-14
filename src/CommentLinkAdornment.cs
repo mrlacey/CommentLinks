@@ -4,18 +4,18 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TextManager.Interop;
+using Button = System.Windows.Controls.Button;
 
 namespace CommentLinks
 {
     internal sealed class CommentLinkAdornment : Button
     {
-        private System.Windows.Forms.Cursor previousCursor;
-
         internal CommentLinkAdornment(CommentLinkTag tag)
         {
             this.Content = new TextBlock { Text = "➡" };
@@ -23,6 +23,7 @@ namespace CommentLinks
             this.Padding = new Thickness(0);
             this.Margin = new Thickness(0);
             this.Background = new SolidColorBrush(Colors.GreenYellow);
+            this.Cursor = Cursors.Hand;
             this.CmntLinkTag = tag;
         }
 
@@ -46,19 +47,6 @@ namespace CommentLinks
         internal void Update(CommentLinkTag dataTag)
         {
             this.CmntLinkTag = dataTag;
-        }
-
-        protected override void OnMouseEnter(System.Windows.Input.MouseEventArgs e)
-        {
-            base.OnMouseEnter(e);
-            this.previousCursor = System.Windows.Forms.Cursor.Current;
-            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Hand;
-        }
-
-        protected override void OnMouseLeave(System.Windows.Input.MouseEventArgs e)
-        {
-            base.OnMouseLeave(e);
-            System.Windows.Forms.Cursor.Current = this.previousCursor;
         }
 
 #pragma warning disable VSTHRD100 // Avoid async void methods
