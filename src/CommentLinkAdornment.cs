@@ -75,7 +75,6 @@ namespace CommentLinks
                         filePath = projItem.Properties.Item("FullPath").Value.ToString();
                     }
 
-
                     VsShellUtilities.OpenDocument(
                         new ServiceProvider((Microsoft.VisualStudio.OLE.Interop.IServiceProvider)ProjectHelpers.Dte),
                         filePath,
