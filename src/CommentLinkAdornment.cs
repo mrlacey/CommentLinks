@@ -63,7 +63,18 @@ namespace CommentLinks
 
                 if (projItem != null)
                 {
-                    var filePath = projItem.Properties.Item("FullPath").Value.ToString();
+                    string filePath;
+
+                    // If an item in a solution folder
+                    if (projItem.Kind == "{66A26722-8FB5-11D2-AA7E-00C04F688DDE}")
+                    {
+                        filePath = projItem.FileNames[1];
+                    }
+                    else
+                    {
+                        filePath = projItem.Properties.Item("FullPath").Value.ToString();
+                    }
+
 
                     VsShellUtilities.OpenDocument(
                         new ServiceProvider((Microsoft.VisualStudio.OLE.Interop.IServiceProvider)ProjectHelpers.Dte),
