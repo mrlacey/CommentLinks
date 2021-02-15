@@ -3,16 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.1401
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommentLinks", "CommentLinks.csproj", "{785A8A90-5489-4BAB-9CE0-67317C97BA01}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommentLinks", ".\src\CommentLinks.csproj", "{785A8A90-5489-4BAB-9CE0-67317C97BA01}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4B4DC261-E520-4051-B3B9-CB715B63E82A}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		..\appveyor.yml = ..\appveyor.yml
-		..\README.md = ..\README.md
+		.\appveyor.yml = .\appveyor.yml
+		.\README.md = .\README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommentLinks.Tests", "..\CommentLinks.Tests\CommentLinks.Tests.csproj", "{15B2D5FA-1402-4082-9D46-E600BB4BD2BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommentLinks.Tests", ".\CommentLinks.Tests\CommentLinks.Tests.csproj", "{15B2D5FA-1402-4082-9D46-E600BB4BD2BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
