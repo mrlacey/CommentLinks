@@ -580,7 +580,9 @@ namespace CommentLinks.Tests
         [TestMethod]
         public void CanSpecifyAbsoluteFilePathInQuotes()
         {
-            var sut = new CommentLinkTag("\"C:\\Users\\matt\\Documents\\desktop.ini\"");
+            var sut = new CommentLinkTag(
+                "\"C:\\Users\\matt\\Documents\\desktop.ini\"",
+                new TestFileSystemAbstraction());
 
             Assert.AreEqual("C:\\Users\\matt\\Documents\\desktop.ini", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
@@ -590,7 +592,9 @@ namespace CommentLinks.Tests
         [TestMethod]
         public void CanSpecifyAbsoluteFilePathInQuotes_AndHaveSubsequentWords()
         {
-            var sut = new CommentLinkTag("\"C:\\Users\\matt\\Documents\\desktop.ini\" and some other words");
+            var sut = new CommentLinkTag(
+                "\"C:\\Users\\matt\\Documents\\desktop.ini\" and some other words",
+                new TestFileSystemAbstraction());
 
             Assert.AreEqual("C:\\Users\\matt\\Documents\\desktop.ini", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);

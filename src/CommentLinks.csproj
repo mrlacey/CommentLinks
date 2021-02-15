@@ -58,6 +58,8 @@
     <Compile Include="CommentLinkTag.cs" />
     <Compile Include="CommentLinkTagger.cs" />
     <Compile Include="CommentLinkTaggerProvider.cs" />
+    <Compile Include="DefaultFileSystemAbstraction.cs" />
+    <Compile Include="IFileSystemAbstraction.cs" />
     <Compile Include="IntraTextAdornmentTagger.cs" />
     <Compile Include="OptionsGrid.cs">
       <SubType>Component</SubType>
