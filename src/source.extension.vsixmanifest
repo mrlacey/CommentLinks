@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="CommentLinks.bd536c05-2af9-4995-b067-56fa2bb88e31" Version="2.0" Language="en-US" Publisher="Matt Lacey" />
+        <Identity Id="CommentLinks.bd536c05-2af9-4995-b067-56fa2bb88e31" Version="2.1" Language="en-US" Publisher="Matt Lacey" />
         <DisplayName>CommentLinks</DisplayName>
         <Description xml:space="preserve">Create links in comments between any file in the solution.</Description>
         <MoreInfo>https://github.com/mrlacey/CommentLinks</MoreInfo>
         <License>LICENSE.txt</License>
+        <ReleaseNotes>fix install issue on VS2017</ReleaseNotes>
         <Icon>Resources\CommentLinksIcon.png</Icon>
     </Metadata>
     <Installation>
@@ -16,7 +17,7 @@
         <Dependency d:Source="Installed" Id="Microsoft.VisualStudio.MPF.15.0" DisplayName="Visual Studio MPF 15.0" Version="[15.0,17.0)" />
     </Dependencies>
     <Prerequisites>
-        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,16.0)" DisplayName="Visual Studio core editor" />
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,)" DisplayName="Visual Studio core editor" />
     </Prerequisites>
     <Assets>
         <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />

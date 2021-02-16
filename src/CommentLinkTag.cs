@@ -7,8 +7,13 @@ namespace CommentLinks
 {
     public class CommentLinkTag : ITag
     {
-        public CommentLinkTag(string link)
+        public CommentLinkTag(string link, IFileSystemAbstraction fileSystem = null)
         {
+            if (fileSystem == null)
+            {
+                fileSystem = new DefaultFileSystemAbstraction();
+            }
+
             this.Link = link;
 
             string croppedLink = link;
@@ -67,7 +72,7 @@ namespace CommentLinks
                 }
             }
 
-            if (System.IO.File.Exists(croppedLink))
+            if (fileSystem.FileExists(croppedLink))
             {
                 this.FileName = croppedLink;
                 separatorPos = -1;  // Reset this as if a valid file path then definitely no search text after a separator
