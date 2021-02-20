@@ -72,6 +72,44 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SMART_LOG_DEVICE_STATISTICS;", sut.SearchTerm);
         }
 
+        [TestMethod]
+        public void LinkFoundIfASpaceBeforeLink()
+        {
+            var sut = ExtractTagFromLine("blah blah blah link:somefile.ext");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("somefile.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void LinkFoundIfATabBeforeLink()
+        {
+            var sut = ExtractTagFromLine("blah blah blah\tlink:somefile.ext");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("somefile.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void LinkNotFoundIfNoSpaceBeforeLink_Comment()
+        {
+            var sut = ExtractTagFromLine("blah blah blah //link:somefile.ext");
+
+            Assert.IsNull(sut);
+        }
+
+        [TestMethod]
+        public void LinkNotFoundIfNoSpaceBeforeLink_AsPartOfWord()
+        {
+            var sut = ExtractTagFromLine("backlink:somefile.ext");
+
+            Assert.IsNull(sut);
+        }
+
         private CommentLinkTag ExtractTagFromLine(string line)
         {
             var regex = RegexHelper.LinkRegex;
