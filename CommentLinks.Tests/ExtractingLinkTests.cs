@@ -600,5 +600,25 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
         }
+
+        [TestMethod]
+        public void CanHaveUnderscoreInSearchTerm_WithoutQuotes()
+        {
+            var sut = new CommentLinkTag("cDriveCommands.cpp:SMART_LOG_DEVICE_STATISTICS");
+
+            Assert.AreEqual("cDriveCommands.cpp", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.AreEqual("SMART_LOG_DEVICE_STATISTICS", sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void CanHaveSemicolonInSearchTerm_WithoutQuotes()
+        {
+            var sut = new CommentLinkTag("cDriveCommands.cpp:SMART_LOG_DEVICE_STATISTICS;");
+
+            Assert.AreEqual("cDriveCommands.cpp", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.AreEqual("SMART_LOG_DEVICE_STATISTICS;", sut.SearchTerm);
+        }
     }
 }

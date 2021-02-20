@@ -45,6 +45,7 @@
     <Compile Include="ExtractingLinkExceptions.cs" />
     <Compile Include="ExtractingLinkTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegexParsingTests.cs" />
     <Compile Include="TestFileSystemAbstraction.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -9,9 +9,7 @@ namespace CommentLinks
     internal sealed class CommentLinkTagger : RegexTagger<CommentLinkTag>
     {
         internal CommentLinkTagger(ITextBuffer buffer)
-            : base(
-                  buffer,
-                  new[] { new Regex(@"(link:)([0-9a-z. \'""\-%\\/\:\#\~\=\(\)]{4,})", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase) })
+            : base(buffer, new[] { RegexHelper.LinkRegex })
         {
         }
 
