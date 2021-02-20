@@ -13,7 +13,7 @@ namespace CommentLinks.Tests
         [TestMethod]
         public void FolderContainsDot_FileNameContainsSpace_WithSubesequentWordsButNoQuotes()
         {
-            var sut = new CommentLinkTag("My.Helpers/Some File.cs and some other words");
+            var sut = CommentLinkTag.Create("My.Helpers/Some File.cs and some other words");
 
             // Will need to add quotes to get `My.Helpers/Some File.cs`
             Assert.AreEqual("My.Helpers/Some", sut.FileName);
@@ -24,7 +24,7 @@ namespace CommentLinks.Tests
         [TestMethod]
         public void FileWithoutExtension_SubsequentWordsContainHash_WithSubesequentWordsButNoQuotes()
         {
-            var sut = new CommentLinkTag("README and some # of words");
+            var sut = CommentLinkTag.Create("README and some # of words");
 
             // Will need to add quotes to get `README`
             Assert.AreEqual("README and some", sut.FileName);
@@ -37,7 +37,7 @@ namespace CommentLinks.Tests
         [TestMethod]
         public void FileWithoutExtension_SubsequentWordsContainColon_WithSubesequentWordsButNoQuotes()
         {
-            var sut = new CommentLinkTag("README in L:25");
+            var sut = CommentLinkTag.Create("README in L:25");
 
             // Will need to add quotes to get `README`
             Assert.AreEqual("README in L", sut.FileName);
@@ -50,7 +50,7 @@ namespace CommentLinks.Tests
         [TestMethod]
         public void FolderContainsDot_FileNameContainsSpace_WithSubesequentWordsContainingHash()
         {
-            var sut = new CommentLinkTag("My.Helpers/Some File.cs and some other words including # separator");
+            var sut = CommentLinkTag.Create("My.Helpers/Some File.cs and some other words including # separator");
 
             // Will need to add quotes to get `My.Helpers/Some File.cs`
             Assert.AreEqual("My.Helpers/Some File.cs and some other words including", sut.FileName);
@@ -63,7 +63,7 @@ namespace CommentLinks.Tests
         [TestMethod]
         public void FolderContainsDot_FileNameWithoutExtension_WithSubesequentWordsContainingHash()
         {
-            var sut = new CommentLinkTag("Docs/README and some other words including # separator");
+            var sut = CommentLinkTag.Create("Docs/README and some other words including # separator");
 
             // Will need to add quotes to get `Docs/README`
             Assert.AreEqual("Docs/README and some other words including", sut.FileName);

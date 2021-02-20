@@ -7,14 +7,55 @@ namespace CommentLinks
 {
     public class CommentLinkTag : ITag
     {
-        public CommentLinkTag(string link, IFileSystemAbstraction fileSystem = null)
+        private CommentLinkTag()
+        {
+        }
+
+        public string Link { get; private set; }
+
+        public string FileName { get; private set; }
+
+        public int LineNo { get; private set; } = -1;
+
+        public string SearchTerm { get; private set; }
+
+        public static CommentLinkTag Create(string link, IFileSystemAbstraction fileSystem = null)
         {
             if (fileSystem == null)
             {
                 fileSystem = new DefaultFileSystemAbstraction();
             }
 
-            this.Link = link;
+            if (string.IsNullOrWhiteSpace(link) || link.StartsWith("  ") || link.StartsWith("\t"))
+            {
+                return null;
+            }
+
+            if (link.StartsWith(" "))
+            {
+                var linkWithoutStart = link.TrimStart();
+
+                var dotPos = linkWithoutStart.IndexOf('.');
+                var spacePos = linkWithoutStart.IndexOf(' ');
+
+                // allow for a space at the start of a possible link if the following looks like a file path/name
+                if (dotPos < 0)
+                {
+                    return null;
+                }
+
+                if (spacePos > 0 && spacePos < dotPos)
+                {
+                    return null;
+                }
+            }
+
+            link = link.Trim();
+
+            var result = new CommentLinkTag
+            {
+                Link = link,
+            };
 
             string croppedLink = link;
             bool trailingTextDefinitelyRemoved = false;
@@ -74,22 +115,22 @@ namespace CommentLinks
 
             if (fileSystem.FileExists(croppedLink))
             {
-                this.FileName = croppedLink;
+                result.FileName = croppedLink;
                 separatorPos = -1;  // Reset this as if a valid file path then definitely no search text after a separator
             }
             else
             {
                 if (separatorPos > 0)
                 {
-                    this.FileName = croppedLink.Substring(0, separatorPos);
+                    result.FileName = croppedLink.Substring(0, separatorPos);
                 }
                 else
                 {
-                    this.FileName = croppedLink;
+                    result.FileName = croppedLink;
                 }
             }
 
-            this.FileName = this.FileName.Replace("%20", " ").Trim();
+            result.FileName = result.FileName.Replace("%20", " ").Trim();
 
             if (separatorPos > -1)
             {
@@ -97,30 +138,24 @@ namespace CommentLinks
                 {
                     if (int.TryParse(croppedLink.Split(' ')[0].Substring(separatorPos + 2), out int lineNo))
                     {
-                        this.LineNo = lineNo;
+                        result.LineNo = lineNo;
                     }
                 }
                 else if (croppedLink[separatorPos] == ':')
                 {
-                    this.SearchTerm = croppedLink.Substring(separatorPos + 1).Replace("%20", " ");
+                    result.SearchTerm = croppedLink.Substring(separatorPos + 1).Replace("%20", " ");
                 }
                 else if (croppedLink.Substring(separatorPos).StartsWith("#:~:text="))
                 {
-                    this.SearchTerm = croppedLink.Substring(separatorPos + 9).Replace("%20", " ");
+                    result.SearchTerm = croppedLink.Substring(separatorPos + 9).Replace("%20", " ");
                 }
                 else
                 {
-                    this.SearchTerm = string.Empty;
+                    result.SearchTerm = string.Empty;
                 }
             }
+
+            return result;
         }
-
-        public string Link { get; }
-
-        public string FileName { get; }
-
-        public int LineNo { get; } = -1;
-
-        public string SearchTerm { get; }
     }
 }

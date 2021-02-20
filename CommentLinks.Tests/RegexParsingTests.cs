@@ -110,6 +110,101 @@ namespace CommentLinks.Tests
             Assert.IsNull(sut);
         }
 
+        [TestMethod]
+        public void FindNothing_IfNothingToFind()
+        {
+            var sut = ExtractTagFromLine("just some words");
+
+            Assert.IsNull(sut);
+        }
+
+        [TestMethod]
+        public void FindNothing_IfEmptyString()
+        {
+            var sut = ExtractTagFromLine("");
+
+            Assert.IsNull(sut);
+        }
+
+        [TestMethod]
+        public void FindLink_FilenameWithExtension()
+        {
+            var sut = ExtractTagFromLine("blah blah link:filename.ext");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("filename.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void FindLink_FilenameWithoutExtension()
+        {
+            var sut = ExtractTagFromLine("blah blah link:README");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("README", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void FindLink_FilenameWithJustExtension()
+        {
+            var sut = ExtractTagFromLine("blah blah link:.gitignore");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual(".gitignore", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void FindLink_IfOneSpaceBeforeFileNameWithExtesion()
+        {
+            var sut = ExtractTagFromLine("blah blah link: filename.ext");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("filename.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void DoNotFindLink_IfTwoSpacesBeforeFileName()
+        {
+            var sut = ExtractTagFromLine("blah blah link:  filename.ext");
+
+            Assert.IsNull(sut);
+        }
+
+        [TestMethod]
+        public void DoNotFindLink_IfTwoSpacesBeforeFileNameWithJust()
+        {
+            var sut = ExtractTagFromLine("blah blah link:  .ignore");
+
+            Assert.IsNull(sut);
+        }
+
+        [TestMethod]
+        public void DoNotFindLink_IfOneSpaceBeforeFileNameWithNoExtension()
+        {
+            var sut = ExtractTagFromLine("blah blah link: README");
+
+            Assert.IsNull(sut);
+        }
+
+        [TestMethod]
+        public void FindLink_IfOneSpaceBeforeFileNameWithJustExtesion()
+        {
+            var sut = ExtractTagFromLine("blah blah link: .ignore");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual(".ignore", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+        }
+
         private CommentLinkTag ExtractTagFromLine(string line)
         {
             var regex = RegexHelper.LinkRegex;
@@ -120,7 +215,7 @@ namespace CommentLinks.Tests
             {
                 // Mirroring behavior in link:CommentLinkTagger.cs:ExtractTagFromLine
                 // Not reusing the actual classes from teh extension becuase they have dependencies on VS that are hard to mock/abstract
-                return new CommentLinkTag(matches[0].Groups[2].Value);
+                return CommentLinkTag.Create(matches[0].Groups[2].Value);
             }
             else
             {

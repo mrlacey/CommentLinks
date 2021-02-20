@@ -17,7 +17,7 @@ namespace CommentLinks
         {
             if (match.Groups.Count == 3)
             {
-                return new CommentLinkTag(match.Groups[2].Value);
+                return CommentLinkTag.Create(match.Groups[2].Value);
             }
 
             return null;
