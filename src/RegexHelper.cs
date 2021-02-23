@@ -7,7 +7,7 @@ namespace CommentLinks
 {
     public class RegexHelper
     {
-        public const string LinkMatchPattern = @"(\slink:)(.{4,})$";
+        public const string LinkMatchPattern = @"((//|\s)link:)(.{4,})$";
 
         public static Regex LinkRegex { get; } = new Regex(LinkMatchPattern, RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
     }

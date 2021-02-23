@@ -95,11 +95,14 @@ namespace CommentLinks.Tests
         }
 
         [TestMethod]
-        public void LinkNotFoundIfNoSpaceBeforeLink_Comment()
+        public void LinkFoundIfNoSpaceBeforeLink_Comment()
         {
             var sut = ExtractTagFromLine("blah blah blah //link:somefile.ext");
 
-            Assert.IsNull(sut);
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("somefile.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
         }
 
         [TestMethod]
@@ -211,11 +214,11 @@ namespace CommentLinks.Tests
 
             var matches = regex.Matches(line);
 
-            if (matches.Count > 0)
+            // Mirroring behavior in link:CommentLinkTagger.cs:ExtractTagFromLine
+            // Not reusing the actual classes from the extension becuase they have dependencies on VS that are hard to mock/abstract
+            if (matches.Count > 0 && matches[0].Groups.Count == 4)
             {
-                // Mirroring behavior in link:CommentLinkTagger.cs:ExtractTagFromLine
-                // Not reusing the actual classes from teh extension becuase they have dependencies on VS that are hard to mock/abstract
-                return CommentLinkTag.Create(matches[0].Groups[2].Value);
+                return CommentLinkTag.Create(matches[0].Groups[3].Value);
             }
             else
             {

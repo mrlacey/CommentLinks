@@ -15,9 +15,9 @@ namespace CommentLinks
 
         protected override CommentLinkTag TryCreateTagForMatch(Match match)
         {
-            if (match.Groups.Count == 3)
+            if (match.Groups.Count == 4)
             {
-                return CommentLinkTag.Create(match.Groups[2].Value);
+                return CommentLinkTag.Create(match.Groups[3].Value);
             }
 
             return null;
