@@ -620,16 +620,186 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("SMART_LOG_DEVICE_STATISTICS;", sut.SearchTerm);
         }
-        /*
-         
-         
-         : someFile.ext#L32
-         : somefile.ext:~:~=some words
-         : somefile.ext:~:~="some words" > 'some words'
-         
-         
-         */
 
+        [TestMethod]
+        public void SpaceBeforeFileName_CanGetLineNumber_NoQuotes()
+        {
+            var sut = CommentLinkTag.Create(" someFile.ext#L32");
 
+            Assert.AreEqual("someFile.ext", sut.FileName);
+            Assert.AreEqual(32, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void SpaceBeforeFileName_CanGetFirstSearchWord_NoQuotes()
+        {
+            var sut = CommentLinkTag.Create(" someFile.ext:some words");
+
+            Assert.AreEqual("someFile.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.AreEqual("some", sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void SpaceBeforeFileName_CanGetOnlySearchWord_DoubleQuotes()
+        {
+            var sut = CommentLinkTag.Create(" someFile.ext:\"some\"");
+
+            Assert.AreEqual("someFile.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.AreEqual("some", sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void SpaceBeforeFileName_CanGetOnlySearchWord_SingleQuotes()
+        {
+            var sut = CommentLinkTag.Create(" someFile.ext:'some'");
+
+            Assert.AreEqual("someFile.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.AreEqual("some", sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void SpaceBeforeFileName_CanGetOnlySearchWord_NoQuotes()
+        {
+            var sut = CommentLinkTag.Create(" someFile.ext:some");
+
+            Assert.AreEqual("someFile.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.AreEqual("some", sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void SpaceBeforeFileName_CanGetSearchWords_DoubleQuotes()
+        {
+            var sut = CommentLinkTag.Create(" someFile.ext:\"some words\"");
+
+            Assert.AreEqual("someFile.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.AreEqual("some words", sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void SpaceBeforeFileName_CanGetSearchWords_SingleQuotes()
+        {
+            var sut = CommentLinkTag.Create(" someFile.ext:'some words'");
+
+            Assert.AreEqual("someFile.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.AreEqual("some words", sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void SpaceBeforeFileName_CanGetSomeSearchWords_DoubleQuotes()
+        {
+            var sut = CommentLinkTag.Create(" someFile.ext:\"some words\" other words");
+
+            Assert.AreEqual("someFile.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.AreEqual("some words", sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void SpaceBeforeFileName_CanGetSomeSearchWords_SingleQuotes()
+        {
+            var sut = CommentLinkTag.Create(" someFile.ext#:~:text='some words' other words");
+
+            Assert.AreEqual("someFile.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.AreEqual("some words", sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void SpaceBeforeFileName_CanGetFirstSearchWord_TextFragmentAnchor_NoQuotes()
+        {
+            var sut = CommentLinkTag.Create(" someFile.ext#:~:text=some words");
+
+            Assert.AreEqual("someFile.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.AreEqual("some", sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void SpaceBeforeFileName_CanGetOnlySearchWord_TextFragmentAnchor_DoubleQuotes()
+        {
+            var sut = CommentLinkTag.Create(" someFile.ext#:~:text=\"some\"");
+
+            Assert.AreEqual("someFile.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.AreEqual("some", sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void SpaceBeforeFileName_CanGetOnlySearchWord_TextFragmentAnchor_SingleQuotes()
+        {
+            var sut = CommentLinkTag.Create(" someFile.ext#:~:text='some'");
+
+            Assert.AreEqual("someFile.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.AreEqual("some", sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void SpaceBeforeFileName_CanGetOnlySearchWord_TextFragmentAnchor_NoQuotes()
+        {
+            var sut = CommentLinkTag.Create(" someFile.ext#:~:text=some");
+
+            Assert.AreEqual("someFile.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.AreEqual("some", sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void SpaceBeforeFileName_CanGetSearchWords_TextFragmentAnchor_DoubleQuotes()
+        {
+            var sut = CommentLinkTag.Create(" someFile.ext#:~:text=\"some words\"");
+
+            Assert.AreEqual("someFile.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.AreEqual("some words", sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void SpaceBeforeFileName_CanGetSearchWords_TextFragmentAnchor_SingleQuotes()
+        {
+            var sut = CommentLinkTag.Create(" someFile.ext#:~:text='some words'");
+
+            Assert.AreEqual("someFile.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.AreEqual("some words", sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void SpaceBeforeFileName_CanGetSomeSearchWords_TextFragmentAnchor_DoubleQuotes()
+        {
+            var sut = CommentLinkTag.Create(" someFile.ext#:~:text=\"some words\" other words");
+
+            Assert.AreEqual("someFile.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.AreEqual("some words", sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void SpaceBeforeFileName_CanGetSomeSearchWords_TextFragmentAnchor_SingleQuotes()
+        {
+            var sut = CommentLinkTag.Create(" someFile.ext#:~:text='some words' other words");
+
+            Assert.AreEqual("someFile.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.AreEqual("some words", sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void SearchTermCanIncludeEmoji()
+        {
+            // If works with emoji then can assume it works with any character (this is just a test to verify the change from detecting specific characters.)
+            var sut = CommentLinkTag.Create("someFile.ext:yay-👍-Yay other words");
+
+            Assert.AreEqual("someFile.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.AreEqual("yay-👍-Yay", sut.SearchTerm);
+        }
     }
 }
