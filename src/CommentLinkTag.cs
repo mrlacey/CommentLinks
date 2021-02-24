@@ -7,6 +7,8 @@ namespace CommentLinks
 {
     public class CommentLinkTag : ITag
     {
+        private const string TextfragmentIndicator = "#:~:text=";
+
         private CommentLinkTag()
         {
         }
@@ -84,15 +86,7 @@ namespace CommentLinks
 
             if (!trailingTextDefinitelyRemoved)
             {
-                if (separatorPos > 0)
-                {
-                    // If there's a separator get everything up to the first space after it
-                    if (croppedLink.Substring(separatorPos).Contains(" "))
-                    {
-                        croppedLink = croppedLink.Substring(0, croppedLink.IndexOf(" ", separatorPos));
-                    }
-                }
-                else
+                if (separatorPos < 0)
                 {
                     var firstDot = croppedLink.IndexOf('.');
 
@@ -112,11 +106,27 @@ namespace CommentLinks
                     }
                 }
             }
+            else
+            {
+                if (separatorPos > 0)
+                {
+                    if (croppedLink.Substring(separatorPos).StartsWith(TextfragmentIndicator))
+                    {
+                        result.SearchTerm = croppedLink.Substring(TextfragmentIndicator.Length + separatorPos);
+                    }
+                    else if (!croppedLink.Substring(separatorPos).StartsWith("#L"))
+                    {
+                        // If this adds a search term based on an absolute file path it will be fixed below.
+                        result.SearchTerm = croppedLink.Substring(1 + separatorPos);
+                    }
+                }
+            }
 
             if (fileSystem.FileExists(croppedLink))
             {
                 result.FileName = croppedLink;
                 separatorPos = -1;  // Reset this as if a valid file path then definitely no search text after a separator
+                result.SearchTerm = null;
             }
             else
             {
@@ -134,6 +144,8 @@ namespace CommentLinks
 
             if (separatorPos > -1)
             {
+                string parseForSearchTerms = null;
+
                 if (croppedLink.Substring(separatorPos).StartsWith("#L"))
                 {
                     if (int.TryParse(croppedLink.Split(' ')[0].Substring(separatorPos + 2), out int lineNo))
@@ -143,15 +155,55 @@ namespace CommentLinks
                 }
                 else if (croppedLink[separatorPos] == ':')
                 {
-                    result.SearchTerm = croppedLink.Substring(separatorPos + 1).Replace("%20", " ");
+                    parseForSearchTerms = croppedLink.Substring(separatorPos + 1);
                 }
-                else if (croppedLink.Substring(separatorPos).StartsWith("#:~:text="))
+                else if (croppedLink.Substring(separatorPos).StartsWith(TextfragmentIndicator))
                 {
-                    result.SearchTerm = croppedLink.Substring(separatorPos + 9).Replace("%20", " ");
+                    parseForSearchTerms = croppedLink.Substring(separatorPos + 9);
                 }
                 else
                 {
                     result.SearchTerm = string.Empty;
+                }
+
+                if (!string.IsNullOrWhiteSpace(parseForSearchTerms))
+                {
+                    parseForSearchTerms = parseForSearchTerms.Trim();
+
+                    var nextSpaceIndex = parseForSearchTerms.IndexOfAny(new[] { ' ', '\t' });
+
+                    if (parseForSearchTerms[0] == '"')
+                    {
+                        var nextDblQuoteIndex = parseForSearchTerms.IndexOf('"', 1);
+
+                        if (nextDblQuoteIndex >= 0)
+                        {
+                            result.SearchTerm = parseForSearchTerms.Substring(1, nextDblQuoteIndex - 1);
+                        }
+                    }
+                    else if (parseForSearchTerms[0] == '\'')
+                    {
+                        var nextSnglQuoteIndex = parseForSearchTerms.IndexOf('\'', 1);
+
+                        if (nextSnglQuoteIndex >= 0)
+                        {
+                            result.SearchTerm = parseForSearchTerms.Substring(1, nextSnglQuoteIndex - 1);
+                        }
+                    }
+
+                    if (string.IsNullOrEmpty(result.SearchTerm))
+                    {
+                        if (nextSpaceIndex >= 0)
+                        {
+                            result.SearchTerm = parseForSearchTerms.Substring(0, nextSpaceIndex);
+                        }
+                        else
+                        {
+                            result.SearchTerm = parseForSearchTerms;
+                        }
+                    }
+
+                    result.SearchTerm = result.SearchTerm.Replace("%20", " ");
                 }
             }
 

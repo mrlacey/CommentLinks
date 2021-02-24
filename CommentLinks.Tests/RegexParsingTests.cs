@@ -35,7 +35,7 @@ namespace CommentLinks.Tests
             Assert.IsNotNull(sut);
             Assert.AreEqual("cDriveCommands.cpp", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
-            Assert.AreEqual("\"SMART_LOG_DEVICE_STATISTICS\"", sut.SearchTerm);
+            Assert.AreEqual("SMART_LOG_DEVICE_STATISTICS", sut.SearchTerm);
         }
 
         [TestMethod]
@@ -46,9 +46,8 @@ namespace CommentLinks.Tests
             Assert.IsNotNull(sut);
             Assert.AreEqual("cDriveCommands.cpp", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
-            Assert.AreEqual("\"SMART_LOG_DEVICE_STATISTICS;\"", sut.SearchTerm);
+            Assert.AreEqual("SMART_LOG_DEVICE_STATISTICS;", sut.SearchTerm);
         }
-
 
         [TestMethod]
         public void CanHaveUnderscoreInSearchTerm_WithQuotesAroundAll()
