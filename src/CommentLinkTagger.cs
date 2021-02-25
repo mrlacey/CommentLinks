@@ -17,7 +17,7 @@ namespace CommentLinks
         {
             if (match.Groups.Count == 4)
             {
-                return CommentLinkTag.Create(match.Groups[3].Value);
+                return CommentLinkTag.Create(match.Groups[3].Value, match.Value.StartsWith("//") ? 2 : 1);
             }
 
             return null;

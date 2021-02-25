@@ -21,7 +21,20 @@ namespace CommentLinks
 
         public string SearchTerm { get; private set; }
 
+        // Position from the start of the RegEx match to show the adornment
+        public int Indent { get; private set; }
+
+        public static CommentLinkTag Create(string link)
+        {
+            return Create(link, fileSystem: null);
+        }
+
         public static CommentLinkTag Create(string link, IFileSystemAbstraction fileSystem = null)
+        {
+            return Create(link, fileSystem: fileSystem);
+        }
+
+        public static CommentLinkTag Create(string link, int indent = 1, IFileSystemAbstraction fileSystem = null)
         {
             if (fileSystem == null)
             {
@@ -57,6 +70,7 @@ namespace CommentLinks
             var result = new CommentLinkTag
             {
                 Link = link,
+                Indent = indent,
             };
 
             string croppedLink = link;
