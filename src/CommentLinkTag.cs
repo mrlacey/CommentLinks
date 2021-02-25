@@ -98,6 +98,14 @@ namespace CommentLinks
 
             var separatorPos = croppedLink.IndexOfAny(new[] { '#', ':' });
 
+            if (separatorPos >= 0)
+            {
+                if (croppedLink[separatorPos + 1] == '\\')
+                {
+                    separatorPos = croppedLink.IndexOfAny(new[] { '#', ':' }, separatorPos + 1);
+                }
+            }
+
             if (!trailingTextDefinitelyRemoved)
             {
                 if (separatorPos < 0)

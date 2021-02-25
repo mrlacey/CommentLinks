@@ -207,6 +207,50 @@ namespace CommentLinks.Tests
             Assert.IsNull(sut.SearchTerm);
         }
 
+        [TestMethod]
+        public void FindLink_AbsolutePath()
+        {
+            var sut = ExtractTagFromLine("blah blah link:C:\\Folder\\filename.ext");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("C:\\Folder\\filename.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void FindLink_AbsolutePathInBrackets()
+        {
+            var sut = ExtractTagFromLine("blah blah link:\"C:\\Folder\\filename.ext\"");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("C:\\Folder\\filename.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void FindLink_AbsolutePathPlusLineNumber()
+        {
+            var sut = ExtractTagFromLine("blah blah link:C:\\Folder\\filename.ext#L23");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("C:\\Folder\\filename.ext", sut.FileName);
+            Assert.AreEqual(23, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+        }
+
+        [TestMethod]
+        public void FindLink_AbsolutePathPlusSearchTerm()
+        {
+            var sut = ExtractTagFromLine("blah blah link:C:\\Folder\\filename.ext:FINDME");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("C:\\Folder\\filename.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.AreEqual("FINDME", sut.SearchTerm);
+        }
+
         private CommentLinkTag ExtractTagFromLine(string line)
         {
             var regex = RegexHelper.LinkRegex;
