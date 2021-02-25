@@ -31,7 +31,7 @@ namespace CommentLinks
 
         public static CommentLinkTag Create(string link, IFileSystemAbstraction fileSystem = null)
         {
-            return Create(link, fileSystem: fileSystem);
+            return Create(link, 1, fileSystem);
         }
 
         public static CommentLinkTag Create(string link, int indent = 1, IFileSystemAbstraction fileSystem = null)
