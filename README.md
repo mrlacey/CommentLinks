@@ -4,6 +4,9 @@
 ![Works with Visual Studio 2017](https://img.shields.io/static/v1.svg?label=VS&message=2017&color=5F2E96)
 ![Works with Visual Studio 2019](https://img.shields.io/static/v1.svg?label=VS&message=2019&color=5F2E96)
 
+See it in action (click image to open YouTube)  
+[![YouTube link](https://img.youtube.com/vi/UtWlXKJ8cxE/0.jpg)](https://www.youtube.com/watch?v=UtWlXKJ8cxE)
+
 Create links between any files. Useful if your project or solution contains code in multiple languages or you wish to link to documentation files also in the solution.
 
 - Open the file
