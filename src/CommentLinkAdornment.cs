@@ -18,7 +18,7 @@ namespace CommentLinks
 {
     internal sealed class CommentLinkAdornment : Button
     {
-        private readonly int _currentLineNumber;
+        private readonly int currentLineNumber;
 
         internal CommentLinkAdornment(CommentLinkTag tag, int currentLineNumber)
         {
@@ -29,7 +29,7 @@ namespace CommentLinks
             this.Background = new SolidColorBrush(Colors.GreenYellow);
             this.Cursor = Cursors.Hand;
             this.CmntLinkTag = tag;
-            this._currentLineNumber = currentLineNumber;
+            this.currentLineNumber = currentLineNumber;
         }
 
         public CommentLinkTag CmntLinkTag { get; private set; }
@@ -42,7 +42,7 @@ namespace CommentLinks
                 lineNumber++;
                 if (line.Contains(content))
                 {
-                    if (withinSameFile && lineNumber <= (this._currentLineNumber + 1))
+                    if (withinSameFile && lineNumber <= (this.currentLineNumber + 1))
                     {
                         continue;
                     }
@@ -238,8 +238,8 @@ namespace CommentLinks
                     ErrorHandler.ThrowOnFailure(codeWin.GetLastActiveView(out textView));
                 }
             }
+
             return textView;
         }
-
     }
 }
