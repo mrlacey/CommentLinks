@@ -100,7 +100,7 @@ namespace CommentLinks
 
             if (separatorPos >= 0)
             {
-                if (croppedLink[separatorPos + 1] == '\\')
+                if (croppedLink.Length > separatorPos + 1 && croppedLink[separatorPos + 1] == '\\')
                 {
                     separatorPos = croppedLink.IndexOfAny(new[] { '#', ':' }, separatorPos + 1);
                 }
