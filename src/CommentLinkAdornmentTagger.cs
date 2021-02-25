@@ -66,7 +66,7 @@ namespace CommentLinks
 
         protected override CommentLinkAdornment CreateAdornment(CommentLinkTag dataTag, SnapshotSpan span)
         {
-            return new CommentLinkAdornment(dataTag);
+            return new CommentLinkAdornment(dataTag, span.Snapshot.GetLineNumberFromPosition(span.Start));
         }
 
         protected override bool UpdateAdornment(CommentLinkAdornment adornment, CommentLinkTag dataTag)

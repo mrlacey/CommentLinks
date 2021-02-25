@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Microsoft;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -17,7 +18,9 @@ namespace CommentLinks
 {
     internal sealed class CommentLinkAdornment : Button
     {
-        internal CommentLinkAdornment(CommentLinkTag tag)
+        private readonly int _currentLineNumber;
+
+        internal CommentLinkAdornment(CommentLinkTag tag, int currentLineNumber)
         {
             this.Content = new TextBlock { Text = "➡" };
             this.BorderBrush = null;
@@ -26,11 +29,12 @@ namespace CommentLinks
             this.Background = new SolidColorBrush(Colors.GreenYellow);
             this.Cursor = Cursors.Hand;
             this.CmntLinkTag = tag;
+            this._currentLineNumber = currentLineNumber;
         }
 
         public CommentLinkTag CmntLinkTag { get; private set; }
 
-        internal int GetLineNumber(string pathToFile, string content)
+        internal int GetLineNumber(string pathToFile, string content, bool withinSameFile)
         {
             int lineNumber = 0;
             foreach (var line in System.IO.File.ReadAllLines(pathToFile))
@@ -38,6 +42,11 @@ namespace CommentLinks
                 lineNumber++;
                 if (line.Contains(content))
                 {
+                    if (withinSameFile && lineNumber <= (this._currentLineNumber + 1))
+                    {
+                        continue;
+                    }
+
                     return lineNumber;
                 }
             }
@@ -74,6 +83,42 @@ namespace CommentLinks
                     return viewAdapter;
                 }
 
+                async System.Threading.Tasks.Task NavigateWithinFile(IVsTextView viewAdapter, string filePath, int lineNo, string searchText, bool sameFile)
+                {
+                    if (viewAdapter == null)
+                    {
+                        return;
+                    }
+
+                    if (lineNo > 0)
+                    {
+                        // Set the cursor at the beginning of the declaration.
+                        if (viewAdapter.SetCaretPos(lineNo - 1, 0) == VSConstants.S_OK)
+                        {
+                            // Make sure that the text is visible.
+                            viewAdapter.CenterLines(lineNo - 1, 1);
+                        }
+                        else
+                        {
+                            await StatusBarHelper.ShowMessageAsync($"'{filePath}' contains fewer than '{lineNo}' lines.");
+                        }
+                    }
+                    else if (!string.IsNullOrWhiteSpace(searchText))
+                    {
+                        var foundLineNo = this.GetLineNumber(filePath, searchText, sameFile);
+
+                        if (foundLineNo > 0)
+                        {
+                            ErrorHandler.ThrowOnFailure(viewAdapter.SetCaretPos(foundLineNo - 1, 0));
+                            viewAdapter.CenterLines(foundLineNo - 1, 1);
+                        }
+                        else
+                        {
+                            await StatusBarHelper.ShowMessageAsync($"Could not find '{searchText}' in '{filePath}'.");
+                        }
+                    }
+                }
+
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
                 var projItem = ProjectHelpers.Dte2.Solution.FindProjectItem(this.CmntLinkTag.FileName);
@@ -81,50 +126,58 @@ namespace CommentLinks
                 if (projItem != null)
                 {
                     string filePath;
+                    bool assumeActiveDocument = false;
 
                     // If an item in a solution folder
                     if (projItem.Kind == "{66A26722-8FB5-11D2-AA7E-00C04F688DDE}")
                     {
                         filePath = projItem.FileNames[1];
                     }
+                    else if (projItem.Kind == "{66A2671F-8FB5-11D2-AA7E-00C04F688DDE}")
+                    {
+                        // A miscellaneous file (possibly something open but not in the solution)
+                        filePath = this.CmntLinkTag.FileName;
+                        assumeActiveDocument = true;
+                    }
                     else
                     {
-                        filePath = projItem.Properties.Item("FullPath").Value.ToString();
+                        filePath = projItem.Properties?.Item("FullPath")?.Value?.ToString();
                     }
 
-                    var viewAdapter = await OpenFileAsync(filePath);
-
-                    if (this.CmntLinkTag.LineNo > 0)
+                    if (filePath != null)
                     {
-                        // Set the cursor at the beginning of the declaration.
-                        if (viewAdapter.SetCaretPos(this.CmntLinkTag.LineNo - 1, 0) == VSConstants.S_OK)
+                        IVsTextView viewAdapter = null;
+                        bool sameFile = false;
+
+                        if (assumeActiveDocument)
                         {
-                            // Make sure that the text is visible.
-                            viewAdapter.CenterLines(this.CmntLinkTag.LineNo - 1, 1);
+                            var activeDocPath = ProjectHelpers.Dte.ActiveDocument.FullName;
+                            if (activeDocPath == filePath || System.IO.Path.GetFileName(activeDocPath) == filePath)
+                            {
+                                viewAdapter = this.GetActiveTextView();
+                                filePath = activeDocPath;
+                                sameFile = true;
+                            }
                         }
                         else
                         {
-                            await StatusBarHelper.ShowMessageAsync($"'{this.CmntLinkTag.FileName}' contains fewer than '{this.CmntLinkTag.LineNo}' lines.");
+                            viewAdapter = await OpenFileAsync(filePath);
                         }
-                    }
-                    else if (!string.IsNullOrWhiteSpace(this.CmntLinkTag.SearchTerm))
-                    {
-                        var lineNo = this.GetLineNumber(filePath, this.CmntLinkTag.SearchTerm);
 
-                        if (lineNo > 0)
+                        if (viewAdapter != null)
                         {
-                            ErrorHandler.ThrowOnFailure(viewAdapter.SetCaretPos(lineNo - 1, 0));
-                            viewAdapter.CenterLines(lineNo - 1, 1);
+                            await NavigateWithinFile(viewAdapter, filePath, this.CmntLinkTag.LineNo, this.CmntLinkTag.SearchTerm, sameFile);
                         }
                         else
                         {
-                            await StatusBarHelper.ShowMessageAsync($"Could not find '{this.CmntLinkTag.SearchTerm}' in '{this.CmntLinkTag.FileName}'.");
+                            await StatusBarHelper.ShowMessageAsync($"Unable to find file '{this.CmntLinkTag.FileName}'");
                         }
                     }
                 }
                 else if (System.IO.File.Exists(this.CmntLinkTag.FileName))
                 {
-                    var _ = await OpenFileAsync(this.CmntLinkTag.FileName);
+                    var va = await OpenFileAsync(this.CmntLinkTag.FileName);
+                    await NavigateWithinFile(va, this.CmntLinkTag.FileName, this.CmntLinkTag.LineNo, this.CmntLinkTag.SearchTerm, sameFile: false);
                 }
                 else
                 {
@@ -136,5 +189,57 @@ namespace CommentLinks
                 await OutputPane.Instance.WriteAsync(exc);
             }
         }
+
+        // From https://docs.microsoft.com/en-us/visualstudio/extensibility/walkthrough-creating-a-view-adornment-commands-and-settings-column-guides?view=vs-2019
+        /// <summary>
+        /// Find the active text view (if any) in the active document.
+        /// </summary>
+        /// <returns>The IVsTextView of the active view, or null if there is no active
+        /// document or the
+        /// active view in the active document is not a text view.</returns>
+        private IVsTextView GetActiveTextView()
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            IVsMonitorSelection selection =
+                ServiceProvider.GlobalProvider.GetService(typeof(IVsMonitorSelection)) as IVsMonitorSelection;
+            Assumes.Present(selection);
+            object frameObj = null;
+            ErrorHandler.ThrowOnFailure(
+                selection.GetCurrentElementValue(
+                    (uint)VSConstants.VSSELELEMID.SEID_DocumentFrame, out frameObj));
+
+            IVsWindowFrame frame = frameObj as IVsWindowFrame;
+            if (frame == null)
+            {
+                return null;
+            }
+
+            return GetActiveView(frame);
+        }
+
+        private static IVsTextView GetActiveView(IVsWindowFrame windowFrame)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            if (windowFrame == null)
+            {
+                throw new ArgumentException("windowFrame");
+            }
+
+            object pvar;
+            ErrorHandler.ThrowOnFailure(
+                windowFrame.GetProperty((int)__VSFPROPID.VSFPROPID_DocView, out pvar));
+
+            IVsTextView textView = pvar as IVsTextView;
+            if (textView == null)
+            {
+                IVsCodeWindow codeWin = pvar as IVsCodeWindow;
+                if (codeWin != null)
+                {
+                    ErrorHandler.ThrowOnFailure(codeWin.GetLastActiveView(out textView));
+                }
+            }
+            return textView;
+        }
+
     }
 }
