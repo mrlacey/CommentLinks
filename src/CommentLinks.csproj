@@ -68,6 +68,7 @@
     <Compile Include="ProjectHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CommentLinksPackage.cs" />
+    <Compile Include="RegexHelper.cs" />
     <Compile Include="RegexTagger.cs" />
     <Compile Include="StatusBarHelper.cs" />
   </ItemGroup>

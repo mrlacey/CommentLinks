@@ -58,7 +58,7 @@ namespace CommentLinks
                     continue;
                 }
 
-                SnapshotSpan adornmentSpan = new SnapshotSpan(linkTagSpans[0].Start, 0);
+                SnapshotSpan adornmentSpan = new SnapshotSpan(linkTagSpans[0].Start + dataTagSpan.Tag.Indent, 0);
 
                 yield return Tuple.Create(adornmentSpan, (PositionAffinity?)PositionAffinity.Successor, dataTagSpan.Tag);
             }
@@ -66,7 +66,7 @@ namespace CommentLinks
 
         protected override CommentLinkAdornment CreateAdornment(CommentLinkTag dataTag, SnapshotSpan span)
         {
-            return new CommentLinkAdornment(dataTag);
+            return new CommentLinkAdornment(dataTag, span.Snapshot.GetLineNumberFromPosition(span.Start));
         }
 
         protected override bool UpdateAdornment(CommentLinkAdornment adornment, CommentLinkTag dataTag)

@@ -9,17 +9,15 @@ namespace CommentLinks
     internal sealed class CommentLinkTagger : RegexTagger<CommentLinkTag>
     {
         internal CommentLinkTagger(ITextBuffer buffer)
-            : base(
-                  buffer,
-                  new[] { new Regex(@"(link:)([0-9a-z. \'""\-%\\/\:\#\~\=\(\)]{4,})", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase) })
+            : base(buffer, new[] { RegexHelper.LinkRegex })
         {
         }
 
         protected override CommentLinkTag TryCreateTagForMatch(Match match)
         {
-            if (match.Groups.Count == 3)
+            if (match.Groups.Count == 4)
             {
-                return new CommentLinkTag(match.Groups[2].Value);
+                return CommentLinkTag.Create(match.Groups[3].Value, match.Value.StartsWith("//") ? 2 : 1);
             }
 
             return null;
