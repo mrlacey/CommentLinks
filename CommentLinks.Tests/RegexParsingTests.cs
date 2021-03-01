@@ -1,4 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿// Copyright (c) Matt Lacey Ltd. All rights reserved.
+// Licensed under the MIT license.
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CommentLinks.Tests
 {
@@ -14,6 +17,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("cDriveCommands.cpp", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("SMART_LOG_DEVICE_STATISTICS", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -25,6 +29,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("cDriveCommands.cpp", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("SMART_LOG_DEVICE_STATISTICS;", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -36,6 +41,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("cDriveCommands.cpp", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("SMART_LOG_DEVICE_STATISTICS", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -47,6 +53,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("cDriveCommands.cpp", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("SMART_LOG_DEVICE_STATISTICS;", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -58,6 +65,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("cDriveCommands.cpp", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("SMART_LOG_DEVICE_STATISTICS", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -69,6 +77,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("cDriveCommands.cpp", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("SMART_LOG_DEVICE_STATISTICS;", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -80,6 +89,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("somefile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -91,6 +101,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("somefile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -102,6 +113,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("somefile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -137,6 +149,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("filename.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -148,6 +161,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("README", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -159,6 +173,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(".gitignore", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -170,6 +185,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("filename.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -205,6 +221,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(".ignore", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -216,6 +233,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("C:\\Folder\\filename.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -227,6 +245,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("C:\\Folder\\filename.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -238,6 +257,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("C:\\Folder\\filename.ext", sut.FileName);
             Assert.AreEqual(23, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -249,11 +269,161 @@ namespace CommentLinks.Tests
             Assert.AreEqual("C:\\Folder\\filename.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("FINDME", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
+        }
+
+        [TestMethod]
+        public void RunWithoutChevron_DoesNothing()
+        {
+            // This is too short to be treated like a file name with no extension
+            var sut = ExtractTagFromLine("blah blah link:run");
+
+            Assert.IsNull(sut);
+        }
+
+        [TestMethod]
+        public void RunChevron_WithoutCommand_NotValid()
+        {
+            var sut = ExtractTagFromLine("blah blah link:run>");
+
+            Assert.IsNull(sut);
+        }
+
+        [TestMethod]
+        public void RunChevron_WithoutCommand_EmptySingleQuotes_NotValid()
+        {
+            var sut = ExtractTagFromLine("blah blah link:run>''");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual(string.Empty, sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+            Assert.IsTrue(sut.IsRunCommand);
+        }
+
+        [TestMethod]
+        public void RunChevron_WithoutCommand_EmptyDoubleQuotes_NotValid()
+        {
+            var sut = ExtractTagFromLine("blah blah link:run>\"\"");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual(string.Empty, sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+            Assert.IsTrue(sut.IsRunCommand);
+        }
+
+        [TestMethod]
+        public void RunChevron_WithCommand_Valid()
+        {
+            var sut = ExtractTagFromLine("blah blah link:run>ms-settings:");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("ms-settings:", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+            Assert.IsTrue(sut.IsRunCommand);
+        }
+
+        [TestMethod]
+        public void RunChevron_WithCommand_InSingleQuotes_Valid()
+        {
+            var sut = ExtractTagFromLine("blah blah link:run>'ms-settings:'");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("ms-settings:", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+            Assert.IsTrue(sut.IsRunCommand);
+        }
+
+        [TestMethod]
+        public void RunChevron_WithCommand_InDoubleQuotes_Valid()
+        {
+            var sut = ExtractTagFromLine("blah blah link:run>\"ms-settings:\"");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("ms-settings:", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+            Assert.IsTrue(sut.IsRunCommand);
+        }
+
+        [TestMethod]
+        public void RunChevron_WithCommandAndValue_Valid()
+        {
+            var sut = ExtractTagFromLine("blah blah link:run>ms-settings:easeofaccess-highcontrast");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("ms-settings:easeofaccess-highcontrast", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+            Assert.IsTrue(sut.IsRunCommand);
+        }
+
+        [TestMethod]
+        public void RunChevron_WithCommandAndValue_InSingleQuotes_Valid()
+        {
+            var sut = ExtractTagFromLine("blah blah link:run>'ms-settings:easeofaccess-highcontrast'");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("ms-settings:easeofaccess-highcontrast", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+            Assert.IsTrue(sut.IsRunCommand);
+        }
+
+        [TestMethod]
+        public void RunChevron_WithCommandAndValue_InDoubleQuotes_Valid()
+        {
+            var sut = ExtractTagFromLine("blah blah link:run>\"ms-settings:easeofaccess-highcontrast\"");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("ms-settings:easeofaccess-highcontrast", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+            Assert.IsTrue(sut.IsRunCommand);
+        }
+
+        [TestMethod]
+        public void RunChevron_WithCommand_AndFollowingWords_Valid()
+        {
+            var sut = ExtractTagFromLine("blah blah link:run>ms-settings: but ignore these words");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("ms-settings:", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+            Assert.IsTrue(sut.IsRunCommand);
+        }
+
+        [TestMethod]
+        public void RunChevron_WithCommand_InSingleQuotes_AndFollowingWords_Valid()
+        {
+            var sut = ExtractTagFromLine("blah blah link:run>'ms-settings: plus this' but ignore these words");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("ms-settings: plus this", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+            Assert.IsTrue(sut.IsRunCommand);
+        }
+
+        [TestMethod]
+        public void RunChevron_WithCommand_InDoubleQuotes_AndFollowingWords_Valid()
+        {
+            var sut = ExtractTagFromLine("blah blah link:run>\"ms-settings: plus this\" but ignore these words");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("ms-settings: plus this", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+            Assert.IsTrue(sut.IsRunCommand);
         }
 
         private CommentLinkTag ExtractTagFromLine(string line)
         {
-            var regex = RegexHelper.LinkRegex;
+            var regex = RegexHelper.DefaultLinkRegex;
 
             var matches = regex.Matches(line);
 

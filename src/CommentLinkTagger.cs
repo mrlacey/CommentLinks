@@ -8,8 +8,8 @@ namespace CommentLinks
 {
     internal sealed class CommentLinkTagger : RegexTagger<CommentLinkTag>
     {
-        internal CommentLinkTagger(ITextBuffer buffer)
-            : base(buffer, new[] { RegexHelper.LinkRegex })
+        internal CommentLinkTagger(ITextBuffer buffer, Regex regex)
+            : base(buffer, new[] { regex })
         {
         }
 

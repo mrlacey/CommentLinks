@@ -42,6 +42,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomTriggerWordTests.cs" />
     <Compile Include="ExtractingLinkExceptions.cs" />
     <Compile Include="ExtractingLinkTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

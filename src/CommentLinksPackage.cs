@@ -14,6 +14,7 @@ namespace CommentLinks
     [InstalledProductRegistration("#110", "#112", "2.2")] // Info on this package for Help/About
     [Guid(CommentLinksPackage.PackageGuidString)]
     [ProvideOptionPage(typeof(OptionsGrid), "Comment Links", "General", 0, 0, true)]
+    [ProvideProfileAttribute(typeof(OptionsGrid), "Comment Links", "General", 0, 0, isToolsOptionPage: true, DescriptionResourceID = 108)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     public sealed class CommentLinksPackage : AsyncPackage
     {
@@ -27,9 +28,14 @@ namespace CommentLinks
             }
         }
 
+        public static CommentLinksPackage Instance { get; private set; }
+
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+
+            Instance = this;
+
             await LinkToFileCommand.InitializeAsync(this);
             await LinkToLineCommand.InitializeAsync(this);
             await LinkToSelectionCommand.InitializeAsync(this);

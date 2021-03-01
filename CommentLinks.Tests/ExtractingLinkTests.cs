@@ -1,4 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿// Copyright (c) Matt Lacey Ltd. All rights reserved.
+// Licensed under the MIT license.
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CommentLinks.Tests
 {
@@ -15,6 +18,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -25,6 +29,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.Gen.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -35,6 +40,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("Some File.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -45,6 +51,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("README", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -55,6 +62,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(".editorconfig", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -65,6 +73,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("Helpers/SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -75,6 +84,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("My Helpers/SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -85,6 +95,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("Cool.Helpers/SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -95,6 +106,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(25, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -105,6 +117,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("Find me", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -115,6 +128,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("Find me", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -125,6 +139,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -135,6 +150,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.gen.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -145,6 +161,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("Some File.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -155,6 +172,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("README", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -165,6 +183,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(".editorconfig", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -175,6 +194,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("Helpers/SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -185,6 +205,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("My Helpers/SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -195,6 +216,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("Cool.Helpers/SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -205,6 +227,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(25, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -215,6 +238,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("Find me", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -225,6 +249,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("Find me", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -235,6 +260,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -245,6 +271,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.gen.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -255,6 +282,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("Some File.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -265,6 +293,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("Some File.gen.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -275,6 +304,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("README", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -285,6 +315,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(".editorconfig", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -295,6 +326,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("Helpers/SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -305,6 +337,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("My Helpers/SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -315,6 +348,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("Cool.Helpers/SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -325,6 +359,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(25, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -335,6 +370,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("Find me", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -345,6 +381,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("Find me", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -355,6 +392,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -365,6 +403,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("Some File.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -375,6 +414,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("README", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -385,6 +425,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(".editorconfig", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -395,6 +436,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("Helpers/SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -405,6 +447,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("My Helpers/SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -415,6 +458,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("Cool.Helpers/SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -425,6 +469,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(25, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -435,6 +480,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("Find me", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -445,6 +491,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("Find me", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -455,6 +502,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -465,6 +513,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("Some File.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -475,6 +524,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("README", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -485,6 +535,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(".editorconfig", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -495,6 +546,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("Helpers/SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -505,6 +557,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("My Helpers/SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -515,6 +568,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("Cool.Helpers/SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -525,6 +579,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(25, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -535,6 +590,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("Find me", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -545,6 +601,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("Find me", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -555,6 +612,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("/Useful Stuff/Helpers.General.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -565,6 +623,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some search words", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -575,6 +634,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("SomeFile.cs", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some search words", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -587,6 +647,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("C:\\Users\\matt\\Documents\\desktop.ini", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -599,6 +660,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("C:\\Users\\matt\\Documents\\desktop.ini", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -609,6 +671,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("cDriveCommands.cpp", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("SMART_LOG_DEVICE_STATISTICS", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -619,6 +682,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("cDriveCommands.cpp", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("SMART_LOG_DEVICE_STATISTICS;", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -629,6 +693,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(32, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -639,6 +704,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -649,6 +715,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -659,6 +726,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -669,6 +737,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -679,6 +748,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some words", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -689,6 +759,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some words", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -699,6 +770,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some words", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -709,6 +781,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some words", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -719,6 +792,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -729,6 +803,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -739,6 +814,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -749,6 +825,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -759,6 +836,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some words", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -769,6 +847,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some words", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -779,6 +858,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some words", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -789,6 +869,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some words", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -799,6 +880,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -809,6 +891,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -819,6 +902,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some more", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -829,6 +913,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some more", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -839,6 +924,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some more", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -849,6 +935,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some more", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -859,6 +946,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some more", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -869,6 +957,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some more", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -879,6 +968,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual(" some more ", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -889,6 +979,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual(" some more ", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -899,6 +990,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("'some more' words", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -909,6 +1001,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("\"some more\" words", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -920,6 +1013,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual("someFile.ext", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("yay-👍-Yay", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
         }
     }
 }

@@ -24,7 +24,19 @@ namespace CommentLinks
                 throw new ArgumentNullException("buffer");
             }
 
-            return buffer.Properties.GetOrCreateSingletonProperty(() => new CommentLinkTagger(buffer)) as ITagger<T>;
+            var keyword = CommentLinksPackage.Instance?.Options?.TriggerWord;
+
+            if (string.IsNullOrWhiteSpace(keyword))
+            {
+                return null;
+            }
+            else
+            {
+                var regex = RegexHelper.CreateWithCustomTriggerWord(keyword);
+
+                return buffer.Properties.GetOrCreateSingletonProperty(
+                    () => new CommentLinkTagger(buffer, regex)) as ITagger<T>;
+            }
         }
     }
 }

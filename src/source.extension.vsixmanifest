@@ -6,7 +6,6 @@
         <Description xml:space="preserve">Create links in comments between any file in the solution.</Description>
         <MoreInfo>https://github.com/mrlacey/CommentLinks</MoreInfo>
         <License>LICENSE.txt</License>
-        <ReleaseNotes>fix install issue on VS2017</ReleaseNotes>
         <Icon>Resources\CommentLinksIcon.png</Icon>
     </Metadata>
     <Installation>

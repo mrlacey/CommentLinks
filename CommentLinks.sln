@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		.\appveyor.yml = .\appveyor.yml
 		.\README.md = .\README.md
+		.\CHANGELOG.md = .\CHANGELOG.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommentLinks.Tests", ".\CommentLinks.Tests\CommentLinks.Tests.csproj", "{15B2D5FA-1402-4082-9D46-E600BB4BD2BD}"
