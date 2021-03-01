@@ -1,4 +1,7 @@
-﻿namespace CommentLinks.Tests
+﻿// Copyright (c) Matt Lacey Ltd. All rights reserved.
+// Licensed under the MIT license.
+
+namespace CommentLinks.Tests
 {
     public class TestFileSystemAbstraction : IFileSystemAbstraction
     {

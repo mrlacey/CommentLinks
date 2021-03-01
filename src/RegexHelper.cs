@@ -9,6 +9,16 @@ namespace CommentLinks
     {
         public const string LinkMatchPattern = @"((//|\s)link:)(.{4,})$";
 
-        public static Regex LinkRegex { get; } = new Regex(LinkMatchPattern, RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+        public static Regex DefaultLinkRegex { get; }
+            = new Regex(
+                LinkMatchPattern,
+                RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+
+        public static Regex CreateWithCustomTriggerWord(string triggerword)
+        {
+            return new Regex(
+                LinkMatchPattern.Replace("link", triggerword),
+                RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Matt Lacey Ltd. All rights reserved.
 // Licensed under the MIT license.
 
+using System;
 using System.ComponentModel;
 using Microsoft.VisualStudio.Shell;
 
@@ -17,5 +18,46 @@ namespace CommentLinks
         [DisplayName("Link text case")]
         [Description("How the link indicator will be cased in links generated from the context menu.")]
         public CaseOption LinkCasing { get; set; } = CaseOption.lowercase;
+
+        [Category("General")]
+        [DisplayName("Trigger word")]
+        [Description("The word used to use to indicate a link. Alphabetic characters only. Re-open documents to see the change.")]
+        public string TriggerWord { get; set; } = "link";
+
+        internal void EnsureValidTriggerWord()
+        {
+            var temp = new System.Text.StringBuilder();
+
+            foreach (var chr in this.TriggerWord)
+            {
+                if (char.IsLetter(chr))
+                {
+                    temp.Append(chr);
+                }
+            }
+
+            if (temp.Length < 1)
+            {
+                this.TriggerWord = "link";
+            }
+            else
+            {
+                this.TriggerWord = temp.ToString();
+            }
+        }
+
+        protected override void OnApply(PageApplyEventArgs e)
+        {
+            this.EnsureValidTriggerWord();
+
+            base.OnApply(e);
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            this.EnsureValidTriggerWord();
+
+            base.OnClosed(e);
+        }
     }
 }

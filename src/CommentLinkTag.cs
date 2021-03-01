@@ -136,7 +136,7 @@ namespace CommentLinks
 
                     if (nextSpaceIndex >= 0)
                     {
-                        command = command.Substring(0, nextSpaceIndex );
+                        command = command.Substring(0, nextSpaceIndex);
                     }
                 }
 

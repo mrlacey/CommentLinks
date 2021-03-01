@@ -129,7 +129,7 @@ namespace CommentLinks
                     }
                     else
                     {
-                        var spaceIndex = this.CmntLinkTag.FileName.IndexOfAny(new[] { ' ', '\t'});
+                        var spaceIndex = this.CmntLinkTag.FileName.IndexOfAny(new[] { ' ', '\t' });
 
                         var args = string.Empty;
                         var cmd = this.CmntLinkTag.FileName;

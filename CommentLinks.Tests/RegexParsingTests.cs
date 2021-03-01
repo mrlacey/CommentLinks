@@ -1,4 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿// Copyright (c) Matt Lacey Ltd. All rights reserved.
+// Licensed under the MIT license.
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CommentLinks.Tests
 {
@@ -420,7 +423,7 @@ namespace CommentLinks.Tests
 
         private CommentLinkTag ExtractTagFromLine(string line)
         {
-            var regex = RegexHelper.LinkRegex;
+            var regex = RegexHelper.DefaultLinkRegex;
 
             var matches = regex.Matches(line);
 
