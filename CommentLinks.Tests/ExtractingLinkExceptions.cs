@@ -19,6 +19,8 @@ namespace CommentLinks.Tests
             Assert.AreEqual("My.Helpers/Some", sut.FileName);
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
+
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -32,6 +34,8 @@ namespace CommentLinks.Tests
 
             // This isn't null because the hash symbol confused it
             Assert.AreEqual(string.Empty, sut.SearchTerm);
+
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -45,6 +49,8 @@ namespace CommentLinks.Tests
 
             // This isn't null because the colon confused it
             Assert.AreEqual("25", sut.SearchTerm);
+
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -58,6 +64,8 @@ namespace CommentLinks.Tests
 
             // This isn't null because the hash confused it
             Assert.AreEqual(string.Empty, sut.SearchTerm);
+
+            Assert.IsFalse(sut.IsRunCommand);
         }
 
         [TestMethod]
@@ -71,6 +79,8 @@ namespace CommentLinks.Tests
 
             // This isn't null because the hash confused it
             Assert.AreEqual(string.Empty, sut.SearchTerm);
+
+            Assert.IsFalse(sut.IsRunCommand);
         }
     }
 }

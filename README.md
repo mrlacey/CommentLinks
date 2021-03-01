@@ -12,6 +12,8 @@ Create links between any files. Useful if your project or solution contains code
 - Open the file
 - Open the file and go to a specific line
 - Open the file and go to specific text
+- Open any file (as specified by absolute path)
+- Run arbitrary commands.
 
 When a comment contains the text `link:` followed by a file name, a green button will be added that when clicked will open that file.
 
@@ -44,6 +46,24 @@ For compatibility with [text fragment anchors](https://github.com/WICG/ScrollToT
 ```cs
 // Go to link:"include/mapManager.js" and see ...
 ```
+
+- Open any file from disk by specifying the full path.
+
+```cs
+// See the log file at link:C:\Temp\logs\analysis-report.log
+```
+
+- Run arbitrary commands to open files or invoke applications by uncluding `run>` after `link:` and before the command to execute.
+
+```cs
+// Change personalization settings to see the full effect link:run>ms-settings:personalization
+// Open a command window - link:run>cmd.exe
+// Pass arguments to an application:- link:run>"cmd.exe /?"
+// Open a file (in the default app) - link:run>C:\path\to\document.pdf
+```
+
 ---
+
+Functionality has increased over time in repsonse to feedback. [Change Log](https://github.com/mrlacey/CommentLinks/blob/main/CHANGELOG.md)
 
 Please [raise an issue](https://github.com/mrlacey/CommentLinks/issues/new) if you have feature requests.

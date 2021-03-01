@@ -121,6 +121,31 @@ namespace CommentLinks
 
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
+                if (this.CmntLinkTag.IsRunCommand)
+                {
+                    if (string.IsNullOrWhiteSpace(this.CmntLinkTag.FileName))
+                    {
+                        await StatusBarHelper.ShowMessageAsync($"No command to run.");
+                    }
+                    else
+                    {
+                        var spaceIndex = this.CmntLinkTag.FileName.IndexOfAny(new[] { ' ', '\t'});
+
+                        var args = string.Empty;
+                        var cmd = this.CmntLinkTag.FileName;
+
+                        if (spaceIndex > 0)
+                        {
+                            cmd = this.CmntLinkTag.FileName.Substring(0, spaceIndex);
+                            args = this.CmntLinkTag.FileName.Substring(spaceIndex);
+                        }
+
+                        System.Diagnostics.Process.Start(cmd, args);
+                    }
+
+                    return;
+                }
+
                 var projItem = ProjectHelpers.Dte2.Solution.FindProjectItem(this.CmntLinkTag.FileName);
 
                 if (projItem != null)
