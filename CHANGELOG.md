@@ -5,6 +5,7 @@ The following incldues details of what has changed in each release.
 ## 2.3
 
 - Add support for `link:run>` syntax.
+- Support configuring a different word instead of 'link' for indicating links.
 
 ## 2.2
 
