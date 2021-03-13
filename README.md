@@ -54,7 +54,7 @@ For compatibility with [text fragment anchors](https://github.com/WICG/ScrollToT
 // See the log file at link:C:\Temp\logs\analysis-report.log
 ```
 
-- Run arbitrary commands to open files or invoke applications by uncluding `run>` after `link:` and before the command to execute.
+- Run arbitrary commands to open files or invoke applications by including `run>` after `link:` and before the command to execute.
 
 ```cs
 // Change personalization settings to see the full effect link:run>ms-settings:personalization
