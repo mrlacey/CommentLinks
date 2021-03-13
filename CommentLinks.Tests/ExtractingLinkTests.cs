@@ -363,6 +363,17 @@ namespace CommentLinks.Tests
         }
 
         [TestMethod]
+        public void FileNameIncludingSpageWithLineNumber_PlusSingleSubsequentWord()
+        {
+            var sut = CommentLinkTag.Create("Some File.cs#L25 andOneOtherWord");
+
+            Assert.AreEqual("Some File.cs", sut.FileName);
+            Assert.AreEqual(25, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
+        }
+
+        [TestMethod]
         public void FileNameWithColonSearchText_PlusSingleSubsequentWord()
         {
             var sut = CommentLinkTag.Create("SomeFile.cs:Find%20me andOneOtherWord");
