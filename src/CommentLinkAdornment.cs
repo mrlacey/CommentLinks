@@ -174,19 +174,18 @@ namespace CommentLinks
                         IVsTextView viewAdapter = null;
                         bool sameFile = false;
 
-                        if (assumeActiveDocument)
+                        var activeDocPath = ProjectHelpers.Dte.ActiveDocument.FullName;
+
+                        if (activeDocPath == filePath || System.IO.Path.GetFileName(activeDocPath) == filePath)
                         {
-                            var activeDocPath = ProjectHelpers.Dte.ActiveDocument.FullName;
-                            if (activeDocPath == filePath || System.IO.Path.GetFileName(activeDocPath) == filePath)
-                            {
-                                viewAdapter = this.GetActiveTextView();
-                                filePath = activeDocPath;
-                                sameFile = true;
-                            }
+                            viewAdapter = this.GetActiveTextView();
+                            filePath = activeDocPath;
+                            sameFile = true;
                         }
                         else
                         {
                             viewAdapter = await OpenFileAsync(filePath);
+                            sameFile = filePath == activeDocPath;
                         }
 
                         if (viewAdapter != null)
