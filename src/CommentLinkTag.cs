@@ -219,7 +219,7 @@ namespace CommentLinks
 
                     if (croppedLink.Substring(separatorPos).StartsWith("#L"))
                     {
-                        if (int.TryParse(croppedLink.Split(' ')[0].Substring(separatorPos + 2), out int lineNo))
+                        if (int.TryParse(croppedLink.Substring(separatorPos + 2), out int lineNo))
                         {
                             result.LineNo = lineNo;
                         }
