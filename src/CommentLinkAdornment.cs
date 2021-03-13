@@ -151,7 +151,6 @@ namespace CommentLinks
                 if (projItem != null)
                 {
                     string filePath;
-                    bool assumeActiveDocument = false;
 
                     // If an item in a solution folder
                     if (projItem.Kind == "{66A26722-8FB5-11D2-AA7E-00C04F688DDE}")
@@ -162,7 +161,6 @@ namespace CommentLinks
                     {
                         // A miscellaneous file (possibly something open but not in the solution)
                         filePath = this.CmntLinkTag.FileName;
-                        assumeActiveDocument = true;
                     }
                     else
                     {
@@ -174,19 +172,18 @@ namespace CommentLinks
                         IVsTextView viewAdapter = null;
                         bool sameFile = false;
 
-                        if (assumeActiveDocument)
+                        var activeDocPath = ProjectHelpers.Dte.ActiveDocument.FullName;
+
+                        if (activeDocPath == filePath || System.IO.Path.GetFileName(activeDocPath) == filePath)
                         {
-                            var activeDocPath = ProjectHelpers.Dte.ActiveDocument.FullName;
-                            if (activeDocPath == filePath || System.IO.Path.GetFileName(activeDocPath) == filePath)
-                            {
-                                viewAdapter = this.GetActiveTextView();
-                                filePath = activeDocPath;
-                                sameFile = true;
-                            }
+                            viewAdapter = this.GetActiveTextView();
+                            filePath = activeDocPath;
+                            sameFile = true;
                         }
                         else
                         {
                             viewAdapter = await OpenFileAsync(filePath);
+                            sameFile = filePath == activeDocPath;
                         }
 
                         if (viewAdapter != null)
