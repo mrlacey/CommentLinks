@@ -151,7 +151,6 @@ namespace CommentLinks
                 if (projItem != null)
                 {
                     string filePath;
-                    bool assumeActiveDocument = false;
 
                     // If an item in a solution folder
                     if (projItem.Kind == "{66A26722-8FB5-11D2-AA7E-00C04F688DDE}")
@@ -162,7 +161,6 @@ namespace CommentLinks
                     {
                         // A miscellaneous file (possibly something open but not in the solution)
                         filePath = this.CmntLinkTag.FileName;
-                        assumeActiveDocument = true;
                     }
                     else
                     {
