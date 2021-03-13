@@ -2,6 +2,12 @@
 
 The following incldues details of what has changed in each release.
 
+## 2.4
+
+- Fix a bug sometimes preventing navigating within the same document.
+- Fix a bug when opening some files. (Link parsing exception)
+- Fix a bug preventing navigating to an already open document that isn't part of the solution.
+
 ## 2.3
 
 - Add support for `link:run>` syntax.
