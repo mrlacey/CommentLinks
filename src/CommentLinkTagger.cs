@@ -25,14 +25,15 @@ namespace CommentLinks
                 var submatches = partAfterKeyword.Split(new[] { keyword }, System.StringSplitOptions.RemoveEmptyEntries);
 
                 var indent = match.Value.StartsWith("//") ? 2 : 1;
-                var lineOffset = match.Index + indent;
+                var lineOffset = match.Index;
 
                 for (int i = 0; i < submatches.Length; i++)
                 {
                     yield return (CommentLinkTag.Create(
                         submatches[i],
-                        i == 0 ? indent : 0),
+                        indent),
                         lineOffset);
+
                     lineOffset += submatches[i].Length + keyword.Length;
                 }
             }
