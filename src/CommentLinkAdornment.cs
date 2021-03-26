@@ -225,13 +225,11 @@ namespace CommentLinks
             IVsMonitorSelection selection =
                 ServiceProvider.GlobalProvider.GetService(typeof(IVsMonitorSelection)) as IVsMonitorSelection;
             Assumes.Present(selection);
-            object frameObj = null;
             ErrorHandler.ThrowOnFailure(
                 selection.GetCurrentElementValue(
-                    (uint)VSConstants.VSSELELEMID.SEID_DocumentFrame, out frameObj));
+                    (uint)VSConstants.VSSELELEMID.SEID_DocumentFrame, out object frameObj));
 
-            IVsWindowFrame frame = frameObj as IVsWindowFrame;
-            if (frame == null)
+            if (!(frameObj is IVsWindowFrame frame))
             {
                 return null;
             }
@@ -247,15 +245,13 @@ namespace CommentLinks
                 throw new ArgumentException("windowFrame");
             }
 
-            object pvar;
             ErrorHandler.ThrowOnFailure(
-                windowFrame.GetProperty((int)__VSFPROPID.VSFPROPID_DocView, out pvar));
+                windowFrame.GetProperty((int)__VSFPROPID.VSFPROPID_DocView, out object pvar));
 
             IVsTextView textView = pvar as IVsTextView;
             if (textView == null)
             {
-                IVsCodeWindow codeWin = pvar as IVsCodeWindow;
-                if (codeWin != null)
+                if (pvar is IVsCodeWindow codeWin)
                 {
                     ErrorHandler.ThrowOnFailure(codeWin.GetLastActiveView(out textView));
                 }

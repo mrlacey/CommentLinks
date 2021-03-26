@@ -48,11 +48,15 @@ namespace CommentLinks
                 {
                     foreach (var match in regex.Matches(text).Cast<Match>())
                     {
-                        T tag = this.TryCreateTagForMatch(match);
-                        if (tag != null)
+                        foreach (var (tag, index) in this.TryCreateTagsForMatch(match))
                         {
-                            SnapshotSpan span = new SnapshotSpan(line.Start + match.Index, match.Length);
-                            yield return new TagSpan<T>(span, tag);
+                            if (tag != null)
+                            {
+                                // Original code returned the length but we don't need it as adornment is at start
+                                // SnapshotSpan span = new SnapshotSpan(line.Start + match.Index, match.Length);
+                                SnapshotSpan span = new SnapshotSpan(line.Start + index, 1);
+                                yield return new TagSpan<T>(span, tag);
+                            }
                         }
                     }
                 }
@@ -65,7 +69,7 @@ namespace CommentLinks
         /// </summary>
         /// <param name="match">The match to create a tag for.</param>
         /// <returns>The tag to return from <see cref="GetTags"/>, if non-<c>null</c>.</returns>
-        protected abstract T TryCreateTagForMatch(Match match);
+        protected abstract IEnumerable<(T, int)> TryCreateTagsForMatch(Match match);
 
         /// <summary>
         /// Handle buffer changes. The default implementation expands changes to full lines and sends out
