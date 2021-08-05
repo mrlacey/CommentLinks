@@ -145,136 +145,144 @@ namespace CommentLinks
             }
             else
             {
-                var separatorPos = croppedLink.IndexOfAny(new[] { '#', ':' });
-
-                if (separatorPos >= 0)
-                {
-                    if (croppedLink.Length > separatorPos + 1 && croppedLink[separatorPos + 1] == '\\')
-                    {
-                        separatorPos = croppedLink.IndexOfAny(new[] { '#', ':' }, separatorPos + 1);
-                    }
-                }
-
-                if (!trailingTextDefinitelyRemoved)
-                {
-                    if (separatorPos < 0)
-                    {
-                        var firstDot = croppedLink.IndexOf('.');
-
-                        // If there's a '.' assume it's for distinguishing the file name from its extension
-                        if (firstDot >= 0)
-                        {
-                            // Get everything up to the first space after the '.'
-                            if (croppedLink.Substring(firstDot).Contains(" "))
-                            {
-                                croppedLink = croppedLink.Substring(0, croppedLink.IndexOf(" ", firstDot));
-                            }
-                        }
-                        else if (croppedLink.Contains(" "))
-                        {
-                            // Get everything up to the first space
-                            croppedLink = croppedLink.Substring(0, croppedLink.IndexOf(" "));
-                        }
-                    }
-                }
-                else
-                {
-                    if (separatorPos > 0)
-                    {
-                        if (croppedLink.Substring(separatorPos).StartsWith(TextfragmentIndicator))
-                        {
-                            result.SearchTerm = croppedLink.Substring(TextfragmentIndicator.Length + separatorPos);
-                        }
-                        else if (!croppedLink.Substring(separatorPos).StartsWith("#L"))
-                        {
-                            // If this adds a search term based on an absolute file path it will be fixed below.
-                            result.SearchTerm = croppedLink.Substring(1 + separatorPos);
-                        }
-                    }
-                }
-
-                if (fileSystem.FileExists(croppedLink))
+                if (System.Uri.IsWellFormedUriString(croppedLink, System.UriKind.Absolute))
                 {
                     result.FileName = croppedLink;
-                    separatorPos = -1;  // Reset this as if a valid file path then definitely no search text after a separator
                     result.SearchTerm = null;
                 }
                 else
                 {
-                    if (separatorPos > 0)
+                    var separatorPos = croppedLink.IndexOfAny(new[] { '#', ':' });
+
+                    if (separatorPos >= 0)
                     {
-                        result.FileName = croppedLink.Substring(0, separatorPos);
+                        if (croppedLink.Length > separatorPos + 1 && croppedLink[separatorPos + 1] == '\\')
+                        {
+                            separatorPos = croppedLink.IndexOfAny(new[] { '#', ':' }, separatorPos + 1);
+                        }
+                    }
+
+                    if (!trailingTextDefinitelyRemoved)
+                    {
+                        if (separatorPos < 0)
+                        {
+                            var firstDot = croppedLink.IndexOf('.');
+
+                            // If there's a '.' assume it's for distinguishing the file name from its extension
+                            if (firstDot >= 0)
+                            {
+                                // Get everything up to the first space after the '.'
+                                if (croppedLink.Substring(firstDot).Contains(" "))
+                                {
+                                    croppedLink = croppedLink.Substring(0, croppedLink.IndexOf(" ", firstDot));
+                                }
+                            }
+                            else if (croppedLink.Contains(" "))
+                            {
+                                // Get everything up to the first space
+                                croppedLink = croppedLink.Substring(0, croppedLink.IndexOf(" "));
+                            }
+                        }
                     }
                     else
+                    {
+                        if (separatorPos > 0)
+                        {
+                            if (croppedLink.Substring(separatorPos).StartsWith(TextfragmentIndicator))
+                            {
+                                result.SearchTerm = croppedLink.Substring(TextfragmentIndicator.Length + separatorPos);
+                            }
+                            else if (!croppedLink.Substring(separatorPos).StartsWith("#L"))
+                            {
+                                // If this adds a search term based on an absolute file path it will be fixed below.
+                                result.SearchTerm = croppedLink.Substring(1 + separatorPos);
+                            }
+                        }
+                    }
+
+                    if (fileSystem.FileExists(croppedLink))
                     {
                         result.FileName = croppedLink;
-                    }
-                }
-
-                result.FileName = result.FileName.Replace("%20", " ").Trim();
-
-                if (separatorPos > -1)
-                {
-                    string parseForSearchTerms = null;
-
-                    if (croppedLink.Substring(separatorPos).StartsWith("#L"))
-                    {
-                        if (int.TryParse(croppedLink.Substring(separatorPos + 2).Split(' ', '\t')[0], out int lineNo))
-                        {
-                            result.LineNo = lineNo;
-                        }
-                    }
-                    else if (croppedLink[separatorPos] == ':')
-                    {
-                        parseForSearchTerms = croppedLink.Substring(separatorPos + 1);
-                    }
-                    else if (croppedLink.Substring(separatorPos).StartsWith(TextfragmentIndicator))
-                    {
-                        parseForSearchTerms = croppedLink.Substring(separatorPos + 9);
+                        separatorPos = -1;  // Reset this as if a valid file path then definitely no search text after a separator
+                        result.SearchTerm = null;
                     }
                     else
                     {
-                        result.SearchTerm = string.Empty;
+                        if (separatorPos > 0)
+                        {
+                            result.FileName = croppedLink.Substring(0, separatorPos);
+                        }
+                        else
+                        {
+                            result.FileName = croppedLink;
+                        }
                     }
 
-                    if (!string.IsNullOrWhiteSpace(parseForSearchTerms))
+                    result.FileName = result.FileName.Replace("%20", " ").Trim();
+
+                    if (separatorPos > -1)
                     {
-                        parseForSearchTerms = parseForSearchTerms.Trim();
+                        string parseForSearchTerms = null;
 
-                        var nextSpaceIndex = parseForSearchTerms.IndexOfAny(new[] { ' ', '\t' });
-
-                        if (parseForSearchTerms[0] == '"')
+                        if (croppedLink.Substring(separatorPos).StartsWith("#L"))
                         {
-                            var nextDblQuoteIndex = parseForSearchTerms.IndexOf('"', 1);
-
-                            if (nextDblQuoteIndex >= 0)
+                            if (int.TryParse(croppedLink.Substring(separatorPos + 2).Split(' ', '\t')[0], out int lineNo))
                             {
-                                result.SearchTerm = parseForSearchTerms.Substring(1, nextDblQuoteIndex - 1);
+                                result.LineNo = lineNo;
                             }
                         }
-                        else if (parseForSearchTerms[0] == '\'')
+                        else if (croppedLink[separatorPos] == ':')
                         {
-                            var nextSnglQuoteIndex = parseForSearchTerms.IndexOf('\'', 1);
-
-                            if (nextSnglQuoteIndex >= 0)
-                            {
-                                result.SearchTerm = parseForSearchTerms.Substring(1, nextSnglQuoteIndex - 1);
-                            }
+                            parseForSearchTerms = croppedLink.Substring(separatorPos + 1);
+                        }
+                        else if (croppedLink.Substring(separatorPos).StartsWith(TextfragmentIndicator))
+                        {
+                            parseForSearchTerms = croppedLink.Substring(separatorPos + 9);
+                        }
+                        else
+                        {
+                            result.SearchTerm = string.Empty;
                         }
 
-                        if (string.IsNullOrEmpty(result.SearchTerm))
+                        if (!string.IsNullOrWhiteSpace(parseForSearchTerms))
                         {
-                            if (nextSpaceIndex >= 0)
-                            {
-                                result.SearchTerm = parseForSearchTerms.Substring(0, nextSpaceIndex);
-                            }
-                            else
-                            {
-                                result.SearchTerm = parseForSearchTerms;
-                            }
-                        }
+                            parseForSearchTerms = parseForSearchTerms.Trim();
 
-                        result.SearchTerm = result.SearchTerm.Replace("%20", " ");
+                            var nextSpaceIndex = parseForSearchTerms.IndexOfAny(new[] { ' ', '\t' });
+
+                            if (parseForSearchTerms[0] == '"')
+                            {
+                                var nextDblQuoteIndex = parseForSearchTerms.IndexOf('"', 1);
+
+                                if (nextDblQuoteIndex >= 0)
+                                {
+                                    result.SearchTerm = parseForSearchTerms.Substring(1, nextDblQuoteIndex - 1);
+                                }
+                            }
+                            else if (parseForSearchTerms[0] == '\'')
+                            {
+                                var nextSnglQuoteIndex = parseForSearchTerms.IndexOf('\'', 1);
+
+                                if (nextSnglQuoteIndex >= 0)
+                                {
+                                    result.SearchTerm = parseForSearchTerms.Substring(1, nextSnglQuoteIndex - 1);
+                                }
+                            }
+
+                            if (string.IsNullOrEmpty(result.SearchTerm))
+                            {
+                                if (nextSpaceIndex >= 0)
+                                {
+                                    result.SearchTerm = parseForSearchTerms.Substring(0, nextSpaceIndex);
+                                }
+                                else
+                                {
+                                    result.SearchTerm = parseForSearchTerms;
+                                }
+                            }
+
+                            result.SearchTerm = result.SearchTerm.Replace("%20", " ");
+                        }
                     }
                 }
             }

@@ -2,6 +2,10 @@
 
 The following incldues details of what has changed in each release.
 
+## 2.6
+
+- Support URIs.
+
 ## 2.5
 
 - Support multiple links on a single line.
