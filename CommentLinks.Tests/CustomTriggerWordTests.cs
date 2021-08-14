@@ -91,6 +91,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("FINDME", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -103,6 +104,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsTrue(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -115,6 +117,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsTrue(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -127,6 +130,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsTrue(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -139,6 +143,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("FINDME", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -151,6 +156,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -163,6 +169,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -175,6 +182,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         private CommentLinkTag GetFromLineWithCustomTriggerWord(string triggerWord, string line)

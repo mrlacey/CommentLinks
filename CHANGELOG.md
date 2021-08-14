@@ -2,6 +2,10 @@
 
 The following incldues details of what has changed in each release.
 
+## 2.7
+
+- Bug fixes.
+
 ## 2.6
 
 - Support URIs.

@@ -30,6 +30,8 @@ namespace CommentLinks
 
         public bool IsRunCommand { get; private set; }
 
+        public bool IsUri { get; private set; }
+
         public static CommentLinkTag Create(string link)
         {
             return Create(link, fileSystem: null);
@@ -145,10 +147,12 @@ namespace CommentLinks
             }
             else
             {
-                if (System.Uri.IsWellFormedUriString(croppedLink, System.UriKind.Absolute))
+                if (croppedLink.StartsWith("http")
+                    && System.Uri.IsWellFormedUriString(croppedLink, System.UriKind.Absolute))
                 {
                     result.FileName = croppedLink;
                     result.SearchTerm = null;
+                    result.IsUri = true;
                 }
                 else
                 {

@@ -19,6 +19,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -30,6 +31,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -41,6 +43,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -52,6 +55,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -63,6 +67,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -74,6 +79,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -85,6 +91,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -96,6 +103,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -107,6 +115,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(25, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -118,6 +127,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("Find me", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -129,6 +139,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("Find me", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -140,6 +151,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -151,6 +163,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -162,6 +175,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -173,6 +187,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -184,6 +199,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -195,6 +211,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -206,6 +223,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -217,6 +235,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -228,6 +247,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(25, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -239,6 +259,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("Find me", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -250,6 +271,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("Find me", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -261,6 +283,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -272,6 +295,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -283,6 +307,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -294,6 +319,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -305,6 +331,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -316,6 +343,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -327,6 +355,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -338,6 +367,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -349,6 +379,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -360,6 +391,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(25, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -371,6 +403,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(25, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -382,6 +415,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("Find me", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -393,6 +427,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("Find me", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -404,6 +439,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -415,6 +451,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -426,6 +463,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -437,6 +475,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -448,6 +487,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -459,6 +499,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -470,6 +511,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -481,6 +523,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(25, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -492,6 +535,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("Find me", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -503,6 +547,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("Find me", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -514,6 +559,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -525,6 +571,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -536,6 +583,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -547,6 +595,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -558,6 +607,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -569,6 +619,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -580,6 +631,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -591,6 +643,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(25, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -602,6 +655,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("Find me", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -613,6 +667,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("Find me", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -624,6 +679,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -635,6 +691,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some search words", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -646,6 +703,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some search words", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -659,6 +717,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -672,6 +731,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -683,6 +743,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("SMART_LOG_DEVICE_STATISTICS", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -694,6 +755,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("SMART_LOG_DEVICE_STATISTICS;", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -705,6 +767,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(32, sut.LineNo);
             Assert.IsNull(sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -716,6 +779,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -727,6 +791,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -738,6 +803,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -749,6 +815,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -760,6 +827,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some words", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -771,6 +839,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some words", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -782,6 +851,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some words", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -793,6 +863,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some words", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -804,6 +875,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -815,6 +887,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -826,6 +899,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -837,6 +911,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -848,6 +923,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some words", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -859,6 +935,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some words", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -870,6 +947,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some words", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -881,6 +959,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some words", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -892,6 +971,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -903,6 +983,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -914,6 +995,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some more", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -925,6 +1007,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some more", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -936,6 +1019,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some more", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -947,6 +1031,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some more", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -958,6 +1043,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some more", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -969,6 +1055,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("some more", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -980,6 +1067,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual(" some more ", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -991,6 +1079,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual(" some more ", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -1002,6 +1091,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("'some more' words", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -1013,6 +1103,7 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("\"some more\" words", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
         }
 
         [TestMethod]
@@ -1025,6 +1116,42 @@ namespace CommentLinks.Tests
             Assert.AreEqual(-1, sut.LineNo);
             Assert.AreEqual("yay-👍-Yay", sut.SearchTerm);
             Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsFalse(sut.IsUri);
+        }
+
+        [TestMethod]
+        public void HttpLink_IdentifiedAsSuch()
+        {
+            var sut = CommentLinkTag.Create("http://mrlacey.com/");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("http://mrlacey.com/", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsTrue(sut.IsUri);
+        }
+
+        [TestMethod]
+        public void HttpsLink_IdentifiedAsSuch()
+        {
+            var sut = CommentLinkTag.Create("https://mrlacey.com/");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("https://mrlacey.com/", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
+            Assert.IsTrue(sut.IsUri);
+        }
+
+        [TestMethod]
+        public void FtpLink_NotIdentifiedAsUri()
+        {
+            var sut = CommentLinkTag.Create("ftp://mrlacey.com/");
+
+            Assert.IsNotNull(sut);
+            Assert.IsFalse(sut.IsUri);
         }
     }
 }
