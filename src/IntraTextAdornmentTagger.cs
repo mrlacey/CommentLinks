@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Tagging;
@@ -102,9 +103,11 @@ namespace CommentLinks
 
                 if (wasEmpty && this.invalidatedSpans.Count > 0)
                 {
-#pragma warning disable VSTHRD001 // Avoid legacy thread switching APIs
-                    this.view.VisualElement.Dispatcher.BeginInvoke(new Action(this.AsyncUpdate));
-#pragma warning restore VSTHRD001 // Avoid legacy thread switching APIs
+                    ThreadHelper.JoinableTaskFactory.Run(async () =>
+                    {
+                        await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                        this.AsyncUpdate();
+                    });
                 }
             }
         }
