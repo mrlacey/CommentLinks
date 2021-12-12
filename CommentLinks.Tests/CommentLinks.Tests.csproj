@@ -51,13 +51,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Text.Logic">
-      <Version>15.8.525</Version>
+      <Version>17.0.487</Version>
     </PackageReference>
     <PackageReference Include="MSTest.TestAdapter">
-      <Version>2.1.2</Version>
+      <Version>2.2.8</Version>
     </PackageReference>
     <PackageReference Include="MSTest.TestFramework">
-      <Version>2.1.2</Version>
+      <Version>2.2.8</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
