@@ -39,6 +39,8 @@ namespace CommentLinks
             await LinkToFileCommand.InitializeAsync(this);
             await LinkToLineCommand.InitializeAsync(this);
             await LinkToSelectionCommand.InitializeAsync(this);
+
+            await SponsorRequestHelper.CheckIfNeedToShowAsync();
         }
     }
 }

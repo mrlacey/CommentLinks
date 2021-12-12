@@ -59,6 +59,7 @@
     <Compile Include="CommentLinkTagger.cs" />
     <Compile Include="CommentLinkTaggerProvider.cs" />
     <Compile Include="DefaultFileSystemAbstraction.cs" />
+    <Compile Include="GeneralOutputPane.cs" />
     <Compile Include="IFileSystemAbstraction.cs" />
     <Compile Include="IntraTextAdornmentTagger.cs" />
     <Compile Include="OptionsGrid.cs">
@@ -70,6 +71,8 @@
     <Compile Include="CommentLinksPackage.cs" />
     <Compile Include="RegexHelper.cs" />
     <Compile Include="RegexTagger.cs" />
+    <Compile Include="SponsorDetector.cs" />
+    <Compile Include="SponsorRequestHelper.cs" />
     <Compile Include="StatusBarHelper.cs" />
   </ItemGroup>
   <ItemGroup>
