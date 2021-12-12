@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="CommentLinks.bd536c05-2af9-4995-b067-56fa2bb88e31" Version="2.7" Language="en-US" Publisher="Matt Lacey" />
-        <DisplayName>CommentLinks</DisplayName>
+        <Identity Id="CommentLinks2019.bd546c05-2af9-4995-b067-57fa2bb88e31" Version="2.8" Language="en-US" Publisher="Matt Lacey" />
+        <DisplayName>CommentLinks (2019)</DisplayName>
         <Description xml:space="preserve">Create links in comments between any files.</Description>
         <MoreInfo>https://github.com/mrlacey/CommentLinks</MoreInfo>
         <License>LICENSE.txt</License>
