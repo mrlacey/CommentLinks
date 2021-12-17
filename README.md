@@ -1,10 +1,13 @@
 # CommentLinks
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+![AppVeyor tests](https://img.shields.io/appveyor/tests/mrlacey/commentlinks)
 ![Works with Visual Studio 2017](https://img.shields.io/static/v1.svg?label=VS&message=2017&color=5F2E96)
 ![Works with Visual Studio 2019](https://img.shields.io/static/v1.svg?label=VS&message=2019&color=5F2E96)
-![Works with Visual Studio 2022](https://img.shields.io/static/v1.svg?label=VS&message=2022&color=5F2E96)
-[![CI Build on VSIXGallery](https://img.shields.io/badge/CI-build-lightgray)](https://www.vsixgallery.com/extension/CommentLinks.bd536c05-2af9-4995-b067-56fa2bb88e31)
+![Works with Visual Studio 2022](https://img.shields.io/static/v1.svg?label=VS&message=2022&color=A853C7)
+[![Build status](https://ci.appveyor.com/api/projects/status/cwq9eea5sonb9rm6/branch/main?svg=true)](https://ci.appveyor.com/project/mrlacey/commentlinks/branch/main)
+
+[Available in the Visual Studio marketplace](https://www.vsixgallery.com/extension/CommentLinks.bd536c05-2af9-4995-b067-56fa2bb88e31)
 
 See it in action (click image to open YouTube)  
 [![YouTube link](https://img.youtube.com/vi/UtWlXKJ8cxE/0.jpg)](https://www.youtube.com/watch?v=UtWlXKJ8cxE)
