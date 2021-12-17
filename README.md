@@ -3,6 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 ![Works with Visual Studio 2017](https://img.shields.io/static/v1.svg?label=VS&message=2017&color=5F2E96)
 ![Works with Visual Studio 2019](https://img.shields.io/static/v1.svg?label=VS&message=2019&color=5F2E96)
+![Works with Visual Studio 2022](https://img.shields.io/static/v1.svg?label=VS&message=2022&color=5F2E96)
 [![CI Build on VSIXGallery](https://img.shields.io/badge/CI-build-lightgray)](https://www.vsixgallery.com/extension/CommentLinks.bd536c05-2af9-4995-b067-56fa2bb88e31)
 
 See it in action (click image to open YouTube)  
