@@ -55,6 +55,11 @@
     <Compile Include="CommentLinkAdornment.cs" />
     <Compile Include="CommentLinkAdornmentTagger.cs" />
     <Compile Include="CommentLinkAdornmentTaggerProvider.cs" />
+    <Compile Include="CommentLinksPackage1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CommentLinksPackage.vsct</DependentUpon>
+    </Compile>
     <Compile Include="CommentLinkTag.cs" />
     <Compile Include="CommentLinkTagger.cs" />
     <Compile Include="CommentLinkTaggerProvider.cs" />
@@ -71,6 +76,11 @@
     <Compile Include="CommentLinksPackage.cs" />
     <Compile Include="RegexHelper.cs" />
     <Compile Include="RegexTagger.cs" />
+    <Compile Include="source.extension.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>source.extension.vsixmanifest</DependentUpon>
+    </Compile>
     <Compile Include="SponsorDetector.cs" />
     <Compile Include="SponsorRequestHelper.cs" />
     <Compile Include="StatusBarHelper.cs" />
@@ -81,6 +91,8 @@
     <None Include="signvsix.targets" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
+      <Generator>VsixManifestGenerator</Generator>
+      <LastGenOutput>source.extension.cs</LastGenOutput>
     </None>
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
@@ -118,14 +130,13 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CommentLinks.resx" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Resources\CommentLinksIcon.png">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <VSCTCompile Include="CommentLinksPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
+      <Generator>VsctGenerator</Generator>
+      <LastGenOutput>CommentLinksPackage1.cs</LastGenOutput>
     </VSCTCompile>
     <Content Include="LICENSE.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

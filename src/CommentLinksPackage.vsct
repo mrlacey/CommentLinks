@@ -43,13 +43,6 @@
         <CommandPlacement guid="guidCommentLinksPackageCmdSet" id="CodeContextMenu" priority="0x0100">
             <Parent guid="guidCommentLinksPackageCmdSet" id="CodeContextGroup" />
         </CommandPlacement>
-
-        <CommandPlacement guid="guidCommentLinksPackageCmdSet" id="CodeContextGroup" priority="0x0200">
-            <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
-        </CommandPlacement>
-        <CommandPlacement guid="guidCommentLinksPackageCmdSet" id="CodeContextMenu" priority="0x0100">
-            <Parent guid="guidCommentLinksPackageCmdSet" id="CodeContextGroup" />
-        </CommandPlacement>
         <CommandPlacement guid="guidCommentLinksPackageCmdSet" id="CodeContextMenuGroup" priority="0x0100">
             <Parent guid="guidCommentLinksPackageCmdSet" id="CodeContextMenu" />
         </CommandPlacement>

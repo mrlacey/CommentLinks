@@ -3,15 +3,16 @@
 
 using System.Reflection;
 using System.Runtime.InteropServices;
+using CommentLinks;
 
-[assembly: AssemblyTitle("CommentLinks")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle(Vsix.Name)]
+[assembly: AssemblyDescription(Vsix.Description)]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Matt Lacey Ltd.")]
 [assembly: AssemblyProduct("CommentLinks")]
-[assembly: AssemblyCopyright("Copyright © Matt Lacey Ltd. 2021")]
+[assembly: AssemblyCopyright("Copyright © Matt Lacey Ltd. 2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
-[assembly: AssemblyVersion("2.8.0.*")]
-[assembly: AssemblyFileVersion("2.8.0.0")]
+[assembly: AssemblyVersion(Vsix.Version)]
+[assembly: AssemblyFileVersion(Vsix.Version)]

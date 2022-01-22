@@ -11,15 +11,13 @@ using Task = System.Threading.Tasks.Task;
 namespace CommentLinks
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [InstalledProductRegistration("#110", "#112", "2.8")] // Info on this package for Help/About
-    [Guid(CommentLinksPackage.PackageGuidString)]
-    [ProvideOptionPage(typeof(OptionsGrid), "Comment Links", "General", 0, 0, true)]
-    [ProvideProfileAttribute(typeof(OptionsGrid), "Comment Links", "General", 0, 0, isToolsOptionPage: true, DescriptionResourceID = 108)]
+    [InstalledProductRegistration(Vsix.Name, Vsix.Description, Vsix.Version)] // Info on this package for Help/About
+    [Guid(PackageGuids.guidCommentLinksPackageString)]
+    [ProvideOptionPage(typeof(OptionsGrid), Vsix.Name, "General", 0, 0, true)]
+    [ProvideProfileAttribute(typeof(OptionsGrid), Vsix.Name, "General", 0, 0, isToolsOptionPage: true, DescriptionResourceID = 108)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     public sealed class CommentLinksPackage : AsyncPackage
     {
-        public const string PackageGuidString = "e1724685-50af-49aa-9d96-ff26a69cc1c9";
-
         public OptionsGrid Options
         {
             get
