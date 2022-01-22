@@ -1,6 +1,10 @@
 # CommentLinks - Change log
 
-The following incldues details of what has changed in each release.
+The following includes details of what has changed in each release.
+
+## 2.8
+
+- Support VS 2022
 
 ## 2.7
 
