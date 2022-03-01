@@ -34,7 +34,7 @@ namespace CommentLinks
                 if (ServiceProvider.GlobalProvider.GetService(typeof(SVsShell)) is IVsShell shell)
                 {
                     // IVsPackage package = null;
-                    Guid PackageToBeLoadedGuid = new Guid(CommentLinksPackage.PackageGuidString);
+                    Guid PackageToBeLoadedGuid = new Guid(PackageGuids.guidCommentLinksPackageString);
                     shell.LoadPackage(ref PackageToBeLoadedGuid, out _);
                 }
             }
