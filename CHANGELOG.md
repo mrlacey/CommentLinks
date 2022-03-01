@@ -2,6 +2,10 @@
 
 The following includes details of what has changed in each release.
 
+## 2.9
+
+- Allow navigating higher within the same file.
+
 ## 2.8
 
 - Support VS 2022
