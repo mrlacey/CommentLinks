@@ -42,7 +42,7 @@ namespace CommentLinks
                 lineNumber++;
                 if (line.Contains(content))
                 {
-                    if (withinSameFile && lineNumber <= (this.currentLineNumber + 1))
+                    if (withinSameFile && lineNumber == (this.currentLineNumber + 1))
                     {
                         continue;
                     }
