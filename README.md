@@ -24,7 +24,7 @@ When a comment contains the text `link:` followed by a file name, a green button
 
 ![Partial screenshot showing the added button](./assets/button-example.png)
 
-Aditionally:
+Additionally:
 
 - You can open the file at a specific line by putting `#L` and the line number (e.g. `#L25`) immediately after the file name.
 
@@ -67,8 +67,11 @@ For compatibility with [text fragment anchors](https://github.com/WICG/ScrollToT
 // Open a file (in the default app) - link:run>C:\path\to\document.pdf
 ```
 
+##
+
+
 ---
 
-Functionality has increased over time in repsonse to feedback. [Change Log](https://github.com/mrlacey/CommentLinks/blob/main/CHANGELOG.md)
+Functionality has increased over time in response to feedback. [Change Log](https://github.com/mrlacey/CommentLinks/blob/main/CHANGELOG.md)
 
 Please [raise an issue](https://github.com/mrlacey/CommentLinks/issues/new) if you have feature requests.
