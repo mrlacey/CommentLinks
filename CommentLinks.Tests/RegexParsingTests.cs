@@ -141,6 +141,18 @@ namespace CommentLinks.Tests
         }
 
         [TestMethod]
+        public void FindLink_CommentsImmediatelyBeforeLinkText()
+        {
+            var sut = ExtractTagFromLine("//link:filename.ext");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("filename.ext", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNull(sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
+        }
+
+        [TestMethod]
         public void FindLink_FilenameWithExtension()
         {
             var sut = ExtractTagFromLine("blah blah link:filename.ext");
