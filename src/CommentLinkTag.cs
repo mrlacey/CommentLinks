@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 using Microsoft.VisualStudio.Text.Tagging;
+using System;
 
 namespace CommentLinks
 {
@@ -75,7 +76,7 @@ namespace CommentLinks
 
             link = link.Trim();
 
-            if (link.Equals("run>", System.StringComparison.InvariantCultureIgnoreCase))
+            if (link.Equals("run>", StringComparison.InvariantCultureIgnoreCase))
             {
                 // There's no command to execute
                 return null;
@@ -110,7 +111,7 @@ namespace CommentLinks
                 }
             }
 
-            if (croppedLink.StartsWith("run>", System.StringComparison.InvariantCultureIgnoreCase))
+            if (croppedLink.StartsWith("run>", StringComparison.InvariantCultureIgnoreCase))
             {
                 var command = croppedLink.Substring(4);
 
@@ -148,7 +149,7 @@ namespace CommentLinks
             else
             {
                 if (croppedLink.StartsWith("http")
-                    && System.Uri.IsWellFormedUriString(croppedLink, System.UriKind.Absolute))
+                    && Uri.IsWellFormedUriString(croppedLink, UriKind.Absolute))
                 {
                     result.FileName = croppedLink;
                     result.SearchTerm = null;
@@ -292,6 +293,20 @@ namespace CommentLinks
             }
 
             return result;
+        }
+
+        internal CommentLinkTag UpdateFileName(string newPath)
+        {
+            return new CommentLinkTag
+            {
+                FileName = newPath,
+                Indent = this.Indent,
+                IsRunCommand = this.IsRunCommand,
+                IsUri = this.IsUri,
+                LineNo = this.LineNo,
+                Link = this.Link,
+                SearchTerm = this.SearchTerm,
+            };
         }
     }
 }
