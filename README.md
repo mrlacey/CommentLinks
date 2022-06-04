@@ -24,7 +24,7 @@ When a comment contains the text `link:` followed by a file name, a green button
 
 ![Partial screenshot showing the added button](./assets/button-example.png)
 
-Additionally:
+## Link options
 
 - You can open the file at a specific line by putting `#L` and the line number (e.g. `#L25`) immediately after the file name.
 
@@ -67,8 +67,11 @@ For compatibility with [text fragment anchors](https://github.com/WICG/ScrollToT
 // Open a file (in the default app) - link:run>C:\path\to\document.pdf
 ```
 
-##
+## Create links
 
+Creating links is easy. Right click where you want the target of a link, or select the text to search for and easily copy the link to the clipboard so you can paste it where you nee dit.
+
+![Example of the options in the context menu](assets/context-menu.png)
 
 ---
 
