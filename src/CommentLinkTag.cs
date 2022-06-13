@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Matt Lacey Ltd. All rights reserved.
 // Licensed under the MIT license.
 
-using Microsoft.VisualStudio.Text.Tagging;
 using System;
+using Microsoft.VisualStudio.Text.Tagging;
 
 namespace CommentLinks
 {
@@ -50,7 +50,11 @@ namespace CommentLinks
                 fileSystem = new DefaultFileSystemAbstraction();
             }
 
-            if (string.IsNullOrWhiteSpace(link) || link.StartsWith("  ") || link.StartsWith("\t"))
+            if (string.IsNullOrWhiteSpace(link)
+             || link.StartsWith("  ")
+             || link.StartsWith("\t")
+             || link.StartsWith("^#")
+             || link.StartsWith("v#"))
             {
                 return null;
             }
