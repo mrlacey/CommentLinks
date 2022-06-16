@@ -26,39 +26,56 @@ When a comment contains the text `link:` followed by a file name, a green button
 
 ## Link options
 
-- You can open the file at a specific line by putting `#L` and the line number (e.g. `#L25`) immediately after the file name.
+There are lots of ways to customize the linking experience.
+
+### Go to a specific line number
+
+You can open the file at a specific line by putting `#L` and the line number (e.g. `#L25`) immediately after the file name.
 
 ```cs
 // link:mapManager.js#L25
 ```
 
-- You can open the file at a place where specific text is found by placing `:` immediately after the file name and then the text to search for.  
+### Go to specific text within a file
+
+You can open the file at a place where specific text is found by placing `:` immediately after the file name and then the text to search for.  
 For compatibility with [text fragment anchors](https://github.com/WICG/ScrollToTextFragment) you can also use `#:~:text=` after the file name to specify text.
+
+The following two links have the same behavior.
 
 ```cs
 // link:mapManager.js:UpdateLocalData
 // link:mapManager.js#:~:text=UpdateLocalData
 ```
 
-- Files will be found anywhere in the solution, even other projects. If you have more than one file with the same name, you can specify the directory name the file is in too.
+Searching starts from the top of the file and goes down line by line.
 
-```cs
-// link:include/mapManager.js
-```
-
-- Any words after the file name or search term should be automatically ignored. If you find that something isn't being detected correctly you can escape the name (and, optionally, search terms) by enclosing them in quotes.
+Any words after the file name or search term should be automatically ignored. If you find that something isn't being detected correctly you can escape the name (and, optionally, search terms) by enclosing them in quotes.
+This is also how you support search terms that include spaces.
 
 ```cs
 // Go to link:"include/mapManager.js" and see ...
 ```
 
-- Open any file from disk by specifying the full path.
+### Include partial file paths
+
+Files will be found anywhere in the solution, even other projects. If you have more than one file with the same name, you can specify the directory name the file is in too.
+
+```cs
+// link:include/mapManager.js
+```
+
+### Open files outside the solution
+
+Open any file from disk by specifying the full path.
 
 ```cs
 // See the log file at link:C:\Temp\logs\analysis-report.log
 ```
 
-- Run arbitrary commands to open files or invoke applications by including `run>` after `link:` and before the command to execute.
+### Run commands from a link
+
+Run arbitrary commands to open files or invoke applications by including `run>` after `link:` and before the command to execute.
 
 ```cs
 // Change personalization settings to see the full effect link:run>ms-settings:personalization
@@ -66,6 +83,37 @@ For compatibility with [text fragment anchors](https://github.com/WICG/ScrollToT
 // Pass arguments to an application:- link:run>"cmd.exe /?"
 // Open a file (in the default app) - link:run>C:\path\to\document.pdf
 ```
+
+### Navigate within the same file
+
+It is possible to navigate within the same file by specifying the name of the file.
+WHen navigating wihtin a file specified by name, any search term will be looked for as when opening another file, but will not match the line containing the link that was clicked.
+
+There are also shortcuts for navigating within the same file to a specified search term.
+
+#### Search higher in the same file
+
+You can prompt to search above the line with the link by specifying `^` instead of the file name.
+
+```cs
+// Link:^:"some text"
+```
+
+When using a link like the one above, it will start on the line above the link and search up towards the top of the file.
+If the search text is not found, the focused line will not change.
+
+
+#### Search lower in the same file
+
+You can prompt to search below the line with the link by specifying `v` instead of the file name.
+
+```cs
+// link:v:Something
+```
+
+When using a link like th one above, it will start on the line below the link and search down towards the bottom of the file.
+If the search text is not found, the focused line will not change.
+
 
 ## Create links
 

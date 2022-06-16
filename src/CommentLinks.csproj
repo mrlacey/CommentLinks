@@ -67,6 +67,7 @@
     <Compile Include="GeneralOutputPane.cs" />
     <Compile Include="IFileSystemAbstraction.cs" />
     <Compile Include="IntraTextAdornmentTagger.cs" />
+    <Compile Include="NavigationType.cs" />
     <Compile Include="OptionsGrid.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -139,7 +140,7 @@
       <LastGenOutput>CommentLinksPackage1.cs</LastGenOutput>
     </VSCTCompile>
     <Content Include="LICENSE.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>

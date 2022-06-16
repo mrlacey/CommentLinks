@@ -433,6 +433,90 @@ namespace CommentLinks.Tests
             Assert.IsTrue(sut.IsRunCommand);
         }
 
+        [TestMethod]
+        public void SearchAboveInSameFile_WithNoExtraDetails()
+        {
+            var sut = ExtractTagFromLine("// link:^");
+
+            Assert.IsNull(sut);
+        }
+
+        [TestMethod]
+        public void SearchAboveInSameFile_WithLineNumber()
+        {
+            var sut = ExtractTagFromLine("// link:^#L100");
+
+            Assert.IsNull(sut);
+        }
+
+        [TestMethod]
+        public void SearchAboveInSameFile_WithSearchTerm()
+        {
+            var sut = ExtractTagFromLine("// link:^:something");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("^", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNotNull(sut.SearchTerm);
+            Assert.AreEqual("something", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
+        }
+
+        [TestMethod]
+        public void SearchAboveInSameFile_WithSearchTermInQuotes()
+        {
+            var sut = ExtractTagFromLine("// link:^:\"some thing\"");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("^", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNotNull(sut.SearchTerm);
+            Assert.AreEqual("some thing", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
+        }
+
+        [TestMethod]
+        public void SearchBelowInSameFile_WithNoExtraDetails()
+        {
+            var sut = ExtractTagFromLine("// link:v");
+
+            Assert.IsNull(sut);
+        }
+
+        [TestMethod]
+        public void SearchBelowInSameFile_WithLineNumber()
+        {
+            var sut = ExtractTagFromLine("// link:v#L100");
+
+            Assert.IsNull(sut);
+        }
+
+        [TestMethod]
+        public void SearchBelowInSameFile_WithSearchTerm()
+        {
+            var sut = ExtractTagFromLine("// link:v:something");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("v", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNotNull(sut.SearchTerm);
+            Assert.AreEqual("something", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
+        }
+
+        [TestMethod]
+        public void SearchBelowInSameFile_WithSearchTermInQuotes()
+        {
+            var sut = ExtractTagFromLine("// link:v:\"some thing\"");
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual("v", sut.FileName);
+            Assert.AreEqual(-1, sut.LineNo);
+            Assert.IsNotNull(sut.SearchTerm);
+            Assert.AreEqual("some thing", sut.SearchTerm);
+            Assert.IsFalse(sut.IsRunCommand);
+        }
+
         private CommentLinkTag ExtractTagFromLine(string line)
         {
             var regex = RegexHelper.DefaultLinkRegex;
@@ -440,7 +524,7 @@ namespace CommentLinks.Tests
             var matches = regex.Matches(line);
 
             // Mirroring behavior in link:CommentLinkTagger.cs:ExtractTagFromLine
-            // Not reusing the actual classes from the extension becuase they have dependencies on VS that are hard to mock/abstract
+            // Not reusing the actual classes from the extension because they have dependencies on VS that are hard to mock/abstract
             if (matches.Count > 0 && matches[0].Groups.Count == 4)
             {
                 return CommentLinkTag.Create(matches[0].Groups[3].Value);
