@@ -59,7 +59,7 @@ This is also how you support search terms that include spaces.
 
 ### Include partial file paths
 
-Files will be found anywhere in the solution, even other projects. If you have more than one file with the same name, you can specify the directory name the file is in too.
+Files will be found anywhere in the solution, even in other projects. If you have more than one file with the same name, you can specify the directory name the file is in too.
 
 ```cs
 // link:include/mapManager.js
@@ -87,7 +87,7 @@ Run arbitrary commands to open files or invoke applications by including `run>` 
 ### Navigate within the same file
 
 It is possible to navigate within the same file by specifying the name of the file.
-WHen navigating wihtin a file specified by name, any search term will be looked for as when opening another file, but will not match the line containing the link that was clicked.
+When navigating within a file specified by name, any search term will be looked for when opening another file, but will not match the line containing the link that was clicked.
 
 There are also shortcuts for navigating within the same file to a specified search term.
 
@@ -111,13 +111,13 @@ You can prompt to search below the line with the link by specifying `v` instead 
 // link:v:Something
 ```
 
-When using a link like th one above, it will start on the line below the link and search down towards the bottom of the file.
+When using a link like the one above, it will start on the line below the link and search down towards the bottom of the file.
 If the search text is not found, the focused line will not change.
 
 
 ## Create links
 
-Creating links is easy. Right click where you want the target of a link, or select the text to search for and easily copy the link to the clipboard so you can paste it where you nee dit.
+Creating links is easy. Right-click where you want the target of a link, or select the text to search for and easily copy the link to the clipboard so you can paste it where you need it.
 
 ![Example of the options in the context menu](assets/context-menu.png)
 
