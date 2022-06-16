@@ -35,20 +35,48 @@ namespace CommentLinks
 
         public CommentLinkTag CmntLinkTag { get; private set; }
 
-        internal int GetLineNumber(string pathToFile, string content, bool withinSameFile)
+        internal int GetLineNumberOfMatch(string pathToFile, string content, bool withinSameFile)
         {
-            int lineNumber = 0;
-            foreach (var line in System.IO.File.ReadAllLines(pathToFile))
-            {
-                lineNumber++;
-                if (line.Contains(content))
-                {
-                    if (withinSameFile && lineNumber == (this.currentLineNumber + 1))
-                    {
-                        continue;
-                    }
+            return this.GetLineNumber(pathToFile, content, startLine: 0, searchDown: true);
+        }
 
-                    return lineNumber;
+        internal int GetLineNumberAboveCurrent(string pathToFile, string content)
+        {
+            return this.GetLineNumber(pathToFile, content, startLine: this.currentLineNumber + 1, searchDown: false);
+        }
+
+        internal int GetLineNumberBelowCurrent(string pathToFile, string content)
+        {
+            return this.GetLineNumber(pathToFile, content, startLine: this.currentLineNumber + 1, searchDown: true);
+        }
+
+        internal int GetLineNumber(string pathToFile, string content, int startLine, bool searchDown)
+        {
+            var lines = File.ReadAllLines(pathToFile);
+
+            var keyword = CommentLinksPackage.Instance?.Options?.TriggerWord;
+
+            if (searchDown)
+            {
+                if (startLine < lines.Length)
+                {
+                    for (int i = startLine; i < lines.Length; i++)
+                    {
+                        if (lines[i].Contains(content) && !lines[i].Contains(keyword))
+                        {
+                            return i + 1;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int i = startLine; i >= 0; i--)
+                {
+                    if (lines[i].Contains(content) && !lines[i].Contains(keyword))
+                    {
+                        return i + 1;
+                    }
                 }
             }
 
@@ -68,56 +96,20 @@ namespace CommentLinks
 
             try
             {
-                async Task<IVsTextView> OpenFileAsync(string filePath)
+                async Task<IVsTextView> OpenFileAsync(string fileToOpen)
                 {
                     await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
                     VsShellUtilities.OpenDocument(
                         new ServiceProvider((Microsoft.VisualStudio.OLE.Interop.IServiceProvider)ProjectHelpers.Dte),
-                        filePath,
+                        fileToOpen,
                         Guid.Empty,
                         out _,
                         out _,
                         out _,
-                        out IVsTextView viewAdapter);
+                        out IVsTextView textViewAdapter);
 
-                    return viewAdapter;
-                }
-
-                async System.Threading.Tasks.Task NavigateWithinFile(IVsTextView viewAdapter, string filePath, int lineNo, string searchText, bool sameFile)
-                {
-                    if (viewAdapter == null)
-                    {
-                        return;
-                    }
-
-                    if (lineNo > 0)
-                    {
-                        // Set the cursor at the beginning of the declaration.
-                        if (viewAdapter.SetCaretPos(lineNo - 1, 0) == VSConstants.S_OK)
-                        {
-                            // Make sure that the text is visible.
-                            viewAdapter.CenterLines(lineNo - 1, 1);
-                        }
-                        else
-                        {
-                            await StatusBarHelper.ShowMessageAsync($"'{filePath}' contains fewer than '{lineNo}' lines.");
-                        }
-                    }
-                    else if (!string.IsNullOrWhiteSpace(searchText))
-                    {
-                        var foundLineNo = this.GetLineNumber(filePath, searchText, sameFile);
-
-                        if (foundLineNo > 0)
-                        {
-                            ErrorHandler.ThrowOnFailure(viewAdapter.SetCaretPos(foundLineNo - 1, 0));
-                            viewAdapter.CenterLines(foundLineNo - 1, 1);
-                        }
-                        else
-                        {
-                            await StatusBarHelper.ShowMessageAsync($"Could not find '{searchText}' in '{filePath}'.");
-                        }
-                    }
+                    return textViewAdapter;
                 }
 
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
@@ -158,75 +150,155 @@ namespace CommentLinks
                     }
                 }
 
-                var projItem = ProjectHelpers.Dte2.Solution.FindProjectItem(this.CmntLinkTag.FileName);
-
-                if (projItem != null)
-                {
-                    string filePath;
-
-                    // If an item in a solution folder
-                    if (projItem.Kind == "{66A26722-8FB5-11D2-AA7E-00C04F688DDE}")
-                    {
-                        filePath = projItem.FileNames[1];
-                    }
-                    else if (projItem.Kind == "{66A2671F-8FB5-11D2-AA7E-00C04F688DDE}")
-                    {
-                        // A miscellaneous file (possibly something open but not in the solution)
-                        filePath = this.CmntLinkTag.FileName;
-                    }
-                    else
-                    {
-                        filePath = projItem.Properties?.Item("FullPath")?.Value?.ToString();
-                    }
-
-                    if (filePath != null)
-                    {
-                        IVsTextView viewAdapter = null;
-                        bool sameFile = false;
-
-                        var activeDocPath = ProjectHelpers.Dte.ActiveDocument.FullName;
-
-                        if (activeDocPath == filePath || System.IO.Path.GetFileName(activeDocPath) == filePath)
-                        {
-                            viewAdapter = this.GetActiveTextView();
-                            filePath = activeDocPath;
-                            sameFile = true;
-                        }
-                        else
-                        {
-                            viewAdapter = await OpenFileAsync(filePath);
-                            sameFile = filePath == activeDocPath;
-                        }
-
-                        if (viewAdapter != null)
-                        {
-                            await NavigateWithinFile(viewAdapter, filePath, this.CmntLinkTag.LineNo, this.CmntLinkTag.SearchTerm, sameFile);
-                        }
-                        else
-                        {
-                            await StatusBarHelper.ShowMessageAsync($"Unable to find file '{this.CmntLinkTag.FileName}'");
-                        }
-                    }
-                }
-                else if (System.IO.File.Exists(this.CmntLinkTag.FileName))
+                if (File.Exists(this.CmntLinkTag.FileName))
                 {
                     var va = await OpenFileAsync(this.CmntLinkTag.FileName);
-                    await NavigateWithinFile(va, this.CmntLinkTag.FileName, this.CmntLinkTag.LineNo, this.CmntLinkTag.SearchTerm, sameFile: false);
+                    await this.NavigateWithinFileAsync(va, this.CmntLinkTag.FileName, this.CmntLinkTag.LineNo, this.CmntLinkTag.SearchTerm, isSameFile: false, navigationType: NavigationType.Default);
+
+                    return;
                 }
-                else if (Uri.IsWellFormedUriString(this.CmntLinkTag.FileName, UriKind.Absolute))
+
+                if (Uri.IsWellFormedUriString(this.CmntLinkTag.FileName, UriKind.Absolute))
                 {
                     System.Diagnostics.Process.Start(
                         new System.Diagnostics.ProcessStartInfo(this.CmntLinkTag.FileName)
                         { UseShellExecute = true });
+
+                    return;
+                }
+
+                string filePath = string.Empty;
+                IVsTextView viewAdapter = null;
+                bool sameFile = false;
+                NavigationType navType = NavigationType.Default;
+
+                if (this.CmntLinkTag.FileName.Equals("^"))
+                {
+                    sameFile = true;
+                    navType = NavigationType.Up;
+                }
+                else if (this.CmntLinkTag.FileName.Equals("v"))
+                {
+                    sameFile = true;
+                    navType = NavigationType.Down;
+                }
+
+                if (!sameFile)
+                {
+                    var projItem = ProjectHelpers.Dte2.Solution.FindProjectItem(this.CmntLinkTag.FileName);
+
+                    if (projItem != null)
+                    {
+                        // If an item in a solution folder
+                        if (projItem.Kind == "{66A26722-8FB5-11D2-AA7E-00C04F688DDE}")
+                        {
+                            filePath = projItem.FileNames[1];
+                        }
+                        else if (projItem.Kind == "{66A2671F-8FB5-11D2-AA7E-00C04F688DDE}")
+                        {
+                            // A miscellaneous file (possibly something open but not in the solution)
+                            filePath = this.CmntLinkTag.FileName;
+                        }
+                        else
+                        {
+                            filePath = projItem.Properties?.Item("FullPath")?.Value?.ToString();
+                        }
+                    }
+                }
+
+                var activeDocPath = ProjectHelpers.Dte.ActiveDocument.FullName;
+
+                if (sameFile || activeDocPath == filePath || System.IO.Path.GetFileName(activeDocPath) == filePath)
+                {
+                    viewAdapter = this.GetActiveTextView();
+                    filePath = activeDocPath;
+                    sameFile = true;
                 }
                 else
                 {
-                    await StatusBarHelper.ShowMessageAsync($"Unable to find file '{this.CmntLinkTag.FileName}'");
+                    viewAdapter = await OpenFileAsync(filePath);
+                    sameFile = filePath == activeDocPath;
                 }
+
+                if (viewAdapter != null)
+                {
+                    await this.NavigateWithinFileAsync(viewAdapter, filePath, this.CmntLinkTag.LineNo, this.CmntLinkTag.SearchTerm, sameFile, navType);
+
+                    return;
+                }
+
+                await StatusBarHelper.ShowMessageAsync($"Unable to find file '{this.CmntLinkTag.FileName}'");
             }
             catch (Exception exc)
             {
                 await OutputPane.Instance.WriteAsync(exc);
+            }
+        }
+
+        private async Task NavigateWithinFileAsync(IVsTextView textViewAdapter, string fileToNavigate, int lineNo, string searchText, bool isSameFile, NavigationType navigationType)
+        {
+            if (textViewAdapter == null)
+            {
+                return;
+            }
+
+            if (lineNo > 0)
+            {
+                // Set the cursor at the beginning of the declaration.
+                if (textViewAdapter.SetCaretPos(lineNo - 1, 0) == VSConstants.S_OK)
+                {
+                    // Make sure that the text is visible.
+                    textViewAdapter.CenterLines(lineNo - 1, 1);
+                }
+                else
+                {
+                    await StatusBarHelper.ShowMessageAsync($"'{fileToNavigate}' contains fewer than '{lineNo}' lines.");
+                }
+            }
+            else if (!string.IsNullOrWhiteSpace(searchText))
+            {
+                if (navigationType == NavigationType.Default)
+                {
+                    var foundLineNo = this.GetLineNumberOfMatch(fileToNavigate, searchText, isSameFile);
+
+                    if (foundLineNo > 0)
+                    {
+                        ErrorHandler.ThrowOnFailure(textViewAdapter.SetCaretPos(foundLineNo - 1, 0));
+                        textViewAdapter.CenterLines(foundLineNo - 1, 1);
+                    }
+                    else
+                    {
+                        await StatusBarHelper.ShowMessageAsync($"Could not find '{searchText}' in '{fileToNavigate}'.");
+                    }
+                }
+                else if (navigationType == NavigationType.Up)
+                {
+                    var foundLineNo = this.GetLineNumberAboveCurrent(fileToNavigate, searchText);
+
+                    if (foundLineNo > 0)
+                    {
+                        ErrorHandler.ThrowOnFailure(textViewAdapter.SetCaretPos(foundLineNo - 1, 0));
+                        textViewAdapter.CenterLines(foundLineNo - 1, 1);
+                    }
+                    else
+                    {
+                        await StatusBarHelper.ShowMessageAsync($"Could not find '{searchText}' above the link.");
+                    }
+                }
+                else if (navigationType == NavigationType.Down)
+                {
+                    var foundLineNo = this.GetLineNumberBelowCurrent(fileToNavigate, searchText);
+
+                    if (foundLineNo > 0)
+                    {
+                        ErrorHandler.ThrowOnFailure(textViewAdapter.SetCaretPos(foundLineNo - 1, 0));
+                        textViewAdapter.CenterLines(foundLineNo - 1, 1);
+                    }
+                    else
+                    {
+                        await StatusBarHelper.ShowMessageAsync($"Could not find '{searchText}' below the link.");
+                    }
+                }
             }
         }
 

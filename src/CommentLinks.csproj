@@ -67,6 +67,7 @@
     <Compile Include="GeneralOutputPane.cs" />
     <Compile Include="IFileSystemAbstraction.cs" />
     <Compile Include="IntraTextAdornmentTagger.cs" />
+    <Compile Include="NavigationType.cs" />
     <Compile Include="OptionsGrid.cs">
       <SubType>Component</SubType>
     </Compile>
