@@ -2,6 +2,14 @@
 
 The following includes details of what has changed in each release.
 
+## 2.11
+
+- Enhance options for navigating within a file.
+
+## 2.10
+
+- Improve handling for relative path links.
+
 ## 2.9
 
 - Allow navigating higher within the same file.
