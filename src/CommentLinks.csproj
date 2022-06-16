@@ -140,7 +140,7 @@
       <LastGenOutput>CommentLinksPackage1.cs</LastGenOutput>
     </VSCTCompile>
     <Content Include="LICENSE.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>
