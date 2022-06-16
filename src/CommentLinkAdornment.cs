@@ -54,7 +54,7 @@ namespace CommentLinks
         {
             var lines = File.ReadAllLines(pathToFile);
 
-            var keyword = CommentLinksPackage.Instance?.Options?.TriggerWord;
+            var keyword = CommentLinksPackage.Instance?.Options?.TriggerWord + ":";
 
             if (searchDown)
             {
@@ -62,7 +62,7 @@ namespace CommentLinks
                 {
                     for (int i = startLine; i < lines.Length; i++)
                     {
-                        if (lines[i].Contains(content) && !lines[i].Contains(keyword))
+                        if (lines[i].Contains(content) && lines[i].IndexOf(keyword, StringComparison.InvariantCultureIgnoreCase) < 0)
                         {
                             return i + 1;
                         }
@@ -73,7 +73,7 @@ namespace CommentLinks
             {
                 for (int i = startLine; i >= 0; i--)
                 {
-                    if (lines[i].Contains(content) && !lines[i].Contains(keyword))
+                    if (lines[i].Contains(content) && lines[i].IndexOf(keyword, StringComparison.InvariantCultureIgnoreCase) < 0)
                     {
                         return i + 1;
                     }
