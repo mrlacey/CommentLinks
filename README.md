@@ -7,7 +7,7 @@
 ![Works with Visual Studio 2022](https://img.shields.io/static/v1.svg?label=VS&message=2022&color=A853C7)
 [![Build status](https://ci.appveyor.com/api/projects/status/cwq9eea5sonb9rm6/branch/main?svg=true)](https://ci.appveyor.com/project/mrlacey/commentlinks/branch/main)
 
-[Available in the Visual Studio marketplace](https://www.vsixgallery.com/extension/CommentLinks.bd536c05-2af9-4995-b067-56fa2bb88e31)
+[Available in the Visual Studio marketplace](https://marketplace.visualstudio.com/items?itemName=MattLaceyLtd.CommentLinks)
 
 See it in action (click image to open YouTube)  
 [![YouTube link](https://img.youtube.com/vi/UtWlXKJ8cxE/0.jpg)](https://www.youtube.com/watch?v=UtWlXKJ8cxE)
