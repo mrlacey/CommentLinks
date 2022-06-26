@@ -11,7 +11,7 @@ namespace CommentLinks
         public const string Name = "Comment Links";
         public const string Description = @"Create links in comments between any files.";
         public const string Language = "en-US";
-        public const string Version = "2.11";
+        public const string Version = "2.12";
         public const string Author = "Matt Lacey";
         public const string Tags = "";
     }

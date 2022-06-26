@@ -2,6 +2,10 @@
 
 The following includes details of what has changed in each release.
 
+## 2.12
+
+- Refine the logic relating to navigating within a file.
+
 ## 2.11
 
 - Enhance options for navigating within a file.
