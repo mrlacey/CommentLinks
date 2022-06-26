@@ -35,26 +35,24 @@ namespace CommentLinks
 
         public CommentLinkTag CmntLinkTag { get; private set; }
 
-        internal int GetLineNumberOfMatch(string pathToFile, string content, bool withinSameFile)
+        internal int GetLineNumberOfMatch(string pathToFile, string content, int lineToSkip)
         {
-            return this.GetLineNumber(pathToFile, content, startLine: 0, searchDown: true);
+            return this.GetLineNumber(pathToFile, content, startLine: 0, searchDown: true, lineToSkip);
         }
 
-        internal int GetLineNumberAboveCurrent(string pathToFile, string content)
+        internal int GetLineNumberAboveCurrent(string pathToFile, string content, int lineToSkip)
         {
-            return this.GetLineNumber(pathToFile, content, startLine: this.currentLineNumber + 1, searchDown: false);
+            return this.GetLineNumber(pathToFile, content, startLine: this.currentLineNumber - 1, searchDown: false, lineToSkip);
         }
 
-        internal int GetLineNumberBelowCurrent(string pathToFile, string content)
+        internal int GetLineNumberBelowCurrent(string pathToFile, string content, int lineToSkip)
         {
-            return this.GetLineNumber(pathToFile, content, startLine: this.currentLineNumber + 1, searchDown: true);
+            return this.GetLineNumber(pathToFile, content, startLine: this.currentLineNumber + 1, searchDown: true, lineToSkip);
         }
 
-        internal int GetLineNumber(string pathToFile, string content, int startLine, bool searchDown)
+        internal int GetLineNumber(string pathToFile, string content, int startLine, bool searchDown, int skipLine)
         {
             var lines = File.ReadAllLines(pathToFile);
-
-            var keyword = CommentLinksPackage.Instance?.Options?.TriggerWord + ":";
 
             if (searchDown)
             {
@@ -62,7 +60,12 @@ namespace CommentLinks
                 {
                     for (int i = startLine; i < lines.Length; i++)
                     {
-                        if (lines[i].Contains(content) && lines[i].IndexOf(keyword, StringComparison.InvariantCultureIgnoreCase) < 0)
+                        if (i == skipLine)
+                        {
+                            continue;
+                        }
+
+                        if (lines[i].Contains(content))
                         {
                             return i + 1;
                         }
@@ -73,7 +76,7 @@ namespace CommentLinks
             {
                 for (int i = startLine; i >= 0; i--)
                 {
-                    if (lines[i].Contains(content) && lines[i].IndexOf(keyword, StringComparison.InvariantCultureIgnoreCase) < 0)
+                    if (lines[i].Contains(content))
                     {
                         return i + 1;
                     }
@@ -150,10 +153,13 @@ namespace CommentLinks
                     }
                 }
 
+                NavigationType navType = NavigationType.Default;
+                int skipLine = -1;
+
                 if (File.Exists(this.CmntLinkTag.FileName))
                 {
                     var va = await OpenFileAsync(this.CmntLinkTag.FileName);
-                    await this.NavigateWithinFileAsync(va, this.CmntLinkTag.FileName, this.CmntLinkTag.LineNo, this.CmntLinkTag.SearchTerm, isSameFile: false, navigationType: NavigationType.Default);
+                    await this.NavigateWithinFileAsync(va, this.CmntLinkTag.FileName, this.CmntLinkTag.LineNo, this.CmntLinkTag.SearchTerm, navigationType: navType, lineToSkip: skipLine);
 
                     return;
                 }
@@ -170,7 +176,6 @@ namespace CommentLinks
                 string filePath = string.Empty;
                 IVsTextView viewAdapter = null;
                 bool sameFile = false;
-                NavigationType navType = NavigationType.Default;
 
                 if (this.CmntLinkTag.FileName.Equals("^"))
                 {
@@ -208,7 +213,13 @@ namespace CommentLinks
 
                 var activeDocPath = ProjectHelpers.Dte.ActiveDocument.FullName;
 
-                if (sameFile || activeDocPath == filePath || System.IO.Path.GetFileName(activeDocPath) == filePath)
+                if (activeDocPath == filePath || System.IO.Path.GetFileName(activeDocPath) == filePath)
+                {
+                    skipLine = this.currentLineNumber;
+                    sameFile = true;
+                }
+
+                if (sameFile)
                 {
                     viewAdapter = this.GetActiveTextView();
                     filePath = activeDocPath;
@@ -222,7 +233,7 @@ namespace CommentLinks
 
                 if (viewAdapter != null)
                 {
-                    await this.NavigateWithinFileAsync(viewAdapter, filePath, this.CmntLinkTag.LineNo, this.CmntLinkTag.SearchTerm, sameFile, navType);
+                    await this.NavigateWithinFileAsync(viewAdapter, filePath, this.CmntLinkTag.LineNo, this.CmntLinkTag.SearchTerm, navType, skipLine);
 
                     return;
                 }
@@ -235,7 +246,7 @@ namespace CommentLinks
             }
         }
 
-        private async Task NavigateWithinFileAsync(IVsTextView textViewAdapter, string fileToNavigate, int lineNo, string searchText, bool isSameFile, NavigationType navigationType)
+        private async Task NavigateWithinFileAsync(IVsTextView textViewAdapter, string fileToNavigate, int lineNo, string searchText, NavigationType navigationType, int lineToSkip)
         {
             if (textViewAdapter == null)
             {
@@ -259,7 +270,7 @@ namespace CommentLinks
             {
                 if (navigationType == NavigationType.Default)
                 {
-                    var foundLineNo = this.GetLineNumberOfMatch(fileToNavigate, searchText, isSameFile);
+                    var foundLineNo = this.GetLineNumberOfMatch(fileToNavigate, searchText, lineToSkip);
 
                     if (foundLineNo > 0)
                     {
@@ -273,7 +284,7 @@ namespace CommentLinks
                 }
                 else if (navigationType == NavigationType.Up)
                 {
-                    var foundLineNo = this.GetLineNumberAboveCurrent(fileToNavigate, searchText);
+                    var foundLineNo = this.GetLineNumberAboveCurrent(fileToNavigate, searchText, lineToSkip);
 
                     if (foundLineNo > 0)
                     {
@@ -287,7 +298,7 @@ namespace CommentLinks
                 }
                 else if (navigationType == NavigationType.Down)
                 {
-                    var foundLineNo = this.GetLineNumberBelowCurrent(fileToNavigate, searchText);
+                    var foundLineNo = this.GetLineNumberBelowCurrent(fileToNavigate, searchText, lineToSkip);
 
                     if (foundLineNo > 0)
                     {
