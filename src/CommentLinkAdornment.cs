@@ -142,7 +142,45 @@ namespace CommentLinks
                     return;
                 }
 
-                if (this.CmntLinkTag.FileName.StartsWith("..")
+                if (this.CmntLinkTag.FileName.StartsWith("..."))
+                {
+                    var relPath = this.CmntLinkTag.FileName.TrimStart(new[] { '.', '\\', '/' });
+                    var posDir = Path.GetDirectoryName(ProjectHelpers.Dte.ActiveDocument.FullName);
+
+                    var keepTrying = true;
+
+                    while (keepTrying)
+                    {
+                        var posFilePath = Path.Combine(posDir, relPath);
+
+                        if (File.Exists(posFilePath))
+                        {
+                            this.CmntLinkTag = this.CmntLinkTag.UpdateFileName(posFilePath);
+                            keepTrying = false;
+                        }
+                        else
+                        {
+                            try
+                            {
+                                posDir = Path.GetDirectoryName(posDir);
+
+                                if (string.IsNullOrWhiteSpace(posDir))
+                                {
+                                    await StatusBarHelper.ShowMessageAsync($"Unable to find file '{this.CmntLinkTag.FileName}'");
+                                    keepTrying = false;
+                                    return;
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                await StatusBarHelper.ShowMessageAsync($"Unable to find file '{this.CmntLinkTag.FileName}'");
+                                keepTrying = false;
+                                return;
+                            }
+                        }
+                    }
+                }
+                else if (this.CmntLinkTag.FileName.StartsWith("..")
                  || this.CmntLinkTag.FileName.StartsWith("./")
                  || this.CmntLinkTag.FileName.StartsWith(".\\"))
                 {
