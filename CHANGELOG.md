@@ -2,6 +2,10 @@
 
 The following includes details of what has changed in each release.
 
+## 2.13
+
+- Enable searching for a file up the directory path by prefixing a file name with threee dots.
+
 ## 2.12
 
 - Refine the logic relating to navigating within a file.

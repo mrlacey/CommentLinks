@@ -73,6 +73,15 @@ Open any file from disk by specifying the full path.
 // See the log file at link:C:\Temp\logs\analysis-report.log
 ```
 
+### Open files 
+
+Open a file anywhere in the file structure above the current file.  
+For example the following will search for, and open, a file called `README.md` in any directory in the curent path.
+
+```cs
+// link:...\README.md
+```
+
 ### Run commands from a link
 
 Run arbitrary commands to open files or invoke applications by including `run>` after `link:` and before the command to execute.
