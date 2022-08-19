@@ -73,10 +73,10 @@ Open any file from disk by specifying the full path.
 // See the log file at link:C:\Temp\logs\analysis-report.log
 ```
 
-### Open files 
+### Open files in a parent directory
 
 Open a file anywhere in the file structure above the current file.  
-For example the following will search for, and open, a file called `README.md` in any directory in the curent path.
+For example, the following will search for, and open, a file called `README.md` in any directory in the current path.
 
 ```cs
 // link:...\README.md
