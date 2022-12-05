@@ -263,7 +263,7 @@ namespace CommentLinks
                     filePath = activeDocPath;
                     sameFile = true;
                 }
-                else
+                else if (!string.IsNullOrEmpty(filePath))
                 {
                     viewAdapter = await OpenFileAsync(filePath);
                     sameFile = filePath == activeDocPath;
