@@ -55,15 +55,28 @@
         <CommandPlacement guid="guidCommentLinksPackageCmdSet" id="LinkToSelectionCommandId" priority="0x0100">
             <Parent guid="guidCommentLinksPackageCmdSet" id="CodeContextMenuGroup" />
         </CommandPlacement>
+
+		<CommandPlacement guid="guidCommentLinksPackageCmdSet" id="CodeContextGroup" priority="0x0200">
+			<Parent guid="GuidVisualStudioXAMLWindowContextMenu" id="IDVisualStudioXAMLWindowContextMenu" />
+		</CommandPlacement>
+		
     </CommandPlacements>
 
-    <Symbols>
-        <GuidSymbol name="guidCommentLinksPackage" value="{e1724685-50af-49aa-9d96-ff26a69cc1c9}" />
+	<VisibilityConstraints>
+		<VisibilityItem context="GuidVisualStudioXAMLWindowContextMenu" guid="guidCommentLinksPackageCmdSet" id="LinkToFileCommandId"/>
+	</VisibilityConstraints>
+
+	<Symbols>
+		<GuidSymbol name="guidCommentLinksPackage" value="{e1724685-50af-49aa-9d96-ff26a69cc1c9}" />
+
+		<GuidSymbol name="GuidVisualStudioXAMLWindowContextMenu" value="{4C87B692-1202-46AA-B64C-EF01FAEC53DA}">
+			<IDSymbol name="IDVisualStudioXAMLWindowContextMenu" value="0x0103" />
+		</GuidSymbol>
 
         <GuidSymbol name="guidCommentLinksPackageCmdSet" value="{8b7f9d00-fcc1-4b0f-a951-3d63273c87de}">
-            <IDSymbol value="0x1100" name="CodeContextGroup" />
-            <IDSymbol value="0x1200" name="CodeContextMenu" />
-            <IDSymbol value="0x1300" name="CodeContextMenuGroup" />
+			<IDSymbol value="0x1100" name="CodeContextGroup" />
+			<IDSymbol value="0x1200" name="CodeContextMenu" />
+			<IDSymbol value="0x1300" name="CodeContextMenuGroup" />
             <IDSymbol name="LinkToFileCommandId" value="0x0100" />
             <IDSymbol name="LinkToLineCommandId" value="0x0200" />
             <IDSymbol name="LinkToSelectionCommandId" value="0x0300" />

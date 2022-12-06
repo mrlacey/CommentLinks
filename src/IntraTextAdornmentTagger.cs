@@ -103,11 +103,13 @@ namespace CommentLinks
 
                 if (wasEmpty && this.invalidatedSpans.Count > 0)
                 {
+#pragma warning disable VSTHRD102 // Implement internal logic asynchronously
                     ThreadHelper.JoinableTaskFactory.Run(async () =>
                     {
                         await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                         this.AsyncUpdate();
                     });
+#pragma warning restore VSTHRD102 // Implement internal logic asynchronously
                 }
             }
         }
