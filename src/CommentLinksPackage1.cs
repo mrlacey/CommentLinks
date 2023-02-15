@@ -15,6 +15,9 @@ namespace CommentLinks
         public const string guidCommentLinksPackageString = "e1724685-50af-49aa-9d96-ff26a69cc1c9";
         public static Guid guidCommentLinksPackage = new Guid(guidCommentLinksPackageString);
 
+        public const string guidCshtmlCodeEditorString = "78f03954-2fb8-4087-8ce7-59d71710b3bb";
+        public static Guid guidCshtmlCodeEditor = new Guid(guidCshtmlCodeEditorString);
+
         public const string GuidVisualStudioXAMLWindowContextMenuString = "4c87b692-1202-46aa-b64c-ef01faec53da";
         public static Guid GuidVisualStudioXAMLWindowContextMenu = new Guid(GuidVisualStudioXAMLWindowContextMenuString);
 

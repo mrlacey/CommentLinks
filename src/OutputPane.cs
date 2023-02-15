@@ -63,7 +63,7 @@ namespace CommentLinks
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(CancellationToken.None);
 
-            this.pane?.OutputString($"{message}{Environment.NewLine}");
+            this.pane?.OutputStringThreadSafe($"{message}{Environment.NewLine}");
         }
     }
 }
