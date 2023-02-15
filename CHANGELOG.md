@@ -2,6 +2,18 @@
 
 The following includes details of what has changed in each release.
 
+## 2.15
+
+- Support the "legacy"" Razor editor.
+
+## 2.14.1
+
+- Support installing in VS for ARM
+
+## 2.14
+
+- Support the XAML editor.
+
 ## 2.13
 
 - Enable searching for a file up the directory path by prefixing a file name with threee dots.
