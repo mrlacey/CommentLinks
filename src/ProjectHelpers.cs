@@ -11,7 +11,7 @@ namespace CommentLinks
     {
         static ProjectHelpers()
         {
-            // Rely on caller being on UI thread as shoudln't do it here in the constructor.
+            // Rely on caller being on UI thread as shouldn't do it here in the constructor.
 #pragma warning disable VSTHRD010 // Invoke single-threaded types on Main thread
             Dte = (DTE)Package.GetGlobalService(typeof(DTE));
 #pragma warning restore VSTHRD010 // Invoke single-threaded types on Main thread
