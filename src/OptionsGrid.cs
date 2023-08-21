@@ -24,6 +24,11 @@ namespace CommentLinks
         [Description("The word used to use to indicate a link. Alphabetic characters only. Re-open documents to see the change.")]
         public string TriggerWord { get; set; } = "link";
 
+        [Category("General")]
+        [DisplayName("Accept command risk")]
+        [Description("Running commands can have consequences. By using this functionality you accept the risk of any unexpected or unintended consequences.")]
+        public bool AcceptRiskOfRunningCommands { get; set; } = false;
+
         internal void EnsureValidTriggerWord()
         {
             var temp = new System.Text.StringBuilder();

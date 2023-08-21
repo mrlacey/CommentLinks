@@ -2,6 +2,10 @@
 
 The following includes details of what has changed in each release.
 
+## 2.16
+
+- Add confirmation before first executing a command.
+
 ## 2.15
 
 - Support the "legacy"" Razor editor.

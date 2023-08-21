@@ -125,6 +125,23 @@ namespace CommentLinks
                     }
                     else
                     {
+                        if (!CommentLinksPackage.Instance?.Options?.AcceptRiskOfRunningCommands ?? false)
+                        {
+                            if (MessageBox.Show(
+                                $"Running this command could have unintended consequences.{Environment.NewLine}Are you sure you want to run this command?",
+                                "Take responsibility for the results of this command?",
+                                MessageBoxButton.YesNo,
+                                MessageBoxImage.Question)
+                                == MessageBoxResult.Yes)
+                            {
+                                CommentLinksPackage.Instance.Options.AcceptRiskOfRunningCommands = true;
+                            }
+                            else
+                            {
+                                return;
+                            }
+                        }
+
                         var spaceIndex = this.CmntLinkTag.FileName.IndexOfAny(new[] { ' ', '\t' });
 
                         var args = string.Empty;

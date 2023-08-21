@@ -53,6 +53,7 @@ namespace CommentLinks
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(CancellationToken.None);
 
             await this.WriteAsync(string.Empty);
+            await this.WriteAsync(DateTimeOffset.Now.ToString());
             await this.WriteAsync($"Error in {caller}");
             await this.WriteAsync(exception.Message);
             await this.WriteAsync(exception.Source);
