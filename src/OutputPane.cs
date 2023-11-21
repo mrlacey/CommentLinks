@@ -26,7 +26,7 @@ namespace CommentLinks
             if (ServiceProvider.GlobalProvider.GetService(typeof(SVsOutputWindow)) is IVsOutputWindow outWindow
                 && (ErrorHandler.Failed(outWindow.GetPane(ref dsPaneGuid, out this.pane)) || this.pane == null))
             {
-                if (ErrorHandler.Failed(outWindow.CreatePane(ref dsPaneGuid, "Comment Links", 1, 0)))
+                if (ErrorHandler.Failed(outWindow.CreatePane(ref dsPaneGuid, Vsix.Name, 1, 0)))
                 {
                     System.Diagnostics.Debug.WriteLine("Failed to create output pane.");
                     return;
@@ -63,6 +63,19 @@ namespace CommentLinks
         public async Task WriteAsync(string message)
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(CancellationToken.None);
+
+            this.pane?.OutputStringThreadSafe($"{message}{Environment.NewLine}");
+        }
+
+        public void Activate()
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            this.pane?.Activate();
+        }
+
+        public void WriteLine(string message)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
 
             this.pane?.OutputStringThreadSafe($"{message}{Environment.NewLine}");
         }
