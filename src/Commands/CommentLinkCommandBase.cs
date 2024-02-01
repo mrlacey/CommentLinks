@@ -2,13 +2,9 @@
 // Licensed under the MIT license.
 
 using System;
+using System.Globalization;
 using System.IO;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.ComponentModelHost;
-using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Text.Editor;
-using Microsoft.VisualStudio.TextManager.Interop;
 
 namespace CommentLinks.Commands
 {
@@ -34,11 +30,11 @@ namespace CommentLinks.Commands
             {
                 switch (this.package.Options.LinkCasing)
                 {
-                    case CaseOption.TitleCase: return "Link";
-                    case CaseOption.UPPERCASE: return "LINK";
+                    case CaseOption.TitleCase: return CultureInfo.CurrentUICulture.TextInfo.ToTitleCase(this.package.Options.TriggerWord);
+                    case CaseOption.UPPERCASE: return this.package.Options.TriggerWord.ToUpper();
                     case CaseOption.lowercase:
                     default:
-                        return "link";
+                        return this.package.Options.TriggerWord.ToLower();
                 }
             }
         }

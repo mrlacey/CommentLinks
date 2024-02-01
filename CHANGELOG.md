@@ -2,6 +2,14 @@
 
 The following includes details of what has changed in each release.
 
+## 2.18
+
+- Fix the generation of links using custom trigger words.
+
+## 2.17
+
+- Update use of the Output window.
+
 ## 2.16
 
 - Add confirmation before first executing a command.
