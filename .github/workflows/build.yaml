@@ -41,7 +41,7 @@ jobs:
         vsix-token-source-file: ${{ env.VsixManifestSourcePath }}
 
     - name: Build
-      run: msbuild /v:m -restore /p:OutDir=\_built ./src/CommentLinks.sln
+      run: msbuild /v:m -restore /p:OutDir=\_built ./CommentLinks.sln
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
