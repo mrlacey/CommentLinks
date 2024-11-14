@@ -6,7 +6,7 @@
 ![Works with Visual Studio 2022](https://img.shields.io/static/v1.svg?label=VS&message=2022&color=A853C7)
 ![Visual Studio Marketplace 5 Stars](https://img.shields.io/badge/VS%20Marketplace-★★★★★-green)
 
-[![Build](https://github.com/mrlacey/CommentLinksr/actions/workflows/build.yaml/badge.svg)](https://github.com/mrlacey/CommentLinks/actions/workflows/build.yaml)
+[![Build](https://github.com/mrlacey/CommentLinks/actions/workflows/build.yaml/badge.svg)](https://github.com/mrlacey/CommentLinks/actions/workflows/build.yaml)
 ![Tests](https://gist.githubusercontent.com/mrlacey/c586ff0f495b4a8dd76ab0dbdf9c89e0/raw/CommentLinks.badge.svg)
 
 [Available in the Visual Studio marketplace](https://marketplace.visualstudio.com/items?itemName=MattLaceyLtd.CommentLinks)
