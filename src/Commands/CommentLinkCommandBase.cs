@@ -59,7 +59,8 @@ namespace CommentLinks.Commands
             {
                 var proj = ProjectHelpers.Dte.Solution?.FindProjectItem(filePath)?.ContainingProject;
 
-                if (proj != null)
+                // Allow for items that aren't part of a project (such as solution items)
+                if (proj != null && !string.IsNullOrWhiteSpace(proj.FileName))
                 {
                     var projDir = Path.GetDirectoryName(proj.FileName);
 
