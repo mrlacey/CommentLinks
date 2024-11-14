@@ -10,8 +10,8 @@ namespace CommentLinks
     public class OptionsGrid : DialogPage
     {
         [Category("General")]
-        [DisplayName("Include path to file")]
-        [Description("If set to true, links generated with the context menu will include the path to the file.")]
+        [DisplayName("Include relative path to file")]
+        [Description("If set to true, links generated with the context menu will include the relative path to the file within a project.")]
         public bool IncludePathToFile { get; set; } = false;
 
         [Category("General")]
