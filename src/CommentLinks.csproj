@@ -49,6 +49,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CaseOption.cs" />
+    <Compile Include="ColorHelper.cs" />
     <Compile Include="Commands\CommentLinkCommandBase.cs" />
     <Compile Include="Commands\LinkToFileCommand.cs" />
     <Compile Include="Commands\LinkToLineCommand.cs" />
@@ -119,6 +120,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Text.Logic">
       <Version>17.6.268</Version>
+    </PackageReference>
+    <PackageReference Include="WarnAboutTODOs">
+      <Version>1.6.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
