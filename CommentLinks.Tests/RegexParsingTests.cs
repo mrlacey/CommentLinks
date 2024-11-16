@@ -517,6 +517,43 @@ namespace CommentLinks.Tests
 			Assert.IsFalse(sut.IsRunCommand);
 		}
 
+		[TestMethod]
+		public void FindPlaceholder_ItemPath()
+		{
+			var sut = ExtractTagFromLine("// link:$(ItemPath)");
+
+			Assert.IsNotNull(sut);
+			Assert.AreEqual("$(ItemPath)", sut.FileName);
+			Assert.AreEqual(-1, sut.LineNo);
+			Assert.IsNull(sut.SearchTerm);
+			Assert.IsFalse(sut.IsRunCommand);
+		}
+
+		[TestMethod]
+		public void FindPlaceholder_ItemPath_PlusLineNumber()
+		{
+			var sut = ExtractTagFromLine("// link:$(ItemPath)#L25");
+
+			Assert.IsNotNull(sut);
+			Assert.AreEqual("$(ItemPath)", sut.FileName);
+			Assert.AreEqual(25, sut.LineNo);
+			Assert.IsNull(sut.SearchTerm);
+			Assert.IsFalse(sut.IsRunCommand);
+		}
+
+		[TestMethod]
+		public void FindPlaceholder_ItemPath_PlusSearchTerm()
+		{
+			var sut = ExtractTagFromLine("// link:$(ItemPath):findMe");
+
+			Assert.IsNotNull(sut);
+			Assert.AreEqual("$(ItemPath)", sut.FileName);
+			Assert.AreEqual(-1, sut.LineNo);
+			Assert.IsNotNull(sut.SearchTerm);
+			Assert.AreEqual("findMe", sut.SearchTerm);
+			Assert.IsFalse(sut.IsRunCommand);
+		}
+
 		private CommentLinkTag ExtractTagFromLine(string line)
 		{
 			var regex = RegexHelper.DefaultLinkRegex;

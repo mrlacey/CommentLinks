@@ -24,7 +24,6 @@ namespace CommentLinks
 
 		internal CommentLinkAdornment(CommentLinkTag tag, int currentLineNumber)
 		{
-
 			try
 			{
 				this.Content = new TextBlock { Text = CommentLinksPackage.Instance.Options.ButtonIcon };
@@ -180,6 +179,43 @@ namespace CommentLinks
 					return;
 				}
 
+				var activeDocPath = ProjectHelpers.Dte.ActiveDocument.FullName;
+
+				if (this.CmntLinkTag.FileName.Contains(VSMacros.ItemPath))
+				{
+					this.CmntLinkTag = this.CmntLinkTag.UpdateFileName(this.CmntLinkTag.FileName.Replace(VSMacros.ItemPath, activeDocPath));
+				}
+				else if (this.CmntLinkTag.FileName.Contains(VSMacros.ItemDir))
+				{
+					this.CmntLinkTag = this.CmntLinkTag.UpdateFileName(this.CmntLinkTag.FileName.Replace(VSMacros.ItemDir, Path.GetDirectoryName(activeDocPath)));
+				}
+				else if (this.CmntLinkTag.FileName.Contains(VSMacros.ProjectDir))
+				{
+					var proj = ProjectHelpers.Dte.Solution?.FindProjectItem(activeDocPath)?.ContainingProject;
+
+					if (string.IsNullOrWhiteSpace(proj?.FileName))
+					{
+						await StatusBarHelper.ShowMessageAsync("Unable to find the project for the current file.");
+					}
+					else
+					{
+						this.CmntLinkTag = this.CmntLinkTag.UpdateFileName(this.CmntLinkTag.FileName.Replace(VSMacros.ProjectDir, Path.GetDirectoryName(proj.FileName)));
+					}
+				}
+				else if (this.CmntLinkTag.FileName.Contains(VSMacros.SolutionDir))
+				{
+					var slnFileName = ProjectHelpers.Dte.Solution?.FullName;
+
+					if (string.IsNullOrWhiteSpace(slnFileName))
+					{
+						await StatusBarHelper.ShowMessageAsync("Unable to find the solution for the current file.");
+					}
+					else
+					{
+						this.CmntLinkTag = this.CmntLinkTag.UpdateFileName(this.CmntLinkTag.FileName.Replace(VSMacros.SolutionDir, Path.GetDirectoryName(slnFileName)));
+					}
+				}
+
 				if (this.CmntLinkTag.FileName.StartsWith("..."))
 				{
 					var relPath = this.CmntLinkTag.FileName.TrimStart(new[] { '.', '\\', '/' });
@@ -286,8 +322,6 @@ namespace CommentLinks
 						}
 					}
 				}
-
-				var activeDocPath = ProjectHelpers.Dte.ActiveDocument.FullName;
 
 				if (activeDocPath == filePath || System.IO.Path.GetFileName(activeDocPath) == filePath)
 				{

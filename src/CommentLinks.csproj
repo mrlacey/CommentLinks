@@ -88,6 +88,7 @@
     <Compile Include="SponsorDetector.cs" />
     <Compile Include="SponsorRequestHelper.cs" />
     <Compile Include="StatusBarHelper.cs" />
+    <Compile Include="VSMacros.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

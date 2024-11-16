@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Matt Lacey Ltd. All rights reserved.
 // Licensed under the MIT license.
 
+using System.Reflection.Metadata;
+
 namespace CommentLinks
 {
 	public enum CaseOption
