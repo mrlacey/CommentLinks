@@ -120,6 +120,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Text.Logic">
       <Version>17.6.268</Version>
     </PackageReference>
+    <PackageReference Include="MRLacey.WpfColorHelper">
+      <Version>1.0.2</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\CommentLinksIcon.png">
