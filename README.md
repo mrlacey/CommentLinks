@@ -16,10 +16,10 @@ See it in action (click image to open YouTube)
 
 Create links between any files. Useful if your project or solution contains code in multiple languages or you wish to link to documentation files also in the solution.
 
-- Open the file
-- Open the file and go to a specific line
-- Open the file and go to specific text
-- Open any file (as specified by absolute path)
+- Open the file.
+- Open the file and go to a specific line.
+- Open the file and go to specific text.
+- Open any file (as specified by absolute path or using macros in file paths).
 - Run arbitrary commands.
 
 When a comment contains the text `link:` followed by a file name, a green button will be added that when clicked will open that file.
@@ -65,6 +65,21 @@ Files will be found anywhere in the solution, even in other projects. If you hav
 
 ```cs
 // link:include/mapManager.js
+```
+
+### Include macros in file paths
+
+The following macros are supported in file paths:
+
+- `$(ItemPath)` - The full path of the current file.
+- `$(ItemDir)` - The directory containing the current file.
+- `$(ProjectDir)` - The directory containing the project file the current file is part of.
+- `$(SolutionDir)` - The directory containing the solution file the current file is part of.
+
+These macros can be used in combination with file names and search terms or line numbers.
+
+```cs
+// link:$(ProjectDir)\docs\readme.md#L10
 ```
 
 ### Open files outside the solution
