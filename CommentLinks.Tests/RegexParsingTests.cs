@@ -530,6 +530,42 @@ namespace CommentLinks.Tests
 		}
 
 		[TestMethod]
+		public void FindPlaceholder_ItemDir()
+		{
+			var sut = ExtractTagFromLine("// link:$(ItemDir)");
+
+			Assert.IsNotNull(sut);
+			Assert.AreEqual("$(ItemDir)", sut.FileName);
+			Assert.AreEqual(-1, sut.LineNo);
+			Assert.IsNull(sut.SearchTerm);
+			Assert.IsFalse(sut.IsRunCommand);
+		}
+
+		[TestMethod]
+		public void FindPlaceholder_ProjectDir()
+		{
+			var sut = ExtractTagFromLine("// link:$(ProjectDir)");
+
+			Assert.IsNotNull(sut);
+			Assert.AreEqual("$(ProjectDir)", sut.FileName);
+			Assert.AreEqual(-1, sut.LineNo);
+			Assert.IsNull(sut.SearchTerm);
+			Assert.IsFalse(sut.IsRunCommand);
+		}
+
+		[TestMethod]
+		public void FindPlaceholder_SolutionDir()
+		{
+			var sut = ExtractTagFromLine("// link:$(SolutionDir)");
+
+			Assert.IsNotNull(sut);
+			Assert.AreEqual("$(SolutionDir)", sut.FileName);
+			Assert.AreEqual(-1, sut.LineNo);
+			Assert.IsNull(sut.SearchTerm);
+			Assert.IsFalse(sut.IsRunCommand);
+		}
+
+		[TestMethod]
 		public void FindPlaceholder_ItemPath_PlusLineNumber()
 		{
 			var sut = ExtractTagFromLine("// link:$(ItemPath)#L25");
