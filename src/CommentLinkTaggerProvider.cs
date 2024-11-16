@@ -12,46 +12,47 @@ using Microsoft.VisualStudio.Utilities;
 
 namespace CommentLinks
 {
-    [Export(typeof(ITaggerProvider))]
-    [ContentType("text")]
-    [TextViewRole(PredefinedTextViewRoles.Document)]
-    [TagType(typeof(CommentLinkTag))]
-    internal sealed class CommentLinkTaggerProvider : ITaggerProvider
-    {
-        public ITagger<T> CreateTagger<T>(ITextBuffer buffer)
-            where T : ITag
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            if (buffer == null)
-            {
-                throw new ArgumentNullException("buffer");
-            }
+	[Export(typeof(ITaggerProvider))]
+	[ContentType(StandardContentTypeNames.Text)]
+	[ContentType(StandardContentTypeNames.Projection)]
+	[TextViewRole(PredefinedTextViewRoles.PrimaryDocument)]
+	[TagType(typeof(CommentLinkTag))]
+	internal sealed class CommentLinkTaggerProvider : ITaggerProvider
+	{
+		public ITagger<T> CreateTagger<T>(ITextBuffer buffer)
+			where T : ITag
+		{
+			ThreadHelper.ThrowIfNotOnUIThread();
+			if (buffer == null)
+			{
+				throw new ArgumentNullException("buffer");
+			}
 
-            if (CommentLinksPackage.Instance == null)
-            {
-                // Try and force load the project if it hasn't already loaded
-                // so can access the configured options.
-                if (ServiceProvider.GlobalProvider.GetService(typeof(SVsShell)) is IVsShell shell)
-                {
-                    // IVsPackage package = null;
-                    Guid PackageToBeLoadedGuid = new Guid(PackageGuids.guidCommentLinksPackageString);
-                    shell.LoadPackage(ref PackageToBeLoadedGuid, out _);
-                }
-            }
+			if (CommentLinksPackage.Instance == null)
+			{
+				// Try and force load the project if it hasn't already loaded
+				// so can access the configured options.
+				if (ServiceProvider.GlobalProvider.GetService(typeof(SVsShell)) is IVsShell shell)
+				{
+					// IVsPackage package = null;
+					Guid PackageToBeLoadedGuid = new Guid(PackageGuids.guidCommentLinksPackageString);
+					shell.LoadPackage(ref PackageToBeLoadedGuid, out _);
+				}
+			}
 
-            var keyword = CommentLinksPackage.Instance?.Options?.TriggerWord;
+			var keyword = CommentLinksPackage.Instance?.Options?.TriggerWord;
 
-            if (string.IsNullOrWhiteSpace(keyword))
-            {
-                return null;
-            }
-            else
-            {
-                var regex = RegexHelper.CreateWithCustomTriggerWord(keyword);
+			if (string.IsNullOrWhiteSpace(keyword))
+			{
+				return null;
+			}
+			else
+			{
+				var regex = RegexHelper.CreateWithCustomTriggerWord(keyword);
 
-                return buffer.Properties.GetOrCreateSingletonProperty(
-                    () => new CommentLinkTagger(buffer, regex)) as ITagger<T>;
-            }
-        }
-    }
+				return buffer.Properties.GetOrCreateSingletonProperty(
+					() => new CommentLinkTagger(buffer, regex)) as ITagger<T>;
+			}
+		}
+	}
 }
