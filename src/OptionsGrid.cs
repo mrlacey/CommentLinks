@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using Microsoft.VisualStudio.Shell;
+using WpfColorHelper;
 
 namespace CommentLinks
 {
@@ -77,10 +78,13 @@ namespace CommentLinks
 				this.ButtonIcon = "➡";
 			}
 
-			// TODO: Add validation to ensure a valid button background value
 			this.ButtonBackground = this.ButtonBackground.Trim();
 
 			if (string.IsNullOrEmpty(this.ButtonBackground))
+			{
+				this.ButtonBackground = "GreenYellow";
+			}
+			else if (!ColorHelper.TryGetColor(this.ButtonBackground, out _))
 			{
 				this.ButtonBackground = "GreenYellow";
 			}
