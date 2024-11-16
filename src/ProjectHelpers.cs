@@ -7,19 +7,19 @@ using Microsoft.VisualStudio.Shell;
 
 namespace CommentLinks
 {
-    public static class ProjectHelpers
-    {
-        static ProjectHelpers()
-        {
-            // Rely on caller being on UI thread as shouldn't do it here in the constructor.
+	public static class ProjectHelpers
+	{
+		static ProjectHelpers()
+		{
+			// Rely on caller being on UI thread as shouldn't do it here in the constructor.
 #pragma warning disable VSTHRD010 // Invoke single-threaded types on Main thread
-            Dte = (DTE)Package.GetGlobalService(typeof(DTE));
+			Dte = (DTE)Package.GetGlobalService(typeof(DTE));
 #pragma warning restore VSTHRD010 // Invoke single-threaded types on Main thread
-            Dte2 = (DTE2)Package.GetGlobalService(typeof(DTE));
-        }
+			Dte2 = (DTE2)Package.GetGlobalService(typeof(DTE));
+		}
 
-        public static DTE Dte { get; }
+		public static DTE Dte { get; }
 
-        public static DTE2 Dte2 { get; }
-    }
+		public static DTE2 Dte2 { get; }
+	}
 }

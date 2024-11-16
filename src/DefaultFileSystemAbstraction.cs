@@ -3,11 +3,11 @@
 
 namespace CommentLinks
 {
-    public class DefaultFileSystemAbstraction : IFileSystemAbstraction
-    {
-        public bool FileExists(string filePath)
-        {
-            return System.IO.File.Exists(filePath);
-        }
-    }
+	public class DefaultFileSystemAbstraction : IFileSystemAbstraction
+	{
+		public bool FileExists(string filePath)
+		{
+			return System.IO.File.Exists(filePath);
+		}
+	}
 }

@@ -3,10 +3,10 @@
 
 namespace CommentLinks
 {
-    public enum NavigationType
-    {
-        Default,
-        Up,
-        Down,
-    }
+	public enum NavigationType
+	{
+		Default,
+		Up,
+		Down,
+	}
 }

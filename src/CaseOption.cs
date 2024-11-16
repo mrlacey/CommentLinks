@@ -3,12 +3,12 @@
 
 namespace CommentLinks
 {
-    public enum CaseOption
-    {
-        TitleCase,
+	public enum CaseOption
+	{
+		TitleCase,
 #pragma warning disable SA1300 // Element should begin with upper-case letter
-        lowercase,
+		lowercase,
 #pragma warning restore SA1300 // Element should begin with upper-case letter
-        UPPERCASE,
-    }
+		UPPERCASE,
+	}
 }

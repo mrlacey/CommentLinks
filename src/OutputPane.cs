@@ -11,73 +11,73 @@ using Task = System.Threading.Tasks.Task;
 
 namespace CommentLinks
 {
-    public class OutputPane
-    {
-        private static Guid dsPaneGuid = new Guid("61839752-500E-4B8C-AA1E-0F62BD71C741");
+	public class OutputPane
+	{
+		private static Guid dsPaneGuid = new Guid("61839752-500E-4B8C-AA1E-0F62BD71C741");
 
-        private static OutputPane instance;
+		private static OutputPane instance;
 
-        private readonly IVsOutputWindowPane pane;
+		private readonly IVsOutputWindowPane pane;
 
-        private OutputPane()
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
+		private OutputPane()
+		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 
-            if (ServiceProvider.GlobalProvider.GetService(typeof(SVsOutputWindow)) is IVsOutputWindow outWindow
-                && (ErrorHandler.Failed(outWindow.GetPane(ref dsPaneGuid, out this.pane)) || this.pane == null))
-            {
-                if (ErrorHandler.Failed(outWindow.CreatePane(ref dsPaneGuid, Vsix.Name, 1, 0)))
-                {
-                    System.Diagnostics.Debug.WriteLine("Failed to create output pane.");
-                    return;
-                }
+			if (ServiceProvider.GlobalProvider.GetService(typeof(SVsOutputWindow)) is IVsOutputWindow outWindow
+				&& (ErrorHandler.Failed(outWindow.GetPane(ref dsPaneGuid, out this.pane)) || this.pane == null))
+			{
+				if (ErrorHandler.Failed(outWindow.CreatePane(ref dsPaneGuid, Vsix.Name, 1, 0)))
+				{
+					System.Diagnostics.Debug.WriteLine("Failed to create output pane.");
+					return;
+				}
 
-                if (ErrorHandler.Failed(outWindow.GetPane(ref dsPaneGuid, out this.pane)) || (this.pane == null))
-                {
-                    System.Diagnostics.Debug.WriteLine("Failed to get output pane.");
-                }
-            }
-        }
+				if (ErrorHandler.Failed(outWindow.GetPane(ref dsPaneGuid, out this.pane)) || (this.pane == null))
+				{
+					System.Diagnostics.Debug.WriteLine("Failed to get output pane.");
+				}
+			}
+		}
 
-        public static OutputPane Instance => instance ?? (instance = new OutputPane());
+		public static OutputPane Instance => instance ?? (instance = new OutputPane());
 
-        public async Task ActivateAsync()
-        {
-            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(CancellationToken.None);
+		public async Task ActivateAsync()
+		{
+			await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(CancellationToken.None);
 
-            this.pane?.Activate();
-        }
+			this.pane?.Activate();
+		}
 
-        public async Task WriteAsync(Exception exception, [CallerMemberName] string caller = "*unknown method*")
-        {
-            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(CancellationToken.None);
+		public async Task WriteAsync(Exception exception, [CallerMemberName] string caller = "*unknown method*")
+		{
+			await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(CancellationToken.None);
 
-            await this.WriteAsync(string.Empty);
-            await this.WriteAsync(DateTimeOffset.Now.ToString());
-            await this.WriteAsync($"Error in {caller}");
-            await this.WriteAsync(exception.Message);
-            await this.WriteAsync(exception.Source);
-            await this.WriteAsync(exception.StackTrace);
-        }
+			await this.WriteAsync(string.Empty);
+			await this.WriteAsync(DateTimeOffset.Now.ToString());
+			await this.WriteAsync($"Error in {caller}");
+			await this.WriteAsync(exception.Message);
+			await this.WriteAsync(exception.Source);
+			await this.WriteAsync(exception.StackTrace);
+		}
 
-        public async Task WriteAsync(string message)
-        {
-            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(CancellationToken.None);
+		public async Task WriteAsync(string message)
+		{
+			await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(CancellationToken.None);
 
-            this.pane?.OutputStringThreadSafe($"{message}{Environment.NewLine}");
-        }
+			this.pane?.OutputStringThreadSafe($"{message}{Environment.NewLine}");
+		}
 
-        public void Activate()
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            this.pane?.Activate();
-        }
+		public void Activate()
+		{
+			ThreadHelper.ThrowIfNotOnUIThread();
+			this.pane?.Activate();
+		}
 
-        public void WriteLine(string message)
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
+		public void WriteLine(string message)
+		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 
-            this.pane?.OutputStringThreadSafe($"{message}{Environment.NewLine}");
-        }
-    }
+			this.pane?.OutputStringThreadSafe($"{message}{Environment.NewLine}");
+		}
+	}
 }

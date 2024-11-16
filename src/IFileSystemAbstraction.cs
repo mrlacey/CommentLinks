@@ -3,8 +3,8 @@
 
 namespace CommentLinks
 {
-    public interface IFileSystemAbstraction
-    {
-        bool FileExists(string filePath);
-    }
+	public interface IFileSystemAbstraction
+	{
+		bool FileExists(string filePath);
+	}
 }
