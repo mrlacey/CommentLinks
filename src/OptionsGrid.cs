@@ -4,20 +4,31 @@
 using System;
 using System.ComponentModel;
 using Microsoft.VisualStudio.Shell;
+using WpfColorHelper;
 
 namespace CommentLinks
 {
-    public class OptionsGrid : DialogPage
-    {
-        [Category("General")]
-        [DisplayName("Trigger word")]
-        [Description("The word used to use to indicate a link. Alphabetic characters only. Re-open documents to see the change.")]
-        public string TriggerWord { get; set; } = "link";
+	public class OptionsGrid : DialogPage
+	{
+		[Category("General")]
+		[DisplayName("Trigger word")]
+		[Description("The word used to use to indicate a link. Alphabetic characters only. Re-open documents to see the change.")]
+		public string TriggerWord { get; set; } = "link";
 
-        [Category("General")]
-        [DisplayName("Accept command risk")]
-        [Description("Running commands can have consequences. By using this functionality you accept the risk of any unexpected or unintended consequences.")]
-        public bool AcceptRiskOfRunningCommands { get; set; } = false;
+		[Category("General")]
+		[DisplayName("Accept command risk")]
+		[Description("Running commands can have consequences. By using this functionality you accept the risk of any unexpected or unintended consequences.")]
+		public bool AcceptRiskOfRunningCommands { get; set; } = false;
+
+		[Category("Display")]
+		[DisplayName("Link button character")]
+		[Description("The unicode character to display on the button next to a link. A single character is recommended. Will default to '➡' if blank.")]
+		public string ButtonIcon { get; set; } = "➡";
+
+		[Category("Display")]
+		[DisplayName("Link button background color")]
+		[Description("The color to use for the link button background. Can be a named color or a hex code (e.g. #FF336699). Default is 'GreenYellow'.")]
+		public string ButtonBackground { get; set; } = "GreenYellow";
 
 		[Category("Generated Links")]
 		[DisplayName("Include relative path to file")]
@@ -35,39 +46,60 @@ namespace CommentLinks
 		public bool UseAbsolutePaths { get; set; } = false;
 
 		internal void EnsureValidTriggerWord()
-        {
-            var temp = new System.Text.StringBuilder();
+		{
+			var temp = new System.Text.StringBuilder();
 
-            foreach (var chr in this.TriggerWord)
-            {
-                if (char.IsLetter(chr))
-                {
-                    temp.Append(chr);
-                }
-            }
+			foreach (var chr in this.TriggerWord)
+			{
+				if (char.IsLetter(chr))
+				{
+					temp.Append(chr);
+				}
+			}
 
-            if (temp.Length < 1)
-            {
-                this.TriggerWord = "link";
-            }
-            else
-            {
-                this.TriggerWord = temp.ToString();
-            }
-        }
+			if (temp.Length < 1)
+			{
+				this.TriggerWord = "link";
+			}
+			else
+			{
+				this.TriggerWord = temp.ToString();
+			}
+		}
 
-        protected override void OnApply(PageApplyEventArgs e)
-        {
-            this.EnsureValidTriggerWord();
+		private void ValidateOptions()
+		{
+			this.EnsureValidTriggerWord();
 
-            base.OnApply(e);
-        }
+			this.ButtonIcon = this.ButtonIcon.Trim();
 
-        protected override void OnClosed(EventArgs e)
-        {
-            this.EnsureValidTriggerWord();
+			if (string.IsNullOrEmpty(this.ButtonIcon))
+			{
+				this.ButtonIcon = "➡";
+			}
 
-            base.OnClosed(e);
-        }
-    }
+			this.ButtonBackground = this.ButtonBackground.Trim();
+
+			if (string.IsNullOrEmpty(this.ButtonBackground))
+			{
+				this.ButtonBackground = "GreenYellow";
+			}
+			else if (!ColorHelper.TryGetColor(this.ButtonBackground, out _))
+			{
+				this.ButtonBackground = "GreenYellow";
+			}
+		}
+
+		protected override void OnApply(PageApplyEventArgs e)
+		{
+			ValidateOptions();
+			base.OnApply(e);
+		}
+
+		protected override void OnClosed(EventArgs e)
+		{
+			ValidateOptions();
+			base.OnClosed(e);
+		}
+	}
 }
