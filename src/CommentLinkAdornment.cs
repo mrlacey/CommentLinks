@@ -13,6 +13,7 @@ using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TextManager.Interop;
+using WpfColorHelper;
 using Button = System.Windows.Controls.Button;
 
 namespace CommentLinks
