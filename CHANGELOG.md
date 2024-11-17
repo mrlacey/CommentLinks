@@ -2,6 +2,14 @@
 
 The following includes details of what has changed in each release.
 
+## 3.0
+
+- Allow customization of the button displayed next to links.
+- Support "macros" as part of link file paths.
+- Limit links to only showing in the main editor window.
+- Addressed security vulnerabilities in underlying libraries.
+- Update minimum VS version to 17.6.
+
 ## 2.18
 
 - Fix the generation of links using custom trigger words.
