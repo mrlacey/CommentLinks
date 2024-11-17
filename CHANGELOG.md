@@ -2,6 +2,10 @@
 
 The following includes details of what has changed in each release.
 
+## 3.0.1
+
+- Add basic usage tracking.
+
 ## 3.0
 
 - Allow customization of the button displayed next to links.
