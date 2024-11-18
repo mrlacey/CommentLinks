@@ -148,6 +148,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="filestosign.txt" />
     <Content Include="Resources\CommentLinksIcon.png">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
