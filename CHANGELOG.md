@@ -2,7 +2,7 @@
 
 The following includes details of what has changed in each release.
 
-## 3.0.1
+## 3.0.1 & 3.0.2
 
 - Add basic usage tracking.
 
