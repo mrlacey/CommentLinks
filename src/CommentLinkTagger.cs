@@ -14,7 +14,7 @@ namespace CommentLinks
 		{
 		}
 
-		protected override IEnumerable<(CommentLinkTag, int)> TryCreateTagsForMatch(Match match)
+		protected override IEnumerable<(CommentLinkTag, int, int)> TryCreateTagsForMatch(Match match)
 		{
 			if (match.Groups.Count == 4)
 			{
@@ -22,23 +22,23 @@ namespace CommentLinks
 
 				var keyword = $"{CommentLinksPackage.Instance?.Options?.TriggerWord}:";
 
-				var submatches = partAfterKeyword.Split(new[] { keyword }, System.StringSplitOptions.RemoveEmptyEntries);
+				var subMatches = partAfterKeyword.Split(new[] { keyword }, System.StringSplitOptions.RemoveEmptyEntries);
 
-				var indent = match.Value.StartsWith("//") ? 2 : 1;
+				var indent = match.Value.ToLowerInvariant().IndexOf(keyword.ToLowerInvariant());
 				var lineOffset = match.Index;
 
-				for (int i = 0; i < submatches.Length; i++)
+				for (int i = 0; i < subMatches.Length; i++)
 				{
-					yield return (CommentLinkTag.Create(
-						submatches[i],
-						indent),
-						lineOffset);
+					yield return (
+						CommentLinkTag.Create(subMatches[i], indent),
+						lineOffset,
+						subMatches[i].Length);
 
-					lineOffset += submatches[i].Length + keyword.Length;
+					lineOffset += subMatches[i].Length + keyword.Length;
 				}
 			}
 
-			yield return (null, 0);
+			yield return (null, 0, 0);
 		}
 	}
 }

@@ -39,8 +39,8 @@ namespace CommentLinks
 			this.view = view;
 			this.Snapshot = view.TextBuffer.CurrentSnapshot;
 
-			this.view.LayoutChanged += this.HandleLayoutChanged;
-			this.view.TextBuffer.Changed += this.HandleBufferChanged;
+			this.view.LayoutChanged += HandleLayoutChanged;
+			this.view.TextBuffer.Changed += HandleBufferChanged;
 		}
 
 		public event EventHandler<SnapshotSpanEventArgs> TagsChanged;
@@ -166,23 +166,23 @@ namespace CommentLinks
 			var start = translatedSpans.Select(span => span.Start).Min();
 			var end = translatedSpans.Select(span => span.End).Max();
 
-			this.RaiseTagsChanged(new SnapshotSpan(start, end));
+			RaiseTagsChanged(new SnapshotSpan(start, end));
 		}
 
 		private void HandleLayoutChanged(object sender, TextViewLayoutChangedEventArgs e)
 		{
-			SnapshotSpan visibleSpan = this.view.TextViewLines.FormattedSpan;
+			SnapshotSpan visibleSpan = view.TextViewLines.FormattedSpan;
 
 			// Filter out the adornments that are no longer visible.
 			List<SnapshotSpan> toRemove = new List<SnapshotSpan>(
 				from keyValuePair
-				in this.adornmentCache
+				in adornmentCache
 				where !keyValuePair.Key.TranslateTo(visibleSpan.Snapshot, SpanTrackingMode.EdgeExclusive).IntersectsWith(visibleSpan)
 				select keyValuePair.Key);
 
 			foreach (var span in toRemove)
 			{
-				this.adornmentCache.Remove(span);
+				adornmentCache.Remove(span);
 			}
 		}
 
@@ -213,23 +213,25 @@ namespace CommentLinks
 				}
 			}
 
+			List<SnapshotSpan> ensureVisible = new();
+
 			foreach (var spanDataPair in this.GetAdornmentData(spans).Distinct(new Comparer()))
 			{
 				// Look up the corresponding adornment or create one if it's new.
-				SnapshotSpan snapshotSpan = spanDataPair.Item1;
+				SnapshotSpan adornmentLocation = spanDataPair.Item1;
 				PositionAffinity? affinity = spanDataPair.Item2;
 				TData adornmentData = spanDataPair.Item3;
 
-				if (this.adornmentCache.TryGetValue(snapshotSpan, out TAdornment adornment))
+				if (this.adornmentCache.TryGetValue(adornmentLocation, out TAdornment adornment))
 				{
 					if (this.UpdateAdornment(adornment, adornmentData))
 					{
-						toRemove.Remove(snapshotSpan);
+						toRemove.Remove(adornmentLocation);
 					}
 				}
 				else
 				{
-					adornment = this.CreateAdornment(adornmentData, snapshotSpan);
+					adornment = this.CreateAdornment(adornmentData, adornmentLocation);
 
 					if (adornment == null)
 					{
@@ -246,15 +248,40 @@ namespace CommentLinks
 					// can help avoid the size change and the resulting unnecessary re-format.
 					adornment.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
 
-					this.adornmentCache.Add(snapshotSpan, adornment);
+					this.adornmentCache.Add(adornmentLocation, adornment);
+
+					// If the adornment is being added outside the changed area (span), keep a record of it's location
+					// We need this to ensure it is shown.
+					// It won't be made visible by default as it's not in a place the editor will automatically check for visual updates
+					if (!spans.IntersectsWith(new NormalizedSnapshotSpanCollection(adornmentLocation)))
+					{
+						ensureVisible.Add(adornmentLocation);
+					}
 				}
 
-				yield return new TagSpan<IntraTextAdornmentTag>(snapshotSpan, new IntraTextAdornmentTag(adornment, null, affinity));
+				yield return new TagSpan<IntraTextAdornmentTag>(adornmentLocation, new IntraTextAdornmentTag(adornment, null, affinity));
 			}
 
 			foreach (var snapshotSpan in toRemove)
 			{
 				this.adornmentCache.Remove(snapshotSpan);
+			}
+
+			// Ensure any adornments that were added outside the visible area are made visible
+			foreach (var newAdornment in ensureVisible)
+			{
+				InvalidateSpans([newAdornment]);
+			}
+
+			// Ensure anything removed is reflected in the UI
+			foreach (var knownAdornment in adornmentCache)
+			{
+				// Does the visible adornment have a corresponding data tag?
+				if (!GetAdornmentData(new NormalizedSnapshotSpanCollection(knownAdornment.Key)).Any())
+				{
+					// If not, force the UI to refresh the location of the displayed adornment (to remove it)
+					InvalidateSpans([knownAdornment.Key]);
+				}
 			}
 		}
 
