@@ -1,6 +1,10 @@
-# CommentLinks - Change log
+﻿# CommentLinks - Change log
 
 The following includes details of what has changed in each release.
+
+## 3.1
+
+- Fix issue where the link button was not always shown or hidden while typing.
 
 ## 3.0.1 & 3.0.2
 
