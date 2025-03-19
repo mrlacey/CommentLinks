@@ -37,6 +37,8 @@ namespace CommentLinks
 
 			Instance = this;
 
+			await OutputPane.Instance.WriteAsync($"{Vsix.Name} v{Vsix.Version}");
+
 			await LinkToFileCommand.InitializeAsync(this);
 			await LinkToLineCommand.InitializeAsync(this);
 			await LinkToSelectionCommand.InitializeAsync(this);
